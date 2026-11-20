@@ -53,5 +53,27 @@
   "baseStake": "10000000000000000",
   "confirmPeriodBlocks": "50400",
   "createRollupTx": "0x73e43485aa7ba9a9093b8168d4aa8f23ac7dc10e26639781f565972c0c790ca5",
-  "createdAtBlock": "119101158"
+  "createdAtBlock": "119101158",
+  "tokenBridge": {
+    "parentChainContracts": {
+      "router": "0xCFe1612bA1Fb5c98a6Aaed86c69cE3aE7f632228",
+      "standardGateway": "0x13Cb5e46C2758057582d27760DDC5052FaDC27c8",
+      "customGateway": "0x4ecD5480E276CB95E6D6268347118D982941E0cC",
+      "wethGateway": "0x0000000000000000000000000000000000000000",
+      "weth": "0x0000000000000000000000000000000000000000",
+      "multicall": "0x32E286aC9eF4b7b6327BC2BA173ec7Dcc4BAD5a6"
+    },
+    "orbitChainContracts": {
+      "router": "0xcD71705cA05E7BE5Dd96E0030Ca943EcC78aEb9D",
+      "standardGateway": "0xf5a5B408Bc6Ef7Fe26AB826E5D158775aFc04fF7",
+      "customGateway": "0x0cfaa659310eae84BAd217f3B7c6e28DEf8caF06",
+      "wethGateway": "0x0000000000000000000000000000000000000000",
+      "weth": "0x0000000000000000000000000000000000000000",
+      "proxyAdmin": "0x5CF107b00427A5f0CC2bC83AD95DF2DDA166586b",
+      "beaconProxyFactory": "0xF3762f1d50c7e2493B5BFA3f05047AB996524Ec8",
+      "upgradeExecutor": "0xaC851399e88A8ec53C2BD22C5c06820dF291566a",
+      "multicall": "0x446394D3e022584E0dAD5A573B781Ad36426f83B"
+    }
+  },
+  "tokenBridgeTx": "0x5b41132203f332917e7f4d2a1533cb79d18b64d56c3760e1256c6dbcbad8664e"
 }
