@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "at": "2026-11-20T13:56:59.184Z",
+  "checks": [
+    {
+      "name": "fork is up",
+      "ok": true,
+      "detail": "block 119100827"
+    },
+    {
+      "name": "ArbSys stand-in installed on fork",
+      "ok": true,
+      "detail": "arbOSVersion 116 = ArbOS 61, as on Robinhood mainnet"
+    },
+    {
+      "name": "ArbGasInfo stand-in installed on fork",
+      "ok": true,
+      "detail": "L1 base fee estimate 0, min gas price 0.02 gwei"
+    },
+    {
+      "name": "real ANT transfers work (not paused, deployer not blocked)",
+      "ok": true,
+      "detail": "0.000000000000000001 ANT"
+    },
+    {
+      "name": "rehearsal uses real mainnet wallet balances",
+      "ok": true,
+      "detail": "exact"
+    },
+    {
+      "name": "rollup created",
+      "ok": true,
+      "detail": "0x8f415110b70249e38b3ced501cada4db4b032a233064ca66ab90b96ae2aefa27"
+    },
+    {
+      "name": "rollup has code",
+      "ok": true,
+      "detail": "0xEb5f26f86478417aD1a2e5704510f576fb866374"
+    },
+    {
+      "name": "inbox has code",
+      "ok": true,
+      "detail": "0x47984232BE388A8Cda9582A585D6DabB8F60076c"
+    },
+    {
+      "name": "outbox has code",
+      "ok": true,
+      "detail": "0x1043efC66Fda04B4219C84E979e145eF2D67A0DA"
+    },
+    {
+      "name": "bridge has code",
+      "ok": true,
+      "detail": "0x07B59CA176ae68CB6d671A8FCE9A572BbAA1aACa"
+    },
+    {
+      "name": "sequencerInbox has code",
+      "ok": true,
+      "detail": "0xB197f034e1bB21c035B3D207faE8eD507dC623A0"
+    },
+    {
+      "name": "upgradeExecutor has code",
+      "ok": true,
+      "detail": "0x24a4848777bdf4485A4D335407758EcBC7F6F9d1"
+    },
+    {
+      "name": "sequencer inbox uses our fee token pricer",
+      "ok": true,
+      "detail": "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF"
+    },
+    {
+      "name": "pricer returns a sane ANT-per-ETH rate from live Chainlink ETH/USD",
+      "ok": true,
+      "detail": "19.374478491072418764 ANT/ETH"
+    },
+    {
+      "name": "bridge gas token is real ANT",
+      "ok": true,
+      "detail": "0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373"
+    },
+    {
+      "name": "batch poster authorised",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "validator allowlisted",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "bridge escrow not blocked by Robinhood registry",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rollup chain ID",
+      "ok": true,
+      "detail": "26800"
+    },
+    {
+      "name": "node config written",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

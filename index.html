@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANT CHAIN</title>
+  <meta name="description" content="ANT CHAIN is an independent L3 rollup on Robinhood Chain where every fee settles in the ANT Stock Token.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="ANT CHAIN home">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <circle cx="9" cy="16" r="4.5" fill="currentColor"/>
+        <circle cx="17" cy="16" r="3.5" fill="currentColor"/>
+        <ellipse cx="25" cy="16" rx="5" ry="4" fill="currentColor"/>
+        <path d="M17 13 L13 6 M17 13 L21 6 M17 19 L13 26 M17 19 L21 26 M9 12 L5 7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span>ANT CHAIN</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#fees">How fees work</a>
+      <a href="#agents">Agents</a>
+      <a href="#build">Build</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-small" href="#waitlist">Join the waitlist</a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <canvas id="colony" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <p class="status"><span class="dot" aria-hidden="true"></span> Testnet in preparation. Mainnet not live.</p>
+        <h1>Every fee settles in ANT.</h1>
+        <p class="lede">ANT CHAIN is an L3 rollup on Robinhood Chain that uses the ANT Stock Token as its gas. Built for software agents that pay each other thousands of times a minute.</p>
+        <div class="cta-row">
+          <a class="btn" href="#waitlist">Join the waitlist</a>
+          <a class="btn btn-ghost" href="#build">Read the builder notes</a>
+        </div>
+      </div>
+      <p class="hero-caption">Each trail is a transaction finding its way into a block.</p>
+    </section>
+
+    <section class="fees" id="fees">
+      <div class="section-head">
+        <h2>How a fee moves</h2>
+        <p>You see a dollar price. The chain collects ANT. Batches settle to Robinhood Chain, then Ethereum.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>You get a dollar quote</h3>
+          <p>An oracle converts the network fee into ANT at the current price, so wallets can show the cost in dollars before you sign.</p>
+        </li>
+        <li>
+          <h3>Gas is paid in ANT</h3>
+          <p>The fee is deducted from your ANT Stock Token balance. Apps can also sponsor fees through a paymaster, so users never touch gas at all.</p>
+        </li>
+        <li>
+          <h3>Batches settle downward</h3>
+          <p>ANT CHAIN posts batches to Robinhood Chain, which settles to Ethereum. Fraud proofs protect every step.</p>
+        </li>
+      </ol>
+
+      <figure class="stack">
+        <svg viewBox="0 0 720 260" role="img" aria-labelledby="stack-title">
+          <title id="stack-title">Settlement path: ANT CHAIN (L3) settles to Robinhood Chain (L2), which settles to Ethereum (L1)</title>
+          <g class="layer l3">
+            <rect x="20" y="20" width="680" height="60" rx="30"/>
+            <text x="50" y="57">ANT CHAIN</text>
+            <text x="670" y="57" text-anchor="end" class="sub">L3 · gas in ANT</text>
+          </g>
+          <path class="link" d="M360 80 V100"/>
+          <g class="layer l2">
+            <rect x="70" y="100" width="580" height="60" rx="30"/>
+            <text x="100" y="137">Robinhood Chain</text>
+            <text x="620" y="137" text-anchor="end" class="sub">L2 · where ANT is issued</text>
+          </g>
+          <path class="link" d="M360 160 V180"/>
+          <g class="layer l1">
+            <rect x="120" y="180" width="480" height="60" rx="30"/>
+            <text x="150" y="217">Ethereum</text>
+            <text x="570" y="217" text-anchor="end" class="sub">L1 · final settlement</text>
+          </g>
+        </svg>
+      </figure>
+    </section>
+
+    <section class="agents" id="agents">
+      <div class="agents-text">
+        <h2>Built for agents that pay each other</h2>
+        <p>One ant carries very little. A colony moves mountains. AI agents work the same way: many small calls, each needing a fast, cheap, verifiable payment.</p>
+      </div>
+      <dl class="features">
+        <div>
+          <dt>Fast blocks</dt>
+          <dd>Targeting sub-second block times so an agent can pay for a call and get the answer in the same breath.</dd>
+        </div>
+        <div>
+          <dt>Session keys with limits</dt>
+          <dd>Give an agent a key that can only spend a set amount, on set contracts, for a set time. Revoke it any time.</dd>
+        </div>
+        <div>
+          <dt>Receipts on chain</dt>
+          <dd>Record which model answered, what it cost, and who paid. Anyone can check the receipt later.</dd>
+        </div>
+        <div>
+          <dt>Sponsored fees</dt>
+          <dd>Apps can pay gas for their users in ETH or stablecoins through a paymaster. The chain still settles in ANT.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="uses" aria-labelledby="uses-title">
+      <h2 id="uses-title">What people can build</h2>
+      <ul class="use-list">
+        <li><strong>Pay-per-call APIs.</strong> Charge fractions of a cent for each inference request, settled instantly.</li>
+        <li><strong>Agent marketplaces.</strong> Let agents hire other agents and pay on delivery.</li>
+        <li><strong>Inference receipts.</strong> Prove which model produced an output and when.</li>
+        <li><strong>Streaming payments.</strong> Pay for compute by the second instead of by the month.</li>
+        <li><strong>Compute markets.</strong> Match idle GPUs with jobs and settle in one place.</li>
+        <li><strong>Game economies.</strong> Run in-game trades with fees too small to notice.</li>
+      </ul>
+    </section>
+
+    <section class="build" id="build">
+      <div class="build-text">
+        <h2>EVM in, nothing new to learn</h2>
+        <p>ANT CHAIN runs the Arbitrum Nitro stack. Foundry, Hardhat, viem and ethers work as they do on Ethereum. The only difference is that gas is denominated in ANT.</p>
+        <p class="note">Network details will be published here when the testnet opens. Values marked TBA are not final.</p>
+      </div>
+      <div class="params">
+        <table>
+          <caption>Testnet parameters</caption>
+          <tbody>
+            <tr><th scope="row">Network name</th><td>ANT CHAIN Testnet</td></tr>
+            <tr><th scope="row">Chain ID</th><td>TBA</td></tr>
+            <tr><th scope="row">RPC URL</th><td>TBA</td></tr>
+            <tr><th scope="row">Gas token</th><td>tANT (test token, no value)</td></tr>
+            <tr><th scope="row">Parent chain</th><td>Robinhood Chain Testnet</td></tr>
+            <tr><th scope="row">Explorer</th><td>TBA</td></tr>
+          </tbody>
+        </table>
+        <div class="gas-token">
+          <h3>Gas token on mainnet</h3>
+          <p>ANT Stock Token on Robinhood Chain (chain ID 4663)</p>
+          <div class="addr-row">
+            <code id="ant-addr">0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</code>
+            <button class="copy" type="button" data-copy="ant-addr">Copy address</button>
+          </div>
+          <p class="warn">Only this address is the ANT Stock Token issued by Robinhood. Other tokens on Robinhood Chain also use the ANT ticker. <a href="https://robin.etherscan.io/token/0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373" target="_blank" rel="noopener">View on explorer</a></p>
+        </div>
+        <pre class="code" aria-label="Example deploy command"><code><span class="c"># deploy with Foundry, once the RPC is live</span>
+forge create src/Receipt.sol:Receipt \
+  --rpc-url $ANT_CHAIN_RPC \
+  --private-key $KEY</code></pre>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <h2>Questions</h2>
+      <details>
+        <summary>Is ANT CHAIN part of Anthropic?</summary>
+        <p>No. ANT CHAIN is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic, PBC, Robinhood Markets, Inc., Offchain Labs, or any of their affiliates. "ANT" refers to the ticker of the tokenized stock used as gas.</p>
+      </details>
+      <details>
+        <summary>What is the ANT Stock Token?</summary>
+        <p>It is a token issued by Robinhood Assets (Jersey) Limited on Robinhood Chain that tracks the price of Anthropic shares listed on Nasdaq under the ticker ANT. It gives price exposure only. It is not a share and carries no shareholder rights.</p>
+      </details>
+      <details>
+        <summary>Who can hold ANT Stock Tokens?</summary>
+        <p>Eligibility follows the issuer's rules. Stock Tokens are not available to US persons and are restricted in other places, including Canada, the UK and Switzerland. Check the issuer's terms before you use them.</p>
+      </details>
+      <details>
+        <summary>Why use a stock token as gas?</summary>
+        <p>Agents spend most of their budget on AI compute. Pricing blockspace in a token tied to an AI company keeps the unit of account close to what agents are actually buying. Wallets still show every fee in dollars.</p>
+      </details>
+      <details>
+        <summary>Does ANT CHAIN have its own coin?</summary>
+        <p>No. There is no ANT CHAIN token, presale or airdrop. Any token claiming to be ours is not. Several unrelated tokens use the ANT ticker, so always check the issuer and contract address.</p>
+      </details>
+      <details>
+        <summary>How do I know I have the real ANT Stock Token?</summary>
+        <p>Check the contract address. The ANT Stock Token issued by Robinhood is <code class="inline">0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</code> on Robinhood Chain, named "Anthropic, PBC Class A Common Stock • Robinhood Token". A token with the same ticker but a supply of one billion is an unrelated memecoin and cannot be bridged as gas.</p>
+      </details>
+      <details>
+        <summary>Is mainnet live?</summary>
+        <p>Not yet. The testnet comes first. Join the waitlist to hear when it opens.</p>
+      </details>
+    </section>
+
+    <section class="waitlist" id="waitlist">
+      <h2>Be early to the colony</h2>
+      <p>We'll email you when the testnet opens. Nothing else.</p>
+      <form id="waitlist-form" novalidate>
+        <label for="email">Email address</label>
+        <div class="field">
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">Join the waitlist</button>
+        </div>
+        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="disclaimer">ANT CHAIN is independent and not affiliated with Anthropic, PBC, Robinhood Markets, Inc. or Offchain Labs. Names are used only to describe the assets and technology involved. Nothing on this site is investment advice or an offer of securities. Tokenized stocks carry market, issuer and regulatory risk and are not available in every country.</p>
+    <p class="copy">© 2026 ANT CHAIN</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

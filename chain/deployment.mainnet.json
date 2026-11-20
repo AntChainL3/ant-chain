@@ -1,0 +1,57 @@
+{
+  "feeTokenPricer": "0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab",
+  "feeTokenPricerTx": "0xd0369fd6139ae3ee09d09b267c8a01474b899b4201ea400c33b967400a4599ba",
+  "network": "mainnet",
+  "chainId": 26800,
+  "nativeToken": "0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373",
+  "chainConfig": {
+    "chainId": 26800,
+    "homesteadBlock": 0,
+    "daoForkBlock": null,
+    "daoForkSupport": true,
+    "eip150Block": 0,
+    "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "muirGlacierBlock": 0,
+    "berlinBlock": 0,
+    "londonBlock": 0,
+    "clique": {
+      "period": 0,
+      "epoch": 0
+    },
+    "arbitrum": {
+      "EnableArbOS": true,
+      "AllowDebugPrecompiles": false,
+      "DataAvailabilityCommittee": false,
+      "InitialArbOSVersion": 51,
+      "InitialChainOwner": "0x032c47Ff69165F2723BE277A8049Dc9308c8f838",
+      "GenesisBlockNum": 0,
+      "MaxCodeSize": 24576,
+      "MaxInitCodeSize": 49152
+    }
+  },
+  "coreContracts": {
+    "rollup": "0xe3A87D0cDA39c335cb2Bbaf4DE1f052fe41aeE06",
+    "inbox": "0x13be8403DdeA7826a6f46904344d4a9431c28Efa",
+    "nativeToken": "0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373",
+    "outbox": "0x745Eb8C2CF6B643d25f4391d3D6C92C318a63CA3",
+    "rollupEventInbox": "0xa6592b7DBe4f388A944B15713A273A50EED14266",
+    "challengeManager": "0xD66ac0e8437F51E78228144f7ff4cfdE08291ac1",
+    "adminProxy": "0xAAb7bB19200A9aab743fD36b08F870De29259a57",
+    "sequencerInbox": "0xCBD854bbAf1580123cE9f7DF5bac3bFc6C33bf9E",
+    "bridge": "0x3c7218E4E7a0819C3C83065d030BB3502AE76F1a",
+    "upgradeExecutor": "0x24a4848777bdf4485A4D335407758EcBC7F6F9d1",
+    "validatorWalletCreator": "0xB7FE37712e46F28C8f22Ec4bAA33A09fb8B52BD0",
+    "deployedAtBlockNumber": 119101158
+  },
+  "stakeToken": "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+  "baseStake": "10000000000000000",
+  "confirmPeriodBlocks": "50400",
+  "createRollupTx": "0x73e43485aa7ba9a9093b8168d4aa8f23ac7dc10e26639781f565972c0c790ca5",
+  "createdAtBlock": "119101158"
+}

@@ -1,0 +1,21 @@
+# Secrets: never commit
+.env
+.env.*
+*.env
+!.env.example
+chain/nodeConfig.*.json
+chain/nodeConfig.json
+chain/nodeConfig.*.b64
+chain/orbitSetupScriptConfig.json
+
+# Build output and dependencies
+node_modules/
+chain/out/
+chain/cache/
+chain/broadcast/
+chain/lib/
+
+# Local rehearsal artefacts
+chain/deployment.fork.json
+chain/*.log
+.railway/
