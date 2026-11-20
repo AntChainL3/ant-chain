@@ -1,0 +1,12 @@
+# Never upload secrets or local artefacts to Railway
+nodeConfig*
+*.b64
+.env*
+deployment.fork.json
+ant-pools.json
+*.log
+out/
+cache/
+lib/
+node_modules/
+test/

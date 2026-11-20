@@ -19,3 +19,4 @@ chain/lib/
 chain/deployment.fork.json
 chain/*.log
 .railway/
+chain/ant-pools.json
