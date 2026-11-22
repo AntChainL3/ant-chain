@@ -44,7 +44,8 @@ const config = createRollupPrepareDeploymentParamsConfig(parentPublicClient, {
 
 // Fee token pricer: required for a custom-gas-token Rollup chain. Without it the
 // batch poster is never reimbursed for the ETH it spends posting batches.
-if (!S.ethUsdFeed) throw new Error("No ETH/USD feed configured for this network.");
+const ethUsdFeed = S.ethUsdFeed || dep.ethUsdFeed;
+if (!ethUsdFeed) throw new Error("No ETH/USD feed configured for this network (testnet: run 01b-deploy-mock-feed.js).");
 const initialAntUsd = process.env.INITIAL_ANT_USD || (NETWORK === "fork" ? "105" : null);
 if (!initialAntUsd) throw new Error("Set INITIAL_ANT_USD (USD per raw ANT, e.g. 97.17) before deploying.");
 
@@ -54,11 +55,11 @@ let feeTokenPricer = dep.feeTokenPricer;
 if (!feeTokenPricer) {
   const art = JSON.parse(readFileSync(path.join(ROOT, "out", "AntFeeTokenPricer.sol", "AntFeeTokenPricer.json"), "utf8"));
   const wallet = walletClient("DEPLOYER");
-  console.log(`Deploying AntFeeTokenPricer (ETH/USD feed ${S.ethUsdFeed}, ANT $${initialAntUsd}) ...`);
+  console.log(`Deploying AntFeeTokenPricer (ETH/USD feed ${ethUsdFeed}, ANT $${initialAntUsd}) ...`);
   const hash = await wallet.deployContract({
     abi: art.abi,
     bytecode: art.bytecode.object,
-    args: [deployer.address, env("KEEPER_ADDRESS"), S.ethUsdFeed, parseEther(initialAntUsd)],
+    args: [deployer.address, env("KEEPER_ADDRESS"), ethUsdFeed, parseEther(initialAntUsd)],
   });
   const r = await parentPublicClient.waitForTransactionReceipt({ hash });
   if (r.status !== "success") throw new Error(`Pricer deploy failed: ${hash}`);

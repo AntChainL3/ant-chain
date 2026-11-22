@@ -20,3 +20,4 @@ chain/deployment.fork.json
 chain/*.log
 .railway/
 chain/ant-pools.json
+walletkit/node_modules/

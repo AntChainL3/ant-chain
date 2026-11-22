@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANT CHAIN Docs</title>
+  <meta name="description" content="ANT CHAIN documentation: what the chain is, why gas is paid in the ANT Stock Token, bridging, the exchange, the planned ANT CHAIN token, developer reference and risks.">
+  <meta name="theme-color" content="#050505">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="canonical" href="https://antchain.tech/docs/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ANT CHAIN">
+  <meta property="og:title" content="ANT CHAIN Docs">
+  <meta property="og:description" content="ANT CHAIN documentation: what the chain is, why gas is paid in the ANT Stock Token, bridging, the exchange, the planned ANT CHAIN token, developer reference and risks.">
+  <meta property="og:url" content="https://antchain.tech/docs/">
+  <meta property="og:image" content="https://antchain.tech/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://antchain.tech/og.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='13.5' fill='none' stroke='%23ffb21a' stroke-width='1.6'/%3E%3Cpath d='M26.6 16.0L26.4 15.0L25.9 14.2L25.1 13.5L24.1 13.0L22.9 12.9L21.6 13.0L20.3 13.5L19.1 14.3L18.1 15.3L17.3 16.6L16.8 18.0L16.6 19.5L16.7 20.9L17.1 22.2L17.8 23.3L18.7 24.2L19.7 24.7L20.8 24.9L21.8 24.7L22.6 24.3L23.2 23.6L23.6 22.6L23.7 21.6L23.4 20.5L22.7 19.4L21.8 18.5L20.6 17.8L19.3 17.3L17.8 17.2L16.3 17.4L14.9 17.9L13.6 18.6L12.6 19.6L11.8 20.8L11.4 22.0L11.3 23.2L11.5 24.3L12.0 25.3L12.7 26.0L13.6 26.3L14.6 26.4L15.6 26.1L16.4 25.5L17.1 24.5L17.5 23.4L17.7 22.1L17.5 20.7L17.0 19.4L16.2 18.2L15.1 17.1L13.9 16.3L12.5 15.8L11.0 15.6L9.7 15.7L8.4 16.1L7.4 16.8L6.7 17.7L6.3 18.7L6.2 19.7L6.4 20.6L7.0 21.4L7.8 21.9L8.9 22.2L10.0 22.2L11.2 21.8L12.3 21.1L13.2 20.1L14.0 18.9L14.4 17.5L14.6 16.0L14.4 14.5L14.0 13.1L13.2 11.9L12.3 10.9L11.2 10.2L10.0 9.8L8.9 9.8L7.8 10.1L7.0 10.6L6.4 11.4L6.2 12.3L6.3 13.3L6.7 14.3L7.4 15.2L8.4 15.9L9.7 16.3L11.0 16.4L12.5 16.2L13.9 15.7L15.1 14.9L16.2 13.8L17.0 12.6L17.5 11.3L17.7 9.9L17.5 8.6L17.1 7.5L16.4 6.5L15.6 5.9L14.6 5.6L13.6 5.7L12.7 6.0L12.0 6.7L11.5 7.7L11.3 8.8L11.4 10.0L11.8 11.2L12.6 12.4L13.6 13.4L14.9 14.1L16.3 14.6L17.8 14.8L19.3 14.7L20.6 14.2L21.8 13.5L22.7 12.6L23.4 11.5L23.7 10.4L23.6 9.4L23.2 8.4L22.6 7.7L21.8 7.3L20.8 7.1L19.7 7.3L18.7 7.8L17.8 8.7L17.1 9.8L16.7 11.1L16.6 12.5L16.8 14.0L17.3 15.4L18.1 16.7L19.1 17.7L20.3 18.5L21.6 19.0L22.9 19.1L24.1 19.0L25.1 18.5L25.9 17.8L26.4 17.0L26.6 16.0Z' fill='none' stroke='%23ffb21a' stroke-width='1.1'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/legacy.css">
+  <link rel="stylesheet" href="../app.css">
+  <link rel="stylesheet" href="../docs.css">
+</head>
+<body class="has-strip app docs">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="none" stroke-width="1.6"/><path d="M27.9 16.0L27.7 14.9L27.1 14.0L26.2 13.2L25.1 12.7L23.7 12.5L22.2 12.6L20.8 13.2L19.5 14.1L18.3 15.3L17.4 16.7L16.8 18.3L16.6 19.9L16.8 21.5L17.3 23.0L18.0 24.2L19.0 25.2L20.2 25.7L21.3 26.0L22.4 25.8L23.4 25.3L24.1 24.5L24.5 23.4L24.6 22.2L24.3 21.0L23.6 19.8L22.5 18.8L21.2 18.0L19.7 17.5L18.0 17.3L16.3 17.5L14.8 18.1L13.3 18.9L12.2 20.1L11.3 21.3L10.8 22.7L10.7 24.1L11.0 25.3L11.5 26.4L12.4 27.1L13.4 27.6L14.4 27.6L15.5 27.3L16.5 26.6L17.2 25.6L17.7 24.3L17.9 22.8L17.7 21.3L17.1 19.8L16.2 18.4L15.0 17.2L13.6 16.3L12.0 15.8L10.5 15.5L8.9 15.7L7.5 16.2L6.4 16.9L5.6 17.9L5.1 19.0L5.0 20.1L5.3 21.2L5.9 22.0L6.9 22.7L8.0 23.0L9.3 22.9L10.6 22.5L11.8 21.7L12.9 20.6L13.7 19.2L14.3 17.7L14.4 16.0L14.3 14.3L13.7 12.8L12.9 11.4L11.8 10.3L10.6 9.5L9.3 9.1L8.0 9.0L6.9 9.3L5.9 10.0L5.3 10.8L5.0 11.9L5.1 13.0L5.6 14.1L6.4 15.1L7.5 15.8L8.9 16.3L10.5 16.5L12.0 16.2L13.6 15.7L15.0 14.8L16.2 13.6L17.1 12.2L17.7 10.7L17.9 9.2L17.7 7.7L17.2 6.4L16.5 5.4L15.5 4.7L14.4 4.4L13.4 4.4L12.4 4.9L11.5 5.6L11.0 6.7L10.7 7.9L10.8 9.3L11.3 10.7L12.2 11.9L13.3 13.1L14.8 13.9L16.3 14.5L18.0 14.7L19.7 14.5L21.2 14.0L22.5 13.2L23.6 12.2L24.3 11.0L24.6 9.8L24.5 8.6L24.1 7.5L23.4 6.7L22.4 6.2L21.3 6.0L20.2 6.3L19.0 6.8L18.0 7.8L17.3 9.0L16.8 10.5L16.6 12.1L16.8 13.7L17.4 15.3L18.3 16.7L19.5 17.9L20.8 18.8L22.2 19.4L23.7 19.5L25.1 19.3L26.2 18.8L27.1 18.0L27.7 17.1L27.9 16.0Z" fill="none" stroke-width="1.1"/></symbol></svg>
+  <div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <!-- test token strip -->
+  <div class="strip" role="note">
+    <span><span class="dot pulse"></span></span>
+    <span>Testnet live · test tokens have no value</span>
+    <span>tANT <code>0xbf10…4b17</code></span>
+    <button type="button" data-copy="0xbf10d827020a5f4260e27a005ae0034d97514b17" aria-label="Copy tANT test token address">Copy</button>
+    <a href="/bridge/">Get a free test kit →</a>
+  </div>
+  <a class="skip" href="#doc">Skip to the documentation</a>
+  <!-- header -->
+  <header class="top" data-top>
+    <div class="top-in">
+      <a class="hp brand" href="/" aria-label="ANT CHAIN home">
+        <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span>
+        <span class="brand-name">ANT CHAIN</span>
+        <span class="brand-net">testnet</span>
+      </a>
+      <nav class="hp menu" aria-label="Primary">
+        <a href="/bridge/">Bridge</a>
+        <a href="/swap/">Swap</a>
+        <a href="/explorer/testnet/">Explorer</a>
+        <a href="/docs/" aria-current="page">Docs</a>
+        <a href="/#build">Build</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <div class="hp actions">
+        <a class="price-chip" href="/#token" title="ANT price on the fee pricer"><span class="dot"></span>ANT <b data-app-price>…</b></a>
+        <a class="x-link" href="https://x.com/antchainl3" target="_blank" rel="noopener" aria-label="ANT CHAIN on X"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78L17.75 3Zm-1.08 16.2h1.7L7.4 4.73H5.58L16.67 19.2Z"/></svg></a>
+        <a class="btn" href="/bridge/">Launch app <span class="ar" aria-hidden="true">→</span></a>
+        <button class="btn btn-ghost menu-btn" type="button" aria-expanded="false" aria-controls="sheet" data-menu>Menu</button>
+      </div>
+    </div>
+  </header>
+  <nav class="sheet-nav" id="sheet" aria-label="Menu">
+    <button class="btn btn-ghost btn-small sheet-close" type="button" data-menu-close>Close</button>
+    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/explorer/testnet/">Explorer</a><a href="/docs/">Docs</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a>
+  </nav>
+
+  <main class="docs-main">
+    <aside class="docs-side" aria-label="Documentation contents">
+      <label class="sr-only" for="doc-filter">Filter sections</label>
+      <input id="doc-filter" class="docs-filter" type="search" placeholder="Filter sections…" autocomplete="off" data-doc-filter>
+      <nav aria-label="Sections">
+        <p class="side-group">Start</p>
+        <ul>
+          <li><a href="#testnet">Testnet is live</a></li>
+          <li><a href="#intro">What is ANT CHAIN</a></li>
+          <li><a href="#why">Why gas is paid in ANT</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#start">Quick start</a></li>
+        </ul>
+        <p class="side-group">Use</p>
+        <ul>
+          <li><a href="#fees">Fees</a></li>
+          <li><a href="#bridge">Bridging ANT</a></li>
+          <li><a href="#exchange">The exchange</a></li>
+        </ul>
+        <p class="side-group">Tokens</p>
+        <ul>
+          <li><a href="#token">The ANT CHAIN token</a></li>
+          <li><a href="#ant">About the ANT Stock Token</a></li>
+        </ul>
+        <p class="side-group">Reference</p>
+        <ul>
+          <li><a href="#developers">For developers</a></li>
+          <li><a href="#contracts">Contract addresses</a></li>
+          <li><a href="#trust">Trust model and risks</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#glossary">Glossary</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="doc" id="doc">
+      <header class="doc-hero">
+        <p class="kicker"><span class="tag plain">docs</span> v1 · updated 22 Nov 2026</p>
+        <h1>ANT CHAIN, <em>explained.</em></h1>
+        <p class="lede">Everything you need to use, build on and judge ANT CHAIN: what it is, why its gas is the ANT Stock Token, how to move ANT in and out, what the planned ANT CHAIN token will do, and what you are trusting when you use it.</p>
+        <dl class="doc-facts">
+          <div><dt>Chain ID</dt><dd>26801 testnet</dd></div>
+          <div><dt>Gas token</dt><dd>tANT (test)</dd></div>
+          <div><dt>Parent</dt><dd>Robinhood Chain Testnet</dd></div>
+          <div><dt>ANT price</dt><dd data-app-price>…</dd></div>
+        </dl>
+      </header>
+
+      <section id="testnet" class="doc-sec">
+        <h2>Testnet is live <span class="tag-soon">Now</span></h2>
+        <p>ANT CHAIN Testnet runs the same software as mainnet, with <strong>tANT</strong>, a free test token with no value, as gas. Mainnet is paused while the team tests; its data and balances are kept.</p>
+        <table class="doc-table">
+          <tbody>
+            <tr><th scope="row">Network name</th><td>ANT CHAIN Testnet</td></tr>
+            <tr><th scope="row">Chain ID</th><td><code>26801</code> (<code>0x68b1</code>)</td></tr>
+            <tr><th scope="row">RPC</th><td><code>https://rpc.testnet.antchain.tech</code></td></tr>
+            <tr><th scope="row">Gas token</th><td>tANT <code>0xbf10d827020a5f4260e27a005ae0034d97514b17</code> on Robinhood Chain Testnet</td></tr>
+            <tr><th scope="row">Parent chain</th><td>Robinhood Chain Testnet, chain ID <code>46630</code>, RPC <code>https://rpc.testnet.chain.robinhood.com</code></td></tr>
+            <tr><th scope="row">Explorer</th><td><a href="/explorer/testnet/">ANT CHAIN Testnet Explorer</a></td></tr>
+            <tr><th scope="row">Withdrawals</th><td>Claimable about 45–60 minutes after you start (batch, assertion, then a 150-block challenge window); the bridge page shows a countdown</td></tr>
+          </tbody>
+        </table>
+        <h3>Try the whole flow</h3>
+        <ol class="doc-steps">
+          <li><b>Testnet ETH.</b> Get free ETH on Robinhood Chain Testnet from the <a href="https://faucet.testnet.chain.robinhood.com" target="_blank" rel="noopener">Robinhood faucet</a>. Make sure your wallet shows chain ID 46630, not 4663.</li>
+          <li><b>tANT.</b> On the <a href="../bridge/">bridge page</a>, click <em>Get 100 tANT</em> (once a day per address).</li>
+          <li><b>Deposit.</b> Bridge some tANT into ANT CHAIN Testnet. It arrives as gas within a minute.</li>
+          <li><b>Swap.</b> Trade tANT for tUSD on the <a href="../swap/">exchange</a>.</li>
+          <li><b>Withdraw.</b> Start a withdrawal on the bridge page and claim it on Robinhood Chain Testnet about 30 minutes later.</li>
+        </ol>
+        <div class="callout warn"><b>Test tokens only</b><p>tANT, tUSD and testnet ETH have no value and cannot be sold. Never send real assets to testnet addresses.</p></div>
+      </section>
+
+      <section id="intro" class="doc-sec">
+        <h2>What is ANT CHAIN</h2>
+        <p>ANT CHAIN is an independent blockchain, a Layer 3 built with Arbitrum Orbit. It runs on top of Robinhood Chain, which itself settles to Ethereum. It behaves like any EVM chain: the same wallets, the same Solidity contracts, the same tools.</p>
+        <p>The one thing that makes it different is the token you pay gas with. On Ethereum you pay in ETH. <strong>On ANT CHAIN every fee is paid in ANT</strong>, the Robinhood stock token that tracks Anthropic, PBC shares (Nasdaq: ANT).</p>
+        <div class="callout"><b>In one line</b><p>A fast, low-cost EVM chain where the gas token is Anthropic's ticker.</p></div>
+        <div class="callout warn"><b>Independent</b><p>ANT CHAIN is not made, endorsed or sponsored by Anthropic, PBC, Robinhood Markets, Inc. or Offchain Labs. "ANT" is the ticker of the token used as gas.</p></div>
+      </section>
+
+      <section id="why" class="doc-sec">
+        <h2>Why gas is paid in ANT</h2>
+        <p>Most of the next wave of on-chain activity will come from software: AI agents that pay for compute, data and each other. Those agents already budget in the economics of the AI industry. A chain whose unit of account tracks one of the companies building that industry keeps their costs and their gas in the same frame of reference.</p>
+        <ul class="doc-list">
+          <li><b>One asset, two jobs.</b> If you already hold ANT, you can use the same balance to pay for transactions instead of selling it for ETH first.</li>
+          <li><b>Tiny fees either way.</b> A transfer costs about 28,400 gas at 0.1 gwei, roughly a fortieth of a cent at today's ANT price.</li>
+          <li><b>Real, not a wrapper.</b> The gas is the ANT Stock Token itself, locked in the bridge on Robinhood Chain one to one. There is no synthetic version and no separate "gas coin".</li>
+        </ul>
+        <p class="muted-note">Paying gas in ANT does not give you shares, votes or any rights in Anthropic. The ANT Stock Token gives price exposure only, under its issuer's terms (see <a href="#ant">About the ANT Stock Token</a>).</p>
+      </section>
+
+      <section id="how" class="doc-sec">
+        <h2>How it works</h2>
+        <ol class="doc-steps">
+          <li><b>You sign.</b> Your wallet sends a transaction to ANT CHAIN and pays gas in ANT.</li>
+          <li><b>The sequencer orders it</b> into a block within a second or two. Our first mainnet transfer was confirmed in 2.7 s end to end.</li>
+          <li><b>A batch lands on Robinhood Chain.</b> Blocks are compressed and posted to the sequencer inbox. The batch poster pays ETH for that and is repaid in ANT.</li>
+          <li><b>A validator vouches for it.</b> A bonded validator posts the resulting state using BoLD fraud proofs. Anyone can challenge a wrong claim during the challenge window: about 7 days on mainnet, about 30 minutes on testnet.</li>
+          <li><b>Ethereum has the final say.</b> Robinhood Chain settles to Ethereum, so ANT CHAIN shares its root of trust with every Arbitrum chain.</li>
+        </ol>
+        <h3>How fees are priced</h3>
+        <p>Posting batches costs ETH on Robinhood Chain, but users pay in ANT. A fee pricer contract converts between them using Chainlink's ETH/USD feed and the ANT market price. A keeper updates the ANT price from the ANT pool on Robinhood Chain, with guards for low liquidity, stale data, large jumps, paused trading and corporate actions, and freezes rather than guessing when markets are closed or unusual.</p>
+      </section>
+
+      <section id="start" class="doc-sec">
+        <h2>Quick start</h2>
+        <ol class="doc-steps">
+          <li><b>Get ANT on Robinhood Chain.</b> Buy the ANT Stock Token where you are eligible and hold it on Robinhood Chain. Check the address: <code>0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</code>. Keep a little ETH there too for the deposit's gas.</li>
+          <li><b>Add ANT CHAIN to your wallet.</b> Use the button below or the values in <a href="#developers">For developers</a>.</li>
+          <li><b>Bridge ANT in.</b> Open the <a href="../bridge/">bridge</a>, deposit, and it arrives as gas on ANT CHAIN, usually within a minute.</li>
+          <li><b>Use it.</b> Send, deploy, or trade on the <a href="../swap/">exchange</a>. Every fee comes out of your ANT.</li>
+        </ol>
+        <div class="doc-cta">
+          <button class="btn btn-amber" type="button" data-add-l3>Add ANT CHAIN to wallet</button>
+          <a class="btn btn-ghost" href="../bridge/">Open the bridge <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="form-msg" role="status" aria-live="polite" data-add-msg></p>
+      </section>
+
+      <section id="fees" class="doc-sec">
+        <h2>Fees</h2>
+        <table class="doc-table">
+          <tbody>
+            <tr><th scope="row">Gas price</th><td>0.1 gwei (in ANT)</td></tr>
+            <tr><th scope="row">ANT transfer</th><td>28,402 gas ≈ 0.0000028 ANT ≈ $0.00025</td></tr>
+            <tr><th scope="row">Deposit from Robinhood Chain</th><td>Paid in ETH on Robinhood Chain: one approval (first time) and one deposit</td></tr>
+            <tr><th scope="row">Withdrawal</th><td>A small ANT fee on ANT CHAIN, then ETH on Robinhood Chain to claim</td></tr>
+            <tr><th scope="row">Swap</th><td>0.3% to liquidity providers, plus gas</td></tr>
+          </tbody>
+        </table>
+        <p class="muted-note">Dollar figures move with the ANT price. The live figure is on the <a href="../#fees">home page</a>.</p>
+      </section>
+
+      <section id="bridge" class="doc-sec">
+        <h2>Bridging ANT</h2>
+        <h3>Deposit: Robinhood Chain → ANT CHAIN</h3>
+        <ol class="doc-steps">
+          <li>Connect a regular wallet (an EOA). Deposits from smart-contract wallets arrive at an aliased address, so the bridge page blocks them.</li>
+          <li>Approve the ANT CHAIN inbox to spend your ANT (first time only).</li>
+          <li>Deposit. Your ANT is locked in the bridge contract on Robinhood Chain, and the same amount is credited as gas on ANT CHAIN at the same address, usually within a minute.</li>
+        </ol>
+        <h3>Withdrawal: ANT CHAIN → Robinhood Chain</h3>
+        <ol class="doc-steps">
+          <li>Start the withdrawal on ANT CHAIN. Your ANT is burned there and a message is created. Keep a little ANT for this transaction's gas.</li>
+          <li>Wait for the challenge window: about 7 days on mainnet (50,400 Ethereum blocks), about an hour in total on testnet. The bridge page shows a countdown. This is the security model, not a delay we can shorten.</li>
+          <li>Claim on Robinhood Chain from the bridge page. Your ANT is released from the bridge to you.</li>
+        </ol>
+        <div class="callout"><b>By hand</b><p>The bridge page calls <code>approve</code> and <code>depositERC20(amount)</code> on the inbox, <code>withdrawEth(destination)</code> on ArbSys, and <code>executeTransaction(…)</code> on the outbox. Exact commands are on the <a href="../#bridge">home page</a>.</p></div>
+      </section>
+
+      <section id="exchange" class="doc-sec">
+        <h2>The exchange</h2>
+        <p>The ANT CHAIN exchange runs the Uniswap V2 contracts, deployed unmodified from Uniswap's published bytecode, with Wrapped ANT (WANT) as the base asset. Anyone can create a pool, add liquidity and earn the 0.3% fee on trades through it.</p>
+        <ul class="doc-list">
+          <li><b>ANT and WANT</b> are the same asset. Wrapping is one to one and always reversible.</li>
+          <li><b>Pools start empty.</b> The first deposit into a pool sets its starting price.</li>
+          <li><b>Check addresses.</b> Anyone can create a token with any name. Trade only tokens whose contract you have verified.</li>
+        </ul>
+        <div class="callout warn"><b>Status</b><p>The exchange contracts passed a full rehearsal on a fork of ANT CHAIN and are waiting for their mainnet deployment. The <a href="../swap/">swap page</a> shows "Opening soon" until then.</p></div>
+      </section>
+
+      <section id="token" class="doc-sec">
+        <h2>The ANT CHAIN token <span class="tag-soon">Planned</span></h2>
+        <p>An ANT CHAIN token is planned. Gas stays ANT; the ANT CHAIN token is for the chain's own economy. It has three jobs:</p>
+        <div class="doc-cards">
+          <div class="doc-card"><h3>Express lane</h3><p>Bid for priority ordering of your transactions in each round. Arbitrum's Timeboost runs a sealed-bid auction for an "express lane"; on ANT CHAIN the bids are paid in the ANT CHAIN token. Useful for traders and bots that need to land first.</p></div>
+          <div class="doc-card"><h3>Gas allowance</h3><p>Stake the token and receive a daily allowance of gas on ANT CHAIN, paid back to you as ANT rebates. Heavy users and agents get predictable, prepaid capacity.</p></div>
+          <div class="doc-card"><h3>Buyback and burn</h3><p>A 0.01% fee on bridge deposits and swaps buys the ANT CHAIN token on the market and burns it. The fee and the burns are on chain for anyone to check.</p></div>
+        </div>
+        <h3>What it is not</h3>
+        <ul class="doc-list">
+          <li><b>Not an Anthropic token.</b> It has no connection to Anthropic, PBC, gives no rights in Anthropic or in ANT, and does nothing outside ANT CHAIN.</li>
+          <li><b>Not live yet.</b> Name, supply, distribution and launch terms will be published here before launch, with the contract address added to <a href="#contracts">Contract addresses</a>.</li>
+          <li><b>No presale, no airdrop claim page.</b> Until it is announced here, anything claiming to be the ANT CHAIN token is not ours.</li>
+        </ul>
+        <p class="muted-note">Nothing on this page is an offer or a promise of value. Utilities describe how the token will be used on the chain, not what it will be worth.</p>
+      </section>
+
+      <section id="ant" class="doc-sec">
+        <h2>About the ANT Stock Token</h2>
+        <table class="doc-table">
+          <tbody>
+            <tr><th scope="row">Name on chain</th><td>Anthropic, PBC Class A Common Stock • Robinhood Token</td></tr>
+            <tr><th scope="row">Address</th><td><code>0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</code> on Robinhood Chain</td></tr>
+            <tr><th scope="row">Issuer</th><td>Robinhood Assets (Jersey) Limited</td></tr>
+            <tr><th scope="row">What it is</th><td>A tokenized debt security that tracks the share price. Holders get price exposure, not shares or shareholder rights.</td></tr>
+            <tr><th scope="row">Who can hold it</th><td>Not US persons; also restricted in Canada, the UK, Switzerland, the UAE and sanctioned places. The issuer's terms decide.</td></tr>
+          </tbody>
+        </table>
+        <h3>What the issuer can do</h3>
+        <ul class="doc-list">
+          <li><b>Pause</b> all ANT transfers. Deposits and withdrawals would stop while paused.</li>
+          <li><b>Block</b> any address, including the ANT CHAIN bridge. ANT held there could not move.</li>
+          <li><b>Burn</b> ANT from any address, and <b>upgrade</b> the token contract for every stock token at once.</li>
+          <li><b>Adjust</b> a multiplier after dividends or splits. Balances stay the same; our fee price follows the market.</li>
+        </ul>
+        <p class="muted-note">Several unrelated tokens use the ANT ticker. Always check the address above.</p>
+      </section>
+
+      <section id="developers" class="doc-sec">
+        <h2>For developers</h2>
+        <table class="doc-table">
+          <tbody>
+            <tr><th scope="row">Network name</th><td>ANT CHAIN</td></tr>
+            <tr><th scope="row">Chain ID</th><td><code>26800</code> (<code>0x68b0</code>)</td></tr>
+            <tr><th scope="row">RPC</th><td><code>https://rpc.antchain.tech</code></td></tr>
+            <tr><th scope="row">Currency</th><td>ANT, 18 decimals</td></tr>
+            <tr><th scope="row">Stack</th><td>Arbitrum Nitro, Rollup mode, BoLD</td></tr>
+            <tr><th scope="row">Block explorer</th><td><a href="/explorer/testnet/">Live</a> · mainnet at <code>/explorer/</code>, testnet at <code>/explorer/testnet/</code></td></tr>
+          </tbody>
+        </table>
+        <p>Everything EVM works unchanged. The difference to keep in mind: <code>msg.value</code>, <code>address.balance</code> and gas are all in ANT.</p>
+        <pre class="term" tabindex="0"><code><span class="c">// viem</span>
+import { defineChain } from "viem";
+export const antChain = defineChain({
+  id: 26800,
+  name: "ANT CHAIN",
+  nativeCurrency: { name: "ANT", symbol: "ANT", decimals: 18 },
+  rpcUrls: { default: { http: ["https://rpc.antchain.tech"] } },
+});</code></pre>
+        <pre class="term" tabindex="0"><code><span class="c"># Foundry</span>
+forge create src/Counter.sol:Counter \
+  --rpc-url https://rpc.antchain.tech \
+  --private-key $KEY --broadcast</code></pre>
+        <ul class="doc-list">
+          <li>The standard CREATE2 deployer (<code>0x4e59…956c</code>) and Multicall are deployed.</li>
+          <li>Bridged ERC-20s arrive through the standard gateway of the token bridge.</li>
+          <li>Arbitrum precompiles are available: <code>ArbSys</code> at <code>0x64</code>, <code>ArbGasInfo</code> at <code>0x6C</code>, <code>NodeInterface</code> at <code>0xC8</code>.</li>
+        </ul>
+      </section>
+
+      <section id="contracts" class="doc-sec">
+        <h2>Contract addresses</h2>
+        <h3>On Robinhood Chain (4663)</h3>
+        <table class="doc-table addr">
+          <tbody>
+            <tr><th scope="row">ANT Stock Token</th><td><code>0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</code></td></tr>
+            <tr><th scope="row">Rollup</th><td><code>0xe3A87D0cDA39c335cb2Bbaf4DE1f052fe41aeE06</code></td></tr>
+            <tr><th scope="row">Bridge (ANT escrow)</th><td><code>0x3c7218E4E7a0819C3C83065d030BB3502AE76F1a</code></td></tr>
+            <tr><th scope="row">Inbox</th><td><code>0x13be8403DdeA7826a6f46904344d4a9431c28Efa</code></td></tr>
+            <tr><th scope="row">Outbox</th><td><code>0x745Eb8C2CF6B643d25f4391d3D6C92C318a63CA3</code></td></tr>
+            <tr><th scope="row">Sequencer inbox</th><td><code>0xCBD854bbAf1580123cE9f7DF5bac3bFc6C33bf9E</code></td></tr>
+            <tr><th scope="row">Fee token pricer</th><td><code>0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab</code></td></tr>
+            <tr><th scope="row">Upgrade executor</th><td><code>0x24a4848777bdf4485A4D335407758EcBC7F6F9d1</code></td></tr>
+            <tr><th scope="row">Token bridge router</th><td><code>0xCFe1612bA1Fb5c98a6Aaed86c69cE3aE7f632228</code></td></tr>
+            <tr><th scope="row">Standard gateway</th><td><code>0x13Cb5e46C2758057582d27760DDC5052FaDC27c8</code></td></tr>
+            <tr><th scope="row">Custom gateway</th><td><code>0x4ecD5480E276CB95E6D6268347118D982941E0cC</code></td></tr>
+          </tbody>
+        </table>
+        <h3>On ANT CHAIN (26800)</h3>
+        <table class="doc-table addr">
+          <tbody>
+            <tr><th scope="row">Token bridge router</th><td><code>0xcD71705cA05E7BE5Dd96E0030Ca943EcC78aEb9D</code></td></tr>
+            <tr><th scope="row">Standard gateway</th><td><code>0xf5a5B408Bc6Ef7Fe26AB826E5D158775aFc04fF7</code></td></tr>
+            <tr><th scope="row">Custom gateway</th><td><code>0x0cfaa659310eae84BAd217f3B7c6e28DEf8caF06</code></td></tr>
+            <tr><th scope="row">Upgrade executor</th><td><code>0xaC851399e88A8ec53C2BD22C5c06820dF291566a</code></td></tr>
+            <tr><th scope="row">Multicall</th><td><code>0x446394D3e022584E0dAD5A573B781Ad36426f83B</code></td></tr>
+            <tr><th scope="row">CREATE2 deployer</th><td><code>0x4e59b44847b379578588920ca78fbf26c0b4956c</code></td></tr>
+            <tr><th scope="row">Exchange (WANT, factory, router)</th><td>Added here after mainnet deployment</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="trust" class="doc-sec">
+        <h2>Trust model and risks</h2>
+        <ul class="doc-list">
+          <li><b>One operator today.</b> A single operator runs the sequencer, the batch poster and the validator. That is normal for a new Arbitrum chain and the main thing you are trusting.</li>
+          <li><b>Censorship has a way out.</b> If the sequencer ignores you, you can push a transaction through the delayed inbox on Robinhood Chain; it must be included after 4 days (28,800 Ethereum blocks).</li>
+          <li><b>Wrong state can be challenged.</b> The validator posts a bond and its claims can be disputed with BoLD fraud proofs during the challenge window (~7 days on mainnet, ~30 minutes on testnet).</li>
+          <li><b>Upgrades are possible.</b> The chain's contracts can be upgraded by its owner through the upgrade executor. There is no timelock or multisig yet.</li>
+          <li><b>The gas token has an issuer.</b> Robinhood can pause, block, burn and upgrade ANT (see <a href="#ant">About the ANT Stock Token</a>).</li>
+          <li><b>Beta software.</b> The bridge and swap pages are new and unaudited interfaces over audited Arbitrum and Uniswap V2 contracts. Use amounts you can afford to have delayed.</li>
+          <li><b>Price risk.</b> ANT tracks a share price. Your gas balance's dollar value moves with it.</li>
+        </ul>
+      </section>
+
+      <section id="faq" class="doc-sec">
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details><summary>Do I need ETH on ANT CHAIN?</summary><p>No. Gas on ANT CHAIN is ANT. You only need a little ETH on Robinhood Chain to make the deposit and, later, to claim a withdrawal.</p></details>
+          <details><summary>How long does withdrawing take?</summary><p>About 7 days on mainnet and about an hour on testnet. Withdrawals wait for the validator's claim to survive the challenge window, the same rule as Arbitrum One; testnet uses a short window so the whole flow can be tried. The bridge page shows a countdown. Deposits do not wait.</p></details>
+          <details><summary>Can I bridge from a Safe or another smart wallet?</summary><p>Not through the bridge page. Deposits from contracts are credited to an aliased address on ANT CHAIN. Use a regular wallet.</p></details>
+          <details><summary>Does holding the ANT CHAIN token give me anything at Anthropic?</summary><p>No. The token is only used on ANT CHAIN, for express-lane bids, gas allowances and the buyback. It has no connection to Anthropic.</p></details>
+          <details><summary>What happens if ANT is paused by its issuer?</summary><p>Transfers on Robinhood Chain stop, so deposits and claims stop too. ANT already on ANT CHAIN keeps working as gas there.</p></details>
+          <details><summary>Is there a block explorer?</summary><p>Yes. The <a href="/explorer/testnet/">ANT CHAIN Explorer</a> shows blocks, transactions and addresses live from the chain, for mainnet and testnet.</p></details>
+        </div>
+      </section>
+
+      <section id="glossary" class="doc-sec">
+        <h2>Glossary</h2>
+        <dl class="glossary">
+          <div><dt>Layer 3 (L3)</dt><dd>A chain that settles to a Layer 2. ANT CHAIN settles to Robinhood Chain, which settles to Ethereum.</dd></div>
+          <div><dt>Sequencer</dt><dd>The service that orders transactions into blocks.</dd></div>
+          <div><dt>Batch poster</dt><dd>Posts compressed blocks to the parent chain so anyone can rebuild the chain.</dd></div>
+          <div><dt>Validator / BoLD</dt><dd>Posts claims about the chain's state with a bond; BoLD is Arbitrum's dispute protocol for challenging wrong claims.</dd></div>
+          <div><dt>Challenge window</dt><dd>The time a claim must survive before withdrawals it covers can be claimed: ~7 days on mainnet, ~30 minutes on testnet.</dd></div>
+          <div><dt>Fee token pricer</dt><dd>The contract that converts parent-chain costs (ETH) into ANT using Chainlink ETH/USD and the ANT price.</dd></div>
+          <div><dt>WANT</dt><dd>Wrapped ANT, the ERC-20 form of ANT used by the exchange. Always one to one.</dd></div>
+          <div><dt>Express lane (Timeboost)</dt><dd>A sealed-bid auction for priority ordering of transactions in each round.</dd></div>
+        </dl>
+      </section>
+
+      <nav class="doc-next" aria-label="Next steps">
+        <a class="app-card spot" href="../bridge/"><span class="app-no">Next</span><span class="app-name">Bridge</span><span class="app-go">Move ANT in <span aria-hidden="true">→</span></span></a>
+        <a class="app-card spot" href="../swap/"><span class="app-no">Then</span><span class="app-name">Swap</span><span class="app-go">Trade on ANT CHAIN <span aria-hidden="true">→</span></span></a>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a class="hp brand" href="/" aria-label="ANT CHAIN home" style="display:inline-flex">
+            <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span><span class="brand-name">ANT CHAIN</span>
+          </a>
+          <p class="muted" style="max-width:36ch">An independent Arbitrum Layer 3 on Robinhood Chain. Gas is the ANT Stock Token.</p>
+        </div>
+        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/explorer/testnet/">Explorer</a></li></ul></div>
+        <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
+        <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li></ul></div>
+      </div>
+      <p class="foot-word display" aria-hidden="true">ANT CHAIN</p>
+      <div class="foot-legal">
+        <p>ANT CHAIN is independent and not affiliated with Anthropic, PBC, Robinhood Markets, Inc. or Offchain Labs. Names are used only to describe the assets and technology involved. Nothing on this site is investment advice or an offer of securities. Tokenized stocks carry market, issuer and regulatory risk and are not available everywhere.</p>
+        <p>© 2026 ANT CHAIN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/appchrome.js"></script>
+  <script type="module" src="../js/docs.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

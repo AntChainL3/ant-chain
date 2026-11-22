@@ -1,0 +1,69 @@
+{
+  "nativeToken": "0xbf10d827020a5f4260e27a005ae0034d97514b17",
+  "nativeTokenTx": "0xbdcb7e5d482a93571083f7556d99d2711376027289ba8ffd0188bd67ac77ef27",
+  "ethUsdFeed": "0x9e541d48480d3fdbdcb5ce534ab6f5974e137a66",
+  "ethUsdFeedTx": "0xa826c7828d2161db09447efbfee06e5ceec494e27852e60bcaacf517442fd7f4",
+  "feeTokenPricer": "0x545328faa9c28fda8d9c1d23ad4bd32f52b2daa7",
+  "feeTokenPricerTx": "0xee2709d205f333f7b0fdf546196c9d1a018795a54d61764744a003caf73ad3a3",
+  "network": "testnet",
+  "chainId": 26801,
+  "chainConfig": {
+    "chainId": 26801,
+    "homesteadBlock": 0,
+    "daoForkBlock": null,
+    "daoForkSupport": true,
+    "eip150Block": 0,
+    "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "muirGlacierBlock": 0,
+    "berlinBlock": 0,
+    "londonBlock": 0,
+    "clique": {
+      "period": 0,
+      "epoch": 0
+    },
+    "arbitrum": {
+      "EnableArbOS": true,
+      "AllowDebugPrecompiles": false,
+      "DataAvailabilityCommittee": false,
+      "InitialArbOSVersion": 51,
+      "InitialChainOwner": "0x6c776BF2689F980c284D0fd1F3f6B1bC108BAf78",
+      "GenesisBlockNum": 0,
+      "MaxCodeSize": 24576,
+      "MaxInitCodeSize": 49152
+    }
+  },
+  "coreContracts": {
+    "rollup": "0xe5336CD5C0A0a9f26967FB4C2F14a8F1109Cd62D",
+    "inbox": "0xc49C0f0faFAB36A5Fe5c2098dEDf958afe3e0730",
+    "nativeToken": "0xBF10D827020A5f4260E27a005Ae0034D97514B17",
+    "outbox": "0x2098519c82D56df147e3EE73886B840026431259",
+    "rollupEventInbox": "0x728FaE50a0A69d2d5E49F0699EBc4Af7a18e73E9",
+    "challengeManager": "0x66A04fce24303BAE871CAdfCAaCd90A89A751B7E",
+    "adminProxy": "0x2aDacBE6f31d257B37c890bC76F557f9731fE2d8",
+    "sequencerInbox": "0x6908E358ff65aed84c44C3Df699262f5B6CBD151",
+    "bridge": "0x8d3A8e6E0938009ba6d46E9904E7B367Ef290682",
+    "upgradeExecutor": "0xef758f2bb044A5150A6F0b10741C68524079b700",
+    "validatorWalletCreator": "0xB7FE37712e46F28C8f22Ec4bAA33A09fb8B52BD0",
+    "deployedAtBlockNumber": 156237543
+  },
+  "stakeToken": "0x7943e237c7F95DA44E0301572D358911207852Fa",
+  "baseStake": "1000000000000000",
+  "confirmPeriodBlocks": "150",
+  "createRollupTx": "0x7956aa5c898de5cf2b9f1d5d8154d790564b182c7e6f19a6da1e67e7a818fe16",
+  "createdAtBlock": "156237543",
+  "dex": {
+    "wrappedAnt": "0xCaab57bf6F4AC057E2024C5778000fb377372548",
+    "factory": "0xc90CdDc8B6bC5c1724e10Ccb161d89e12f162Af2",
+    "router": "0x2Db8b8200a474F47640f16dB66C0089169b6FDaa",
+    "initCodeHash": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+    "deployedAt": "2026-11-21T11:53:44.439Z",
+    "testUsd": "0xA020932FB3D16836B0B8741370a5D4B123eEc43c",
+    "seedPair": "0x98B8313367716D1A672194DF10AfB8Bc7cfBdB0a"
+  }
+}

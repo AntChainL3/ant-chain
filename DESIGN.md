@@ -1,94 +1,104 @@
 # ANT CHAIN design system
 
-Direction: **field notebook for a colony.** A light, cool paper surface with ink-black type, ruled grid lines and one amber "pheromone" signal. Data looks like it was measured, not marketed: real chain values, read live from the RPC, set in a mono face only where the value is machine-readable.
+Direction: **tokenized equity, as an instrument panel.** ANT is Anthropic's ticker, not an insect: the visual language comes from securities (guilloché engraving from share certificates, a reeded coin, a stock-exchange ticker tape), set in a dark live hero and light technical sheets, with one amber signal throughout.
 
-Why: the reference set splits into dark-with-one-neon (nvdachain `#050605` + `#76b900`, Monad `#141414` + `#836ef9`) and light editorial (Base `#dde3e9` + `#0000ff`, MegaETH `#ece8e8` + `#1a1a1b`). Our direct competitor is dark and green, so ANT CHAIN is light and amber. Warm cream with a clay accent is avoided on purpose: it reads as Anthropic's own palette and would imply an affiliation we do not have.
+## Current layer (2026-11-21, overrides older notes below)
+
+- **All black.** The light "sheets" are flipped to black tokens; a fixed amber/white glow sits behind everything so glass has something to refract.
+- **Glassmorphism** on header, telemetry, cards, boards, chips: `linear-gradient(155deg, rgba(255,255,255,.075), rgba(255,255,255,.018))`, 1px `rgba(255,255,255,.1)` border, `blur(16px) saturate(140%)`, inset top highlight.
+- **Header** (after getcofer.com, reworked): glass bar, icons over labels, amber top indicator + glow tab on the section in view, live ANT mini-ticker, outlined pill CTA with live dot.
+- **Hero**: halftone dot-matrix (after getcofer.com) that sweeps between ANT → candlesticks → linked blocks → neural network; pointer lens; new block advances it. Footer has a large "ANT CHAIN" dot wordmark.
+- **02 showcase** (after getcofer.com section 04): pinned full-screen band, 3D point cloud morphing linked chain → blockspace surface → globe with scroll, live glass tags with parallax, 00–100 ruler.
+- **Motion** (after motion.zajno.com principles): titles rise word by word from behind a mask with offset delay; the CTA has a disc that zooms with scroll and inverts the words it covers (difference blend).
+
+## Identity
+
+- **Mark**: a guilloché rosette (a 7-lobe hypotrochoid inside a ring), in amber line on black. It turns 60° on hover. No ant shapes, no colony or trail metaphors.
+- **Hero object**: an obsidian equity coin with a gold reeded rim, guilloché engraving on both faces and the ANT ticker plate. It is wrapped by a ticker tape that scrolls the live ANT price from our fee pricer. Amber particles orbit it as transactions, and a real new block speeds them up.
+- **Anthropic** is named only as fact (ticker ANT, "Anthropic, PBC" in disclosures). Its logo, its spark/asterisk shapes, its colors (cream, clay) and its typefaces are never used. Every page says the chain is independent.
+
+Built from three references the owner chose, each for one thing:
+
+- **corbel.finance**: dark full-screen hero with dotted arcs between named stops, mono uppercase nav with a chain status pill, a section progress bar under the nav, and a fixed live telemetry bar at the bottom.
+- **getcofer.com**: light framed sections on a faint grid with corner marks, bracketed labels (`[ 01 / Route ]`), two-line titles (sans, then a mono line in grey), "F/01" figure cards with dot-matrix illustrations, black terminal blocks and a staged flow.
+- **equiagent.trade**: a canvas that fills the first viewport, a fixed nav that turns solid on scroll, and sizes that scale with the viewport.
+
+A fourth suggested reference, antchain.lol, is a separate project with the same concept and a near-identical name. Its design was deliberately not used, so ANT CHAIN does not look like a copy of it.
+
+Amber stays the only accent, which keeps us distinct from corbel's green and equiagent's purple. Warm cream and clay stay out because they read as Anthropic's palette.
 
 ## Color
 
-| Token | Light | Dark | Role |
-|---|---|---|---|
-| `--paper` | `#eef1f3` | `#0c0f12` | page background |
-| `--sheet` | `#f8fafb` | `#14181d` | raised panels, tables, code |
-| `--ink` | `#0e1116` | `#e9edf1` | body text, primary buttons |
-| `--ink-2` | `#4a5562` | `#a3aeba` | secondary text (contrast ≥ 4.5:1 on both surfaces) |
-| `--rule` | `#cfd6dd` | `#262d35` | grid lines, borders, dividers |
-| `--signal` | `#f2a900` | `#f5b82e` | the one accent: live dot, highlights, trail, focus ring. Never body text on paper. |
-| `--signal-ink` | `#7a5200` | `#f5b82e` | amber used as text (links in prose), 4.5:1 on paper |
-| `--ok` | `#1f7a4d` | `#4cc38a` | healthy status |
-| `--warn` | `#a35a00` | `#f0a04b` | degraded status, risk notes |
-| `--bad` | `#b42318` | `#f97066` | errors |
-
-## Typography
-
-- **Display**: Bricolage Grotesque, width 75–85, weights 700/800. Headings only.
-- **Body**: IBM Plex Sans 400/500/600.
-- **Data**: IBM Plex Mono 400/500, only for addresses, chain IDs, RPC URLs, code and measured numbers.
-
-| Step | Size / line height | Use |
+| Token | Value | Role |
 |---|---|---|
-| display | clamp(3rem, 8vw, 6.5rem) / 0.95 | hero headline |
-| h2 | clamp(2rem, 4vw, 3rem) / 1.05 | section titles |
-| h3 | 1.375rem / 1.25 | sub-heads |
-| lead | 1.25rem / 1.5 | intros |
-| body | 1.0625rem / 1.6 | prose, max 68ch |
-| small | 0.9375rem / 1.5 | captions, table labels |
-| mono | 0.9375rem / 1.5 | data |
+| `--night` | `#0a0a0a` | hero, network band, footer, terminals, bars |
+| `--night-line` | `#262626` | borders on night |
+| `--night-ink` / `--night-mute` | `#ededed` / `#8f8f8f` | text on night |
+| `--paper` | `#f3f3f1` | light sheets, with a 40px grid at 4.5% ink |
+| `--sheet` | `#fafaf8` | cells, cards and boards on paper |
+| `--ink` / `--mute` | `#0a0a0a` / `#5f5f5f` | text on paper (mute is 5.6:1) |
+| `--line` | `#d4d4cf` | frames and dividers on paper |
+| `--amber` | `#ffb21a` | the one signal: CTAs, live packets, the active stage, the headline accent. Never text on paper. |
+| `--amber-ink` | `#8a5800` | amber as text on paper |
+| `--ok` / `--ok-ink` | `#2fbf72` / `#1a7a4a` | live and healthy |
+| `--warn-ink` | `#9a5300` | issuer powers, withdrawal wait |
 
-Sentence case everywhere. No all-caps eyebrows, no gradient text.
+## Type
 
-## Spacing and layout
+- **Geist** 400/500 for headlines and prose. Headlines use weight 500 and tight tracking (−0.035 to −0.045em).
+- **Geist Mono** 400/500 for labels (uppercase, +0.08em), buttons, data, addresses, code, and the second line of each section title.
+- Hero clamp(2.75rem, 7.4vw, 6.25rem) / 0.98. h2 clamp(2rem, 4.4vw, 3.5rem) / 1.04. Body 1rem / 1.6. Labels 0.6875–0.75rem.
+- Live numbers use tabular figures.
 
-- 4px base: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128.
-- Content width 1180px, gutter clamp(16px, 4vw, 48px), section padding clamp(64px, 10vw, 128px).
-- Left-aligned 12-column grid; sections break it asymmetrically (7/5, 5/7). Nothing centered except the footer legal line.
-- Ruled lines (1px `--rule`) separate content instead of card boxes.
+## Layout
 
-## Shape and depth
-
-- Radius: 2px (inputs, code, tables), 999px (buttons, status pills). Nothing in between.
-- No shadows. Depth comes from `--sheet` on `--paper` and rules.
+- Content width 1240px, gutter clamp(16px, 4vw, 40px), section padding clamp(64px, 9vw, 120px).
+- Each section is a frame with ruled sides and a `+` mark at each top corner (hidden below 1290px). The head row has a bracketed label on the left and a mono meta line on the right.
+- Title row splits 7/4: the title on the left and a short aside on the right.
+- Grids of cells share borders (cofer style). There are no shadows. Radius is 2–3px, 6px on the floating bars, and 999px on pills.
 
 ## Components
 
-- **Button primary**: ink fill, paper text, pill. Hover: signal underline bar. Focus: 3px signal ring. Disabled: 40% opacity, no pointer.
-- **Button secondary**: transparent, 1px ink border, pill.
-- **Quiet link**: ink text, 1px underline offset 3px; prose links use `--signal-ink`.
-- **Live readout**: label in small sans `--ink-2`, value in mono `--ink`; a 8px signal dot that pulses only when a new block arrives.
-- **Data table**: rows divided by rules, label column sans, value column mono with a Copy button.
-- **Code block**: `--sheet`, 2px radius, mono, comment lines in `--ink-2`.
-- **Nav**: sticky, paper background with a bottom rule, wordmark left, 4 links, one primary button.
-- **Footer**: rules, three short link groups, disclaimer paragraph.
+- **Nav**: wordmark, Beta badge, mono links, a chain status pill, and an amber "Add to wallet" button. Transparent over the hero, then solid night after 24px of scroll.
+- **Progress**: 01–05 section links on a dotted track that fills amber with scroll position. The current section turns white with an amber number.
+- **Hero**: centered. Kicker, two-line headline (the second line amber), lede, an RPC command bar with a Copy button, fact chips, then two CTAs.
+- **Telemetry bar**: fixed at the bottom. Shows block, gas, transfer fee, batches, validator, escrow and the ANT contract address with Copy. Items drop out at narrow widths.
+- **Stage board**: tabs 01–05, a board head (stage / route / status), a terminal next to the explanation, and an SVG flow whose nodes turn ink when done and ink-with-amber when active.
+- **Figure card**: F/0n label and tag, a dot-matrix canvas with two real captions, a title, text, and an ↗ link.
+- **Buttons**: rectangular, mono uppercase. Primary is amber with ink text; the ghost button has a 1px border. The arrow nudges 3px on hover.
 
 ## Motion
 
-Rule: at most two things move per view, and every movement means something.
-
 | Token | Value | Use |
 |---|---|---|
-| `--dur-quick` | 120ms | hover and press feedback |
-| `--dur-state` | 220ms | tabs, toggles, a trail station turning amber |
-| `--dur-enter` | 520ms | the one page-load sequence |
-| `--dur-tick` | 600ms | a live value that just changed |
-| `--ease-out` | cubic-bezier(.2,.7,.2,1) | anything arriving |
-| `--ease-in` | cubic-bezier(.4,0,1,1) | anything leaving |
+| `--dur-quick` | 120ms | hover and press |
+| `--dur-state` | 220ms | stage switch, flow nodes, nav solidifying |
+| `--dur-enter` | 560ms | hero load stagger (70ms steps), section reveal |
+| `--dur-tick` | 600ms | a live value that changed flashes amber |
+| `--ease-out` | cubic-bezier(.2,.7,.2,1) | everything arriving |
 
-- **Load**: status pill, headline, lede, buttons and the live readout rise 14px in a 70ms stagger; the colony canvas fades in after. Pure CSS, so content shows even if JS fails.
-- **Scroll**: the dotted ant trail in "Where a transaction goes" fills with amber and each station turns amber as it reaches 60% of the viewport. No scroll-jacking, no parallax.
-- **Live data**: values start as skeleton bars (no layout shift). A changed value lifts 4px and draws a short amber underline that retracts.
-- **Ambient**: the colony is the only continuous animation. It pauses off screen, and a node flashes only when a real block lands.
-- **Reduced motion**: every animation above is off; the trail is drawn and all stations are amber from the start.
-- No animation library. Researched GSAP presets (stagger 250–700ms) informed the timings; none are needed at this scale.
+- **Hero field**: a breathing dot dune and slow columns of hex behind the equity coin (see Identity). The coin, tape and orbit pause off screen, when the tab is hidden, or when motion is off.
+- **Headline** letters resolve from blur in sequence; section titles resolve word by word as they enter.
+- **Motion toggle** in the top bar turns every animation off, like reduced motion.
+- **Sphere** (F/02) turns only while it is in view. Every other figure is static.
+- **Reveal**: section heads and blocks rise 16px once. Content stays visible without JS.
+- **Reduced motion** turns all of it off: figures and the field draw once, and everything is visible.
 
-## Type details
+---
 
-- Live numbers use tabular figures so digits do not shift as they change.
-- Headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`.
-- Plex Sans and Plex Mono are one family on purpose: data and prose share proportions. Bricolage Grotesque gives the headlines their own voice; Inter was rejected as the default every chain site uses.
+## v7 (22 Nov 2026): "Terminal on ice". Supersedes every layer above.
 
-## Imagery and icons
+References studied: delira.cc (giant wordmark over a chrome 3D object, engraved linework, mono `<tags>`, serif italic accent, pill UI), vulpineapp.com (instrument-screen corner brackets, live status row, live chain card, scroll as a clock), syncronixai.xyz (contract strip on top, live/planned labelling), casebookduel.com (live numbers as the hero, block ledger, runnable terminal), plus getcofer.com halftone and motion.zajno.com masking from earlier.
 
-- One signature visual: the colony trail canvas in the hero (ink trails on paper, amber nodes; a node flashes when a real block lands). Respects reduced motion.
-- Diagrams in inline SVG with the same tokens.
-- Icons: none, or simple 1.5px stroke inline SVG where an action needs one (copy, external link). No emoji.
-- No Anthropic logo, mark, colors or product names other than the factual ticker "ANT" and "Anthropic, PBC" in disclosures.
+- **Files**: `site/css/core.css` (tokens, header, buttons, tags, tables, terminal, footer, orbit dial), `site/css/home.css`, `site/css/legacy.css` (maps the app pages' old variables to these tokens), `site/js/site.js` (Lenis, menu, header hide, reveals, orbit dial), `site/js/home.js` (live data, ledger, packets, scroll route, console), `site/js/knot.js` (three.js chrome knot).
+- **Colour**: ground `--bg #f1f4fa`, surface `--paper #fff`, ink `#0b0e1a`, muted `#5d6585`, line `rgba(11,14,26,.11)`. Cobalt `#2a3ef5` is the only accent for links, linework and serif accents. Amber `#ffb21a` only for live signals (dots, the route packet, block bursts). Green/amber/red only for status. Anthropic colours stay out.
+- **Type**: Archivo (wdth 118, 800) uppercase for display words; Geist for UI and body; Geist Mono for data and `<tags>`; Instrument Serif italic in cobalt for one accent phrase per heading.
+- **Shape**: radius 14 / 22 px, pills for header and tags, 1 px lines, no shadows, no glass, no glow. Hover = ink fill, arrow nudge, lift of 3 to 4 px.
+- **Signature pieces**: viewport corner brackets; floating three-pill header with a dark contract strip; hero wordmark ANT / outlined CHAIN with the chrome knot crossing it; live "CHAIN LINK" card; block ledger; pinned route scrubbed by scroll with a frame counter; live/planned status board; console that really calls the RPC.
+- **Banned** (user feedback): numbered section labels, preloaders, custom cursor, motion toggle, neon hover glows, glassmorphism everywhere.
+
+### v7.1 (22 Nov 2026): colour back to black + amber
+User kept the v7 layout and motion but wanted the earlier palette. Tokens now: `--bg #050505`, `--paper #111`, `--ink #ededed`, `--muted #8c8c8c`, lines `rgba(255,255,255,.09)`. The accent tokens keep their names (`--cobalt*`) but hold amber (`#ffb21a`, text `#ffc24d`). Buttons are light fills with black text and turn amber on hover. The chrome knot reflects warm panels; data packets are amber with white bursts on each new block. App pages use their original dark sheets through css/legacy.css.
+
+### v7.2 (22 Nov 2026): hero object = the chain stack
+The chrome knot (js/knot.js, now unused) was replaced by js/stack3d.js after the user found it ugly and added mantle.xyz, sui.io and ton.org as references. Those heroes all show how the network works (TON's node globe, Sui's transaction streaks, Mantle's rising bars). Ours: three plates (Ethereum, Robinhood Chain 46630, ANT CHAIN 26801) joined by dashed pillars. The latest real ANT CHAIN blocks stand on the top plate as amber bars (height = gas used; data from home.js via the `antchain:ledger` / `antchain:newblock` events). A new block drops in as it is made. Small packets sinking down the pillars illustrate batches settling. Crisp edges, no glow.

@@ -1,0 +1,48 @@
+{
+	admin off
+	auto_https off
+}
+:{$PORT:8080} {
+	root * /srv
+	encode zstd gzip
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+	# one address: www goes to the bare domain
+	@www host www.antchain.tech
+	redir @www https://antchain.tech{uri} permanent
+
+	@internal path /Dockerfile /Caddyfile /.dockerignore /.railwayignore
+	respond @internal 404
+
+	# Robinhood Chain Testnet RPC through our own server: some ISPs hijack *.robinhood.com DNS for users.
+	handle_path /rpc/rh-testnet* {
+		reverse_proxy https://rpc.testnet.chain.robinhood.com {
+			header_up Host {upstream_hostport}
+		}
+	}
+
+	# testnet faucet service on Railway's private network
+	handle_path /api/faucet* {
+		reverse_proxy http://faucet.railway.internal:8080
+	}
+
+	# explorer: clean URLs for blocks, transactions and addresses
+	handle /explorer/* {
+		try_files {path} {path}/ /explorer/index.html
+		file_server
+	}
+
+	handle {
+		# pages are always revalidated so a redesign shows up on the next visit
+		@pages path / *.html */
+		header @pages Cache-Control "no-cache"
+		@assets path *.css *.js
+		header @assets Cache-Control "public, max-age=60, must-revalidate"
+		file_server
+	}
+}

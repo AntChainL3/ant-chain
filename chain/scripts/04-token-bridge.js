@@ -13,7 +13,7 @@ import {
 } from "@arbitrum/chain-sdk";
 import { NETWORK, S, erc20Abi, parentPublicClient, account, walletClient, loadDeployment, saveDeployment, confirmMainnet } from "./lib.js";
 
-const L3_RPC = process.env.L3_RPC || "https://nitro-node-production.up.railway.app";
+const L3_RPC = process.env.L3_RPC || "https://rpc.antchain.tech";
 const dep = loadDeployment();
 if (!dep.coreContracts) throw new Error(`No core contracts in ${S.deploymentFile}.`);
 if (dep.tokenBridge) {
