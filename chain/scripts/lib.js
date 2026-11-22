@@ -20,7 +20,9 @@ const flag = process.argv.find((a) => ["--mainnet", "--fork", "--testnet"].inclu
 export const NETWORK = process.env.NETWORK || (flag ? flag.slice(2) : "testnet");
 if (!["mainnet", "fork", "testnet"].includes(NETWORK)) throw new Error(`Unknown NETWORK=${NETWORK}`);
 const usesMainnetKeys = NETWORK !== "testnet";
-config({ path: path.resolve(ROOT, "..", usesMainnetKeys ? ".env.mainnet" : ".env"), quiet: true });
+// override: the network's own key file always wins over variables left in the shell,
+// so a testnet key exported in a terminal can never be used for a mainnet run.
+config({ path: path.resolve(ROOT, "..", usesMainnetKeys ? ".env.mainnet" : ".env"), quiet: true, override: true });
 
 // ---------- DNS-over-HTTPS (some ISPs hijack *.robinhood.com, even plain UDP to 1.1.1.1) ----------
 const dohCache = new Map();
@@ -126,7 +128,13 @@ export function env(name) {
   return v;
 }
 export function account(role) {
-  return privateKeyToAccount(env(`${role}_PRIVATE_KEY`));
+  const acct = privateKeyToAccount(env(`${role}_PRIVATE_KEY`));
+  // the key must belong to the address recorded for this role in the same key file
+  const expected = process.env[`${role}_ADDRESS`];
+  if (expected && expected.toLowerCase() !== acct.address.toLowerCase()) {
+    throw new Error(`${role} key does not match ${role}_ADDRESS for NETWORK=${NETWORK} (${acct.address} vs ${expected}). Check your key file and shell variables; nothing was sent.`);
+  }
+  return acct;
 }
 export function walletClient(role) {
   return createWalletClient({ chain: parentChain, transport, account: account(role) });
