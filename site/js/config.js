@@ -36,7 +36,7 @@ const PROFILES = {
       arbSys: "0x0000000000000000000000000000000000000064",
       nodeInterface: "0x00000000000000000000000000000000000000C8",
     },
-    DEX: null,
+    DEX: { wrappedAnt: "0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4", factory: "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A", router: "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF", testUsd: null }, // deployed 22 Nov 2026, no pools yet
     CONFIRM_BLOCKS: 50400, // about 7 days of 12 s Ethereum blocks
   },
 };

@@ -75,5 +75,12 @@
       "multicall": "0x446394D3e022584E0dAD5A573B781Ad36426f83B"
     }
   },
-  "tokenBridgeTx": "0x5b41132203f332917e7f4d2a1533cb79d18b64d56c3760e1256c6dbcbad8664e"
+  "tokenBridgeTx": "0x5b41132203f332917e7f4d2a1533cb79d18b64d56c3760e1256c6dbcbad8664e",
+  "dex": {
+    "wrappedAnt": "0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4",
+    "factory": "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A",
+    "router": "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF",
+    "initCodeHash": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+    "deployedAt": "2026-11-22T16:23:43.740Z"
+  }
 }

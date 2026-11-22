@@ -46,10 +46,10 @@ node scripts/faucet.js                  # "Get test kit" service (testnet ETH + 
 | Rollup + Nitro node (sequencer, batch poster, BoLD validator) | running on Railway | deployed, node paused (volume and balances kept) |
 | Token bridge (gateway router) | not needed for the demo | deployed |
 | Keeper (ANT/USD to the pricer) | deployer key | ready, paused with the node |
-| Exchange (Uniswap V2 + Wrapped ANT) | deployed, tANT/tUSD pool seeded | not deployed yet |
+| Exchange (Uniswap V2 + Wrapped ANT) | deployed, tANT/tUSD pool seeded | deployed 22 Nov 2026, no pools yet |
 | Faucet | running on Railway | n/a |
 
-Still open before mainnet users: move chain ownership to a Safe multisig, monitoring and alerts (batch poster ETH, validator stake, keeper freshness, ANT `paused()`, registry `isBlocked(bridge)`), and the mainnet exchange.
+Still open before mainnet users: move chain ownership to a Safe multisig, monitoring and alerts (batch poster ETH, validator stake, keeper freshness, ANT `paused()`, registry `isBlocked(bridge)`).
 
 User-facing documentation lives in [`../docs`](../docs).
 
