@@ -43,9 +43,9 @@ node scripts/faucet.js                  # "Get test kit" service (testnet ETH + 
 
 | | Testnet | Mainnet |
 |---|---|---|
-| Rollup + Nitro node (sequencer, batch poster, BoLD validator) | running on Railway | deployed, node paused (volume and balances kept) |
+| Rollup + Nitro node (sequencer, batch poster, BoLD validator) | running on Railway | running quietly on Railway, not announced (site stays on testnet) |
 | Token bridge (gateway router) | not needed for the demo | deployed |
-| Keeper (ANT/USD to the pricer) | deployer key | ready, paused with the node |
+| Keeper (ANT/USD to the pricer) | deployer key | ready, not restarted yet |
 | Exchange (Uniswap V2 + Wrapped ANT) | deployed, tANT/tUSD pool seeded | deployed 22 Nov 2026, no pools yet |
 | Faucet | running on Railway | n/a |
 
