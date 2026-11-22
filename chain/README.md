@@ -26,12 +26,32 @@ npm run mainnet:node-config   # nodeConfig.mainnet.json for the Nitro node
 
 Mainnet scripts refuse to run until `npm run rehearse` has passed (`rehearsal.json`).
 
-## Still to do before users
+## Testnet flow
 
-1. Nitro node on Railway (sequencer, batch poster, BoLD validator) with a persistent volume.
-2. Token bridge (`createTokenBridge`), then move chain ownership to a Safe multisig.
-3. Keeper service: pushes ANT/USD (per raw token) to the pricer and the L3 base fee; freezes around `effectiveAt()` corporate actions and when `oraclePaused()`.
-4. Monitoring and alerts: batch poster ETH, validator stake, keeper freshness, ANT `paused()`, registry `isBlocked(bridge)`.
+```bash
+node scripts/01-deploy-tant.js          # tANT on Robinhood Chain Testnet
+node scripts/01b-deploy-mock-feed.js    # mock ETH/USD feed (testnet has no Chainlink feed)
+node scripts/02-create-rollup.js        # pricer + core contracts
+node scripts/03-node-config.js          # nodeConfig.testnet.json
+node scripts/05-dex.js                  # Wrapped tANT, Uniswap V2, tUSD, seeded pool
+node scripts/testnet-smoke.js           # drip, deposit, swap, withdraw
+node scripts/testnet-claim.js           # claim withdrawals once confirmed
+node scripts/faucet.js                  # "Get test kit" service (testnet ETH + 100 tANT)
+```
+
+## Status
+
+| | Testnet | Mainnet |
+|---|---|---|
+| Rollup + Nitro node (sequencer, batch poster, BoLD validator) | running on Railway | deployed, node paused (volume and balances kept) |
+| Token bridge (gateway router) | not needed for the demo | deployed |
+| Keeper (ANT/USD to the pricer) | deployer key | ready, paused with the node |
+| Exchange (Uniswap V2 + Wrapped ANT) | deployed, tANT/tUSD pool seeded | not deployed yet |
+| Faucet | running on Railway | n/a |
+
+Still open before mainnet users: move chain ownership to a Safe multisig, monitoring and alerts (batch poster ETH, validator stake, keeper freshness, ANT `paused()`, registry `isBlocked(bridge)`), and the mainnet exchange.
+
+User-facing documentation lives in [`../docs`](../docs).
 
 ## Keys
 

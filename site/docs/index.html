@@ -76,6 +76,7 @@
         <p class="side-group">Start</p>
         <ul>
           <li><a href="#testnet">Testnet is live</a></li>
+          <li><a href="#tant">What is tANT</a></li>
           <li><a href="#intro">What is ANT CHAIN</a></li>
           <li><a href="#why">Why gas is paid in ANT</a></li>
           <li><a href="#how">How it works</a></li>
@@ -132,13 +133,36 @@
         </table>
         <h3>Try the whole flow</h3>
         <ol class="doc-steps">
-          <li><b>Testnet ETH.</b> Get free ETH on Robinhood Chain Testnet from the <a href="https://faucet.testnet.chain.robinhood.com" target="_blank" rel="noopener">Robinhood faucet</a>. Make sure your wallet shows chain ID 46630, not 4663.</li>
-          <li><b>tANT.</b> On the <a href="../bridge/">bridge page</a>, click <em>Get 100 tANT</em> (once a day per address).</li>
-          <li><b>Deposit.</b> Bridge some tANT into ANT CHAIN Testnet. It arrives as gas within a minute.</li>
-          <li><b>Swap.</b> Trade tANT for tUSD on the <a href="../swap/">exchange</a>.</li>
-          <li><b>Withdraw.</b> Start a withdrawal on the bridge page and claim it on Robinhood Chain Testnet about 30 minutes later.</li>
+          <li><b>Connect.</b> Open the <a href="../bridge/">bridge page</a> and connect a wallet: MetaMask, Rabby, Coinbase Wallet, or a mobile wallet through WalletConnect.</li>
+          <li><b>Get a test kit.</b> Press <em>Get test kit</em>. You receive 100 tANT plus a little testnet ETH for gas on Robinhood Chain Testnet, once a day per wallet. No other faucet needed.</li>
+          <li><b>Deposit.</b> Bridge some tANT into ANT CHAIN Testnet (approve, then deposit). It arrives as gas within about a minute. Press <em>Add network</em> to see it in your wallet.</li>
+          <li><b>Swap.</b> Trade tANT for tUSD, or add liquidity, on the <a href="../swap/">exchange</a>.</li>
+          <li><b>Withdraw.</b> Start a withdrawal on the bridge page. A countdown shows when the claim opens, usually 45 to 60 minutes later; then press <em>Claim</em>.</li>
         </ol>
-        <div class="callout warn"><b>Test tokens only</b><p>tANT, tUSD and testnet ETH have no value and cannot be sold. Never send real assets to testnet addresses.</p></div>
+        <div class="callout warn"><b>Test tokens only</b><p>tANT, tUSD and testnet ETH have no value and cannot be sold. Testnet balances are not converted into anything. Never send real assets to testnet addresses.</p></div>
+        <p class="muted-note">The full guide, with fixes for common problems, is on <a href="https://github.com/AntChainL3/ant-chain/blob/main/docs/testnet-guide.md" target="_blank" rel="noopener">GitHub</a>.</p>
+      </section>
+
+      <section id="tant" class="doc-sec">
+        <h2>What is tANT?</h2>
+        <p><strong>tANT</strong> ("Test ANT") is the gas token of ANT CHAIN Testnet. It plays the part the real ANT Stock Token plays on mainnet, so you can try every feature without spending anything. You hold it on Robinhood Chain Testnet, bridge it into ANT CHAIN, and there it becomes your balance and pays every fee.</p>
+        <table class="doc-table">
+          <tbody>
+            <tr><th scope="row">Name / symbol</th><td>Test ANT / <code>tANT</code></td></tr>
+            <tr><th scope="row">Standard</th><td>ERC-20, 18 decimals, no transfer fees or rebasing</td></tr>
+            <tr><th scope="row">Address</th><td><code>0xbf10d827020a5f4260e27a005ae0034d97514b17</code> on Robinhood Chain Testnet</td></tr>
+            <tr><th scope="row">On ANT CHAIN Testnet</th><td>the native currency: your wallet balance and every fee</td></tr>
+            <tr><th scope="row">How to get it</th><td><em>Get test kit</em> on the <a href="../bridge/">bridge page</a> (100 tANT + testnet ETH, once a day), or call <code>drip()</code> on the contract for 100 tANT a day</td></tr>
+            <tr><th scope="row">Value</th><td>none, and it cannot be sold or exchanged for ANT</td></tr>
+          </tbody>
+        </table>
+        <h3>tANT, ANT and $ANTc are three different things</h3>
+        <ul class="doc-list">
+          <li><b>tANT</b>: the free test gas token on testnet. No value.</li>
+          <li><b>ANT</b>: the Robinhood Stock Token that is the gas token on mainnet. ANT CHAIN does not issue it.</li>
+          <li><b>$ANTc</b>: the planned ANT CHAIN token. Not launched; no presale or airdrop.</li>
+        </ul>
+        <p>On testnet there are two more helpers: <strong>Wrapped tANT</strong>, an ERC-20 version of the native tANT used by the exchange (like WETH for ETH), and <strong>tUSD</strong>, a test dollar token (10,000 a day from its own <code>drip()</code>) that gives the exchange a trading pair. Dollar amounts shown on testnet use the live ANT price only to show what fees would cost on mainnet.</p>
       </section>
 
       <section id="intro" class="doc-sec">
@@ -389,7 +413,7 @@ forge create src/Counter.sol:Counter \
         </div>
         <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/explorer/testnet/">Explorer</a></li></ul></div>
         <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
-        <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li></ul></div>
+        <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
       </div>
       <p class="foot-word display" aria-hidden="true">ANT CHAIN</p>
       <div class="foot-legal">

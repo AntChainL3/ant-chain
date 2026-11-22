@@ -1,0 +1,152 @@
+<p align="center">
+  <a href="https://antchain.tech"><img src="site/og.png" alt="ANT CHAIN" width="720"></a>
+</p>
+
+<h1 align="center">ANT CHAIN</h1>
+
+<p align="center">
+  An independent Arbitrum Layer 3 on Robinhood Chain where every fee is paid in the <b>ANT Stock Token</b>.<br>
+  <a href="https://antchain.tech">Website</a> ·
+  <a href="https://antchain.tech/bridge/">Bridge</a> ·
+  <a href="https://antchain.tech/swap/">Swap</a> ·
+  <a href="https://antchain.tech/explorer/testnet/">Explorer</a> ·
+  <a href="https://antchain.tech/docs/">Docs</a> ·
+  <a href="https://x.com/antchainl3">X</a>
+</p>
+
+---
+
+## What is ANT CHAIN?
+
+ANT CHAIN is a blockchain built with Arbitrum Nitro. It runs as a **Layer 3**: it posts its data to **Robinhood Chain** (a Layer 2), which in turn settles to **Ethereum**.
+
+The one thing that makes it different is its gas token. On most chains you pay fees in ETH. On ANT CHAIN you pay them in **ANT**, the Robinhood Stock Token that tracks the price of Anthropic, PBC shares. Your wallet shows ANT as your balance, and every transaction takes a small amount of it as the fee: about a fortieth of a cent for a transfer at today's prices.
+
+Everything else works like any EVM chain: MetaMask, Rabby, Foundry, Hardhat, viem and ethers all work unchanged.
+
+> ANT CHAIN is independent. It is not made, endorsed or sponsored by Anthropic, PBC, Robinhood Markets, Inc. or Offchain Labs. "ANT" is the ticker of the token used as gas.
+
+## Status
+
+| Part | Status |
+|---|---|
+| **Testnet** (chain 26801) | **Live**: try it at [antchain.tech](https://antchain.tech) |
+| Mainnet (chain 26800) | Deployed on Robinhood Chain, **paused** while testnet runs. All balances are kept. |
+| Bridge (deposit, withdraw, claim) | Live on testnet |
+| Exchange (Uniswap V2, tANT/tUSD pool) | Live on testnet |
+| Explorer (blocks, transactions, addresses) | Live for testnet and mainnet |
+| Test kit faucet | Live on testnet |
+| $ANTc, the ANT CHAIN token | **Planned**. Not launched; there is no presale or airdrop. See [Token](#the-antc-token-planned). |
+
+## Meet tANT, the testnet gas token
+
+On testnet, real ANT is replaced by **tANT** ("Test ANT"): a free token with **no value** that behaves exactly like ANT does on mainnet. You bridge it in, it becomes your gas, and you spend it on fees, swaps and contracts.
+
+- **What it is:** an ERC-20 on Robinhood Chain Testnet, 18 decimals, at [`0xbf10d827020a5f4260e27a005ae0034d97514b17`](docs/contracts.md). Source: [`chain/contracts/TestANT.sol`](chain/contracts/TestANT.sol).
+- **How to get it:** press **Get test kit** on the [bridge page](https://antchain.tech/bridge/). It sends you testnet ETH for gas plus 100 tANT, once a day per wallet. You can also call `drip()` on the contract yourself for 100 tANT a day.
+- **What it is not:** it is not ANT, it cannot be sold, and it has no price. The dollar figures you see on testnet use the real ANT price only to show what fees *would* cost.
+
+Full details: [docs/tant.md](docs/tant.md)
+
+## Try the testnet in five minutes
+
+1. **Connect** a wallet at [antchain.tech/bridge](https://antchain.tech/bridge/) (MetaMask, Rabby, Coinbase Wallet, or any mobile wallet through WalletConnect).
+2. **Get a test kit**: testnet ETH and 100 tANT land in your wallet on Robinhood Chain Testnet.
+3. **Deposit** some tANT. It arrives on ANT CHAIN Testnet as gas within about a minute.
+4. **Swap** tANT for tUSD, or add liquidity, at [antchain.tech/swap](https://antchain.tech/swap/).
+5. **Withdraw** back. A countdown shows when your claim opens (about an hour on testnet), then press **Claim**.
+
+Step by step, with what to expect at each step and fixes for common problems: [docs/testnet-guide.md](docs/testnet-guide.md)
+
+## Network details
+
+| | Testnet | Mainnet (paused) |
+|---|---|---|
+| Network name | ANT CHAIN Testnet | ANT CHAIN |
+| Chain ID | `26801` (`0x68b1`) | `26800` (`0x68b0`) |
+| RPC | `https://rpc.testnet.antchain.tech` | `https://rpc.antchain.tech` |
+| Gas token | tANT (test, no value) | ANT Stock Token |
+| Parent chain | Robinhood Chain Testnet (46630) | Robinhood Chain (4663) |
+| Settles to | Ethereum (through Robinhood Chain) | Ethereum (through Robinhood Chain) |
+| Explorer | [antchain.tech/explorer/testnet](https://antchain.tech/explorer/testnet/) | [antchain.tech/explorer](https://antchain.tech/explorer/) |
+| Withdrawal wait | about 1 hour | about 7 days |
+
+All contract addresses: [docs/contracts.md](docs/contracts.md)
+
+## How it works
+
+```mermaid
+flowchart LR
+  W[Your wallet] -->|tx, gas in ANT| S[ANT CHAIN sequencer]
+  S -->|blocks| B[Batch poster]
+  B -->|compressed batches| R[Robinhood Chain]
+  V[BoLD validator] -->|state claims + bond| R
+  R -->|settles| E[Ethereum]
+```
+
+1. **You sign** a transaction and pay gas in ANT.
+2. **The sequencer** orders it into a block, usually within a second.
+3. **The batch poster** compresses blocks and posts them to Robinhood Chain. It pays ETH there and is repaid in ANT at a rate from Chainlink ETH/USD and the ANT price ([`AntFeeTokenPricer.sol`](chain/contracts/AntFeeTokenPricer.sol)).
+4. **A bonded validator** posts the resulting state. Anyone can challenge a wrong claim during the challenge window (BoLD).
+5. **Ethereum** has the final say, through Robinhood Chain.
+
+More: [docs/how-it-works.md](docs/how-it-works.md)
+
+## The $ANTc token (planned)
+
+An ANT CHAIN token, **$ANTc**, is planned with three jobs on the chain:
+
+- bidding for the **express lane** (priority ordering of transactions, Arbitrum Timeboost),
+- a **daily gas allowance** for people who stake it,
+- a **0.01% bridge and swap fee** used to buy $ANTc back and burn it.
+
+Gas itself stays ANT. Supply and launch terms will be published on [antchain.tech](https://antchain.tech) before launch, with the contract address added to the network details. **Until then there is no ANT CHAIN token, presale or airdrop, and anything claiming to be one is not ours.** Nothing in this repository is an offer or investment advice.
+
+## Know the token you pay with
+
+ANT CHAIN does not issue ANT and cannot change it. ANT is issued by Robinhood Assets (Jersey) Limited as a tokenized debt security that tracks the share price; holders get price exposure, not shares or shareholder rights. It is not available to US persons and is restricted in several other places. Its issuer can **pause** transfers, **block** addresses (including our bridge), **burn** balances and **upgrade** the token contract. These powers apply to every chain that uses a Robinhood stock token as gas.
+
+## Repository layout
+
+```text
+chain/        contracts, deployment scripts, node config generator, keeper, faucet, monitor
+  contracts/  AntFeeTokenPricer, TestANT (tANT), TestUSD (tUSD), WrappedANT
+  scripts/    numbered deploy steps (00 to 05), bridge helpers, faucet, smoke tests
+site/         antchain.tech: home, bridge, swap, docs, explorer (static, served by Caddy)
+walletkit/    RainbowKit + wagmi wallet modal, bundled into site/js/walletkit
+docs/         this documentation
+DESIGN.md     design system of the website
+```
+
+### Run the website locally
+
+```bash
+cd site
+python -m http.server 8765        # then open http://127.0.0.1:8765
+```
+
+The pages read live data straight from the public RPCs, so nothing else needs to run.
+
+### Rebuild the wallet bundle
+
+```bash
+cd walletkit
+npm install
+npm run build                     # writes site/js/walletkit and site/walletkit.css
+```
+
+### Chain scripts
+
+See [chain/README.md](chain/README.md). Deploy scripts need operator keys in `.env` / `.env.mainnet`, which are never committed.
+
+## Trust model
+
+Today one operator runs the sequencer, the batch poster and the validator. That is normal for a new Arbitrum chain and it is the main trust assumption to know about: the sequencer can delay or reorder transactions, but it cannot forge state, because the validator's claims are bonded and open to challenge, and withdrawals wait for the challenge window. Chain ownership currently sits with the deployer key.
+
+## Security
+
+Found a problem? Please do not open a public issue for anything that could put funds at risk. Contact us privately through [X @antchainl3](https://x.com/antchainl3).
+
+## Disclaimer
+
+ANT CHAIN is independent and not affiliated with Anthropic, PBC, Robinhood Markets, Inc., Offchain Labs or Uniswap Labs. Names are used only to describe the assets and technology involved. Nothing here is investment advice or an offer of securities. Tokenized stocks carry market, issuer and regulatory risk and are not available everywhere. Testnet tokens (tANT, tUSD, testnet ETH) have no value. Mainnet is in beta.
