@@ -68,10 +68,12 @@ async function refreshBlockTime() {
   try {
     const latest = await rpc(L3.rpc, "eth_getBlockByNumber", ["latest", false]);
     lastTs = Number(BigInt(latest.timestamp));
-    setLive("lastblock", ago(lastTs));
+    setLive("lastblock", lastLabel(lastTs));
   } catch { /* keep last */ }
 }
-setInterval(() => { if (lastTs) document.querySelectorAll('[data-live="lastblock"]').forEach((el) => { el.textContent = ago(lastTs); }); }, 1000);
+// Blocks are made only when there is a transaction, so a quiet chain shows "on demand" instead of an old age.
+const lastLabel = (ts) => (Date.now() / 1000 - ts > 3600 ? "on demand" : ago(ts));
+setInterval(() => { if (lastTs) document.querySelectorAll('[data-live="lastblock"]').forEach((el) => { el.textContent = lastLabel(lastTs); el.title = `Last block ${ago(lastTs)}. ANT CHAIN makes a block when there is a transaction.`; }); }, 1000);
 
 async function refreshL2() {
   const SEL = { batchCount: "0x06f13056", balanceOf: "0x70a08231", antUsd: "0xca3d55bd", currentRate: "0xf9f8bdb7", isStaked: "0x6177fd18" };

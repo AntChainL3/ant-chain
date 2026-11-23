@@ -248,3 +248,4 @@ h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.025em; }
 .net-more > summary::before { content: "+"; color: var(--amber); font-weight: 600; }
 .net-more[open] > summary::before { content: "−"; }
 .net-more > .net-grid { margin-top: 16px; }
+.net-switch { justify-self: start; align-self: start; width: max-content; }

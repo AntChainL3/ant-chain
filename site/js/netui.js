@@ -15,6 +15,8 @@ const TEXT = {
   tok: P.TOKEN,
   net: ACTIVE,
   NET: ACTIVE.toUpperCase(),
+  netlive: `${ACTIVE} live`,
+  route: `${SHORT_L2[ACTIVE]} (${P.L2.id}) → ${P.L3.name} (${P.L3.id})`,
   rpc: P.L3.rpc.replace("https://", ""),
   strip: ACTIVE === "mainnet" ? "Mainnet live · gas paid in ANT" : "Testnet · test tokens have no value",
 };
