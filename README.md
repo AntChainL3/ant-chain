@@ -31,7 +31,7 @@ Everything else works like any EVM chain: MetaMask, Rabby, Foundry, Hardhat, vie
 | Part | Status |
 |---|---|
 | **Testnet** (chain 26801) | **Live**: try it at [antchain.tech](https://antchain.tech) |
-| Mainnet (chain 26800) | Deployed on Robinhood Chain, **paused** while testnet runs. All balances are kept. |
+| Mainnet (chain 26800) | Deployed on Robinhood Chain, **not open to users yet**. Opens after testnet; it will be announced on [antchain.tech](https://antchain.tech) and [X](https://x.com/antchainl3). |
 | Bridge (deposit, withdraw, claim) | Live on testnet |
 | Exchange (Uniswap V2, tANT/tUSD pool) | Live on testnet |
 | Explorer (blocks, transactions, addresses) | Live for testnet and mainnet |
@@ -60,7 +60,7 @@ Step by step, with what to expect at each step and fixes for common problems: [d
 
 ## Network details
 
-| | Testnet | Mainnet (paused) |
+| | Testnet | Mainnet (not open yet) |
 |---|---|---|
 | Network name | ANT CHAIN Testnet | ANT CHAIN |
 | Chain ID | `26801` (`0x68b1`) | `26800` (`0x68b0`) |
@@ -146,6 +146,17 @@ Today one operator runs the sequencer, the batch poster and the validator. That 
 ## Security
 
 Found a problem? Please do not open a public issue for anything that could put funds at risk. Contact us privately through [X @antchainl3](https://x.com/antchainl3).
+
+## License
+
+The code in this repository is released under the [MIT License](LICENSE), with these exceptions:
+
+- [`chain/contracts/WrappedANT.sol`](chain/contracts/WrappedANT.sol) is a port of WETH9 and keeps its **GPL-3.0-or-later** license, as stated in the file.
+- The wallet bundle in `site/js/walletkit/` is built from RainbowKit, wagmi, viem, React and TanStack Query, each under its own license (MIT).
+- The exchange contracts are the official Uniswap V2 bytecode, fetched from npm at deploy time and not stored here; they remain under Uniswap's licenses.
+- The chain itself runs the official Arbitrum Nitro node and contracts from Offchain Labs, under their licenses.
+
+What is **not** in this repository: operator private keys, the generated node configuration that contains them, and hosting settings. Everything else needed to read, check and rebuild the contracts, scripts and website is here.
 
 ## Disclaimer
 

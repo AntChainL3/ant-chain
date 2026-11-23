@@ -31,7 +31,7 @@ Always check addresses against this page or [antchain.tech](https://antchain.tec
 
 Pair init code hash: `0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f`
 
-## Mainnet (paused)
+## Mainnet (not open to users yet)
 
 ### On Robinhood Chain (4663)
 
