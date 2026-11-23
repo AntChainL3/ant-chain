@@ -69,8 +69,11 @@ function units(wei, dp = 6) {
 }
 const tiny = (x) => { if (x === 0) return "0"; const e = Math.floor(Math.log10(x)); return e < -4 ? `0.0<sub>${-e - 1}</sub>${Math.round(x * 10 ** (-e + 1))}` : x.toLocaleString("en-US", { maximumSignificantDigits: 3 }); };
 const label = (a) => (a ? KNOWN[a.toLowerCase()] : null);
-const addrLink = (a) => (a ? `<a class="hx" href="${BASE}/address/${esc(a)}" title="${esc(a)}">${esc(label(a) || short(a))}</a>` : `<span class="muted">contract creation</span>`);
-const txLink = (h, a = 6) => `<a class="hx" href="${BASE}/tx/${esc(h)}" title="${esc(h)}">${esc(short(h, a, 6))}</a>`;
+// Hashes and addresses from the RPC are rebuilt from their numeric value, so only hex digits are ever rendered.
+const hx = (h, len = 64) => { try { return "0x" + BigInt(h).toString(16).padStart(len, "0"); } catch { return "0x"; } };
+const addrLink = (a) => { if (!a) return `<span class="muted">contract creation</span>`; const A = hx(a, 40); return `<a class="hx" href="${BASE}/address/${A}" title="${A}">${esc(label(A) || short(A))}</a>`; };
+const txLink = (h, a = 6) => { const H = hx(h); return `<a class="hx" href="${BASE}/tx/${H}" title="${H}">${short(H, a, 6)}</a>`; };
+const typeName = (t) => TX_TYPES[t] || `type ${Number(t)}`;
 const blkLink = (n) => `<a class="hx" href="${BASE}/block/${n}">#${Number(n).toLocaleString("en-US")}</a>`;
 function method(tx) {
   if (TX_TYPES[tx.type] && !["legacy", "access list", "EIP-1559"].includes(TX_TYPES[tx.type])) return TX_TYPES[tx.type];
@@ -158,7 +161,7 @@ async function blockView(id) {
   const n = hexN(b.number);
   const rows = [
     ["Block", `#${n.toLocaleString("en-US")}`], ["Time", `${new Date(hexN(b.timestamp) * 1000).toLocaleString()} (${ago(hexN(b.timestamp))})`],
-    ["Hash", `<code>${esc(b.hash)}</code>`], ["Parent", `<a class="hx" href="${BASE}/block/${Math.max(0, n - 1)}"><code>${esc(b.parentHash)}</code></a>`],
+    ["Hash", `<code>${hx(b.hash)}</code>`], ["Parent", `<a class="hx" href="${BASE}/block/${Math.max(0, n - 1)}"><code>${hx(b.parentHash)}</code></a>`],
     ["Transactions", `${Number(b.transactions.length)} (${Number(b.transactions.filter((t) => !SYSTEM.has(t.type)).length)} user)`],
     ["Gas used", hexN(b.gasUsed).toLocaleString("en-US")], ["Base fee", b.baseFeePerGas ? `${Number(big(b.baseFeePerGas)) / 1e9} gwei` : "—"],
     ["Parent-chain block", b.l1BlockNumber ? hexN(b.l1BlockNumber).toLocaleString("en-US") : "—"],
@@ -166,7 +169,7 @@ async function blockView(id) {
   app.innerHTML = `${crumb(`Block #${n.toLocaleString("en-US")}`)}${table(rows)}
     <nav class="ex-pager"><a class="btn btn-ghost btn-small" href="${BASE}/block/${Math.max(0, n - 1)}">← #${Math.max(0, n - 1)}</a><a class="btn btn-ghost btn-small" href="${BASE}/block/${n + 1}">#${n + 1} →</a></nav>
     <section class="card"><h2 class="label">Transactions</h2><ul class="ex-list">${b.transactions.map((t) => `
-      <li><span class="badge-ico">TX</span><div>${txLink(t.hash)}<small>${esc(TX_TYPES[t.type] || t.type)}</small></div>
+      <li><span class="badge-ico">TX</span><div>${txLink(t.hash)}<small>${typeName(t.type)}</small></div>
       <div class="mid">${addrLink(t.from)} <span class="arrow">→</span> ${addrLink(t.to)}</div><div class="r"><b class="meth">${esc(method(t))}</b><small>${units(big(t.value), 4)} ${TOKEN}</small></div></li>`).join("") || `<li class="empty">Empty block.</li>`}</ul></section>`;
 }
 
@@ -177,14 +180,14 @@ async function txView(hash) {
   const ok = r ? r.status === "0x1" : null;
   const fee = r ? big(r.gasUsed) * big(r.effectiveGasPrice || t.gasPrice || "0x0") : 0n;
   const rows = [
-    ["Hash", `<code>${esc(t.hash)}</code>`],
+    ["Hash", `<code>${hx(t.hash)}</code>`],
     ["Status", r ? (ok ? `<span class="ok-t">Success</span>` : `<span class="bad-t">Failed</span>`) : `<span class="muted">Pending</span>`],
     ["Block", t.blockNumber ? `${blkLink(hexN(t.blockNumber))}${b ? ` · ${new Date(hexN(b.timestamp) * 1000).toLocaleString()} (${ago(hexN(b.timestamp))})` : ""}` : "—"],
-    ["Type", esc(TX_TYPES[t.type] || t.type) + (t.type === "0x64" ? " · ANT bridged in from the parent chain" : "")],
-    ["Method", esc(method(t))], ["From", addrLink(t.from) + ` <code class="dim">${esc(t.from || "")}</code>`], ["To", addrLink(t.to) + (t.to ? ` <code class="dim">${esc(t.to)}</code>` : "")],
+    ["Type", typeName(t.type) + (t.type === "0x64" ? " · ANT bridged in from the parent chain" : "")],
+    ["Method", esc(method(t))], ["From", addrLink(t.from) + (t.from ? ` <code class="dim">${hx(t.from, 40)}</code>` : "")], ["To", addrLink(t.to) + (t.to ? ` <code class="dim">${hx(t.to, 40)}</code>` : "")],
     ["Value", `${units(big(t.value), 8)} ${TOKEN}`], ["Fee", r ? `${units(fee, 10)} ${TOKEN}` : "—"],
     ["Gas used", r ? hexN(r.gasUsed).toLocaleString("en-US") : "—"], ["Logs", r ? String(Number(r.logs.length)) : "—"],
-    ["Input", t.input && t.input !== "0x" ? `<code class="wrap">${esc(t.input.slice(0, 650))}${t.input.length > 650 ? "…" : ""}</code>` : "—"],
+    ["Input", t.input && t.input !== "0x" ? `<code class="wrap">${hx(t.input.slice(0, 650), Number(t.input.slice(0, 650).length) - 2)}${Number(t.input.length) > 650 ? "…" : ""}</code>` : "—"],
   ];
   app.innerHTML = `${crumb("Transaction")}${table(rows)}`;
 }
@@ -194,7 +197,7 @@ async function addressView(addr) {
   const head = hexN(headHex), from = Math.max(0, head - SCAN_MAX + 1);
   const isContract = code && code !== "0x";
   const rows = [
-    ["Address", `<code>${esc(addr)}</code>`], ["Name", esc(label(addr) || (isContract ? "Contract" : "Account"))],
+    ["Address", `<code>${hx(addr, 40)}</code>`], ["Name", esc(label(addr) || (isContract ? "Contract" : "Account"))],
     ["Balance", `${units(big(bal), 8)} ${TOKEN}`], ["Transactions sent", hexN(nonce).toLocaleString("en-US")],
     ["Type", isContract ? `Contract (${((code.length - 2) / 2).toLocaleString("en-US")} bytes)` : "Externally owned account"],
   ];
