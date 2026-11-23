@@ -2,6 +2,7 @@
 // Network and contract come from STAKING in config.js ($ANTC on Robinhood Chain; test: true switches to the tANT rehearsal).
 import { STAKING } from "./config.js";
 import { viem, state, onWallet, connect, friendlyError, fmt, short } from "./wallet.js";
+const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const { createPublicClient, createWalletClient, custom, http, fallback, defineChain, parseAbi, parseUnits, maxUint256 } = viem;
 const $ = (s, r = document) => r.querySelector(s);
@@ -106,7 +107,7 @@ const prov = () => window.antWallet?.provider || window.ethereum;
 async function onChain() {
   const p = prov();
   if (!p) throw new Error("No browser wallet found.");
-  const current = parseInt(await p.request({ method: "eth_chainId" }), 16);
+  const current = Number.parseInt(await p.request({ method: "eth_chainId" }), 16);
   if (current === C.id) return;
   try {
     await p.request({ method: "wallet_switchEthereumChain", params: [{ chainId: C.hex }] });
@@ -150,8 +151,8 @@ go.addEventListener("click", async () => {
 
 onWallet((s) => {
   $$("[data-connect]").forEach((b) => { b.textContent = s.address ? short(s.address) : "Connect wallet"; });
-  refresh();
+  refresh().catch(warn);
 });
 $$("[data-connect]").forEach((b) => b.addEventListener("click", () => connect().catch((e) => say(friendlyError(e), "bad"))));
-refresh();
+refresh().catch(warn);
 setInterval(refresh, 20_000);

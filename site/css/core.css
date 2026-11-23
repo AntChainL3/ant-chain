@@ -176,6 +176,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.025em; }
 
 /* terminal */
 .term { margin: 0; background: #0a0a0a; border: 1px solid var(--line); color: #d6d6d6; border-radius: var(--r); padding: 18px 20px; font: 400 .82rem/1.7 var(--mono); overflow-x: auto; tab-size: 2; }
+.doc .term { white-space: pre-wrap; overflow-wrap: anywhere; } /* docs snippets wrap, so no keyboard scrolling is needed */
 .term .c { color: #6f6f6f; }
 .term .k { color: var(--amber); }
 .term .s { color: #ffd27a; }

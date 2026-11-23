@@ -1,6 +1,7 @@
 // ANT CHAIN home: live chain readout, block ledger, orbit linework, data packets,
 // scroll-driven fee route, console "Run it", copy, add network.
 import { L3, L2, ADDR, TOKEN, PRICE_SOURCE } from "./config.js";
+const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
@@ -53,7 +54,7 @@ async function refreshL3() {
     setLive("gas", g); setLive("gas2", g);
     setLive("updated", new Date().toLocaleTimeString());
     renderFee();
-    if (lastBlock !== null && block > lastBlock) onNewBlocks(lastBlock + 1n, block);
+    if (lastBlock !== null && block > lastBlock) onNewBlocks(lastBlock + 1n, block).catch(warn);
     lastBlock = block;
   } catch {
     setLive("block", "offline"); setLive("updated", "RPC did not answer, retrying");
@@ -120,14 +121,19 @@ function ago(ts) {
   return s < 60 ? `${s}s ago` : s < 3600 ? `${Math.floor(s / 60)}m ago` : `${Math.floor(s / 3600)}h ago`;
 }
 function blockEl(b, isNew) {
-  const li = document.createElement("li");
-  const n = BigInt(b.number), txs = b.transactions.length, used = Number(BigInt(b.gasUsed));
+  // built with DOM nodes and textContent: nothing from the RPC is parsed as HTML
+  const n = BigInt(b.number), txs = b.transactions.length, used = Number(BigInt(b.gasUsed)), ts = Number(BigInt(b.timestamp));
   const w = Math.min(100, (used / 1_000_000) * 100);
-  li.innerHTML = `<a class="blk${isNew ? " new" : ""}" href="${EXPLORER}/block/${n}">
-    <span class="blk-top"><span>block</span><span data-ago="${Number(BigInt(b.timestamp))}">${ago(Number(BigInt(b.timestamp)))}</span></span>
-    <span class="blk-n">#${fmtInt(n)}</span>
-    <span class="blk-bar" title="gas used"><i style="--w:${w.toFixed(1)}%"></i></span>
-    <span class="blk-meta"><span>${txs} tx</span><span>${fmtInt(used)} gas</span></span></a>`;
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+  const li = document.createElement("li");
+  const a = el("a", `blk${isNew ? " new" : ""}`);
+  a.href = `${EXPLORER}/block/${n}`;
+  const top = el("span", "blk-top"); const age = el("span", "", ago(ts)); age.dataset.ago = String(ts);
+  top.append(el("span", "", "block"), age);
+  const bar = el("span", "blk-bar"); bar.title = "gas used"; const fill = el("i"); fill.style.setProperty("--w", `${w.toFixed(1)}%`); bar.append(fill);
+  const meta = el("span", "blk-meta"); meta.append(el("span", "", `${txs} tx`), el("span", "", `${fmtInt(used)} gas`));
+  a.append(top, el("span", "blk-n", `#${fmtInt(n)}`), bar, meta);
+  li.append(a);
   return li;
 }
 async function loadLedger() {
@@ -332,7 +338,7 @@ $$("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
 requestAnimationFrame(() => $$(".hero .line-mask").forEach((m) => m.classList.add("in")));
 
 // ---------- start ----------
-refreshL3(); refreshL2(); refreshBlockTime(); loadLedger();
+refreshL3().catch(warn); refreshL2().catch(warn); refreshBlockTime().catch(warn); loadLedger().catch(warn);
 setInterval(refreshL3, 3000);
 setInterval(refreshL2, 30000);
 setInterval(refreshBlockTime, 5000);

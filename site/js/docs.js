@@ -3,7 +3,8 @@ import { addNetwork, friendlyError } from "./wallet.js";
 import { L3 } from "./config.js";
 
 const links = [...document.querySelectorAll(".docs-side nav a")];
-const sections = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+const byHash = (h) => (h && h.startsWith("#") ? document.getElementById(h.slice(1)) : null); // external links (like /roadmap/) have no section
+const sections = links.map((a) => byHash(a.getAttribute("href"))).filter(Boolean);
 
 // scroll-spy: the last section whose top has passed a line under the header
 let ticking = false;
@@ -42,7 +43,7 @@ filter?.addEventListener("input", () => {
     let shown = 0;
     ul.querySelectorAll("li").forEach((li) => {
       const id = li.querySelector("a").getAttribute("href");
-      const text = (li.textContent + " " + (document.querySelector(id)?.textContent || "")).toLowerCase();
+      const text = (li.textContent + " " + (byHash(id)?.textContent || "")).toLowerCase();
       const hit = !q || text.includes(q);
       li.hidden = !hit;
       if (hit) shown++;

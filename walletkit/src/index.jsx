@@ -64,7 +64,7 @@ function Bridge() {
       if (!alive) return;
       api.provider = provider; api.address = address || null; api.chainId = chainId || null; api.status = status;
       window.dispatchEvent(new CustomEvent("antwallet:change", { detail: { address: api.address, chainId: api.chainId, status } }));
-    })();
+    })().catch((e) => console.warn(e));
     return () => { alive = false; };
   }, [address, chainId, connector, status]);
   return null;

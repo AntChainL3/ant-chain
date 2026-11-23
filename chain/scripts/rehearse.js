@@ -4,7 +4,9 @@
 import { spawn, execFileSync } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { createTestClient, createPublicClient, http, parseEther, parseAbi, formatEther } from "viem";
+const ANVIL = process.env.ANVIL_BIN || path.join(os.homedir(), ".foundry", "bin", process.platform === "win32" ? "anvil.exe" : "anvil"); // absolute path, not a PATH lookup
 
 process.env.NETWORK = "fork";
 const { ROOT, FORK_RPC, ANT_TOKEN, S, env, erc20Abi, loadDeployment, saveForkRehearsal, parentChain } = await import("./lib.js");
@@ -20,7 +22,7 @@ function check(name, ok, detail = "") {
 
 // 1. start the fork
 console.log(`Starting Anvil fork of Robinhood Chain mainnet via ${UPSTREAM} ...`);
-const anvil = spawn("anvil", ["--fork-url", UPSTREAM, "--chain-id", "4663", "--port", "8545", "--silent", "--no-rate-limit"], { stdio: "ignore" });
+const anvil = spawn(ANVIL, ["--fork-url", UPSTREAM, "--chain-id", "4663", "--port", "8545", "--silent", "--no-rate-limit"], { stdio: "ignore" });
 const stop = () => { if (process.env.KEEP_FORK) return; try { anvil.kill(); } catch {} };
 process.on("exit", stop);
 

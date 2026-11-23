@@ -348,7 +348,7 @@
           </tbody>
         </table>
         <p>Everything EVM works unchanged. The difference to keep in mind: <code>msg.value</code>, <code>address.balance</code> and gas are all in ANT.</p>
-        <pre class="term" tabindex="0"><code><span class="c">// viem</span>
+        <pre class="term"><code><span class="c">// viem</span>
 import { defineChain } from "viem";
 export const antChain = defineChain({
   id: 26800,
@@ -356,7 +356,7 @@ export const antChain = defineChain({
   nativeCurrency: { name: "ANT", symbol: "ANT", decimals: 18 },
   rpcUrls: { default: { http: ["https://rpc.antchain.tech"] } },
 });</code></pre>
-        <pre class="term" tabindex="0"><code><span class="c"># Foundry</span>
+        <pre class="term"><code><span class="c"># Foundry</span>
 forge create src/Counter.sol:Counter \
   --rpc-url https://rpc.antchain.tech \
   --private-key $KEY --broadcast</code></pre>
@@ -468,7 +468,7 @@ forge create src/Counter.sol:Counter \
 
   <script type="module" src="../js/appchrome.js"></script>
   <script type="module" src="../js/docs.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>

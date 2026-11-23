@@ -44,12 +44,12 @@ if (kit()) {
   window.ethereum.request({ method: "eth_accounts" }).then(async (accs) => {
     if (accs && accs[0]) {
       state.address = viem.getAddress(accs[0]);
-      state.chainId = parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16);
+      state.chainId = Number.parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16);
       emit();
     }
   }).catch(() => {});
   window.ethereum.on?.("accountsChanged", (accs) => { state.address = accs && accs[0] ? viem.getAddress(accs[0]) : null; emit(); });
-  window.ethereum.on?.("chainChanged", (id) => { state.chainId = parseInt(id, 16); emit(); });
+  window.ethereum.on?.("chainChanged", (id) => { state.chainId = Number.parseInt(id, 16); emit(); });
 }
 
 // Opens the RainbowKit modal (or the account panel when connected) and resolves with the address once connected.
@@ -67,7 +67,7 @@ export async function connect() {
   if (!window.ethereum) throw new Error("No browser wallet found. Install MetaMask, Rabby or another EVM wallet.");
   const [addr] = await window.ethereum.request({ method: "eth_requestAccounts" });
   state.address = viem.getAddress(addr);
-  state.chainId = parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16);
+  state.chainId = Number.parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16);
   emit();
   return state.address;
 }
@@ -80,7 +80,7 @@ const PARAMS = {
 export async function ensureChain(id) {
   if (!state.address) await connect();
   const p = prov();
-  const current = parseInt(await p.request({ method: "eth_chainId" }), 16);
+  const current = Number.parseInt(await p.request({ method: "eth_chainId" }), 16);
   if (current === id) return;
   try {
     await p.request({ method: "wallet_switchEthereumChain", params: [{ chainId: PARAMS[id].chainId }] });
@@ -126,7 +126,7 @@ export function friendlyError(e) {
 export const fmt = (wei, dp = 6, decimals = 18) => {
   const s = viem.formatUnits(wei ?? 0n, decimals);
   const [i, f = ""] = s.split(".");
-  const t = f.slice(0, dp).replace(/0+$/, "");
+  let t = f.slice(0, dp); while (t.endsWith("0")) t = t.slice(0, -1);
   return Number(i).toLocaleString("en-US") + (t ? "." + t : "");
 };
 export const short = (a) => (a ? `${a.slice(0, 6)}…${a.slice(-4)}` : "");

@@ -1,6 +1,7 @@
 // ANT CHAIN bridge: deposit ANT from Robinhood Chain, withdraw back, claim after the challenge window.
 import { ADDR, L2, L3, CONFIRM_BLOCKS, TOKEN, NETWORK } from "./config.js";
 import { viem, l2, l3, state, onWallet, connect, ensureChain, write, friendlyError, fmt, short, hasWallet, addNetwork } from "./wallet.js";
+const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const { parseAbi, parseAbiItem, parseEther, formatEther, zeroHash } = viem;
 const $ = (s, r = document) => r.querySelector(s);
@@ -77,7 +78,7 @@ $$(".bridge-tabs [role=tab]").forEach((t, i, all) => {
       document.getElementById(x.getAttribute("aria-controls")).hidden = !on;
     });
     if (focus) tab.focus();
-    if (tab.id === "tab-out") loadWithdrawals();
+    if (tab.id === "tab-out") loadWithdrawals().catch(warn);
   };
   t.addEventListener("click", () => select(t));
   t.addEventListener("keydown", (e) => {
@@ -119,9 +120,9 @@ $("[data-max=withdraw]").addEventListener("click", () => {
 onWallet((s) => {
   $$("[data-connect]").forEach((b) => { b.textContent = s.address ? short(s.address) : "Connect wallet"; });
   $$("[data-need-wallet]").forEach((el) => { el.hidden = !s.address; });
-  refreshBalances();
+  refreshBalances().catch(warn);
   updateButtons();
-  if (!$("#panel-out").hidden) loadWithdrawals();
+  if (!$("#panel-out").hidden) loadWithdrawals().catch(warn);
 });
 $$("[data-connect]").forEach((b) => b.addEventListener("click", () => connect().catch((e) => alert(friendlyError(e)))));
 $$("[data-add-l3]").forEach((b) => b.addEventListener("click", async () => {
@@ -165,7 +166,7 @@ dep.addEventListener("submit", async (e) => {
         msg.innerHTML = `Done. ${fmt(now - before, 6)} ${TOKEN} arrived on ANT CHAIN in ${Math.round((Date.now() - t0) / 1000)} s. Deposit tx ${txLink(r.transactionHash)}.`;
         msg.dataset.kind = "ok";
         $("input[name=amount]", dep).value = "";
-        refreshBalances();
+        refreshBalances().catch(warn);
         return;
       }
     }
@@ -173,7 +174,7 @@ dep.addEventListener("submit", async (e) => {
   } catch (err) {
     status(msg, friendlyError(err), "bad");
   } finally {
-    refreshBalances();
+    refreshBalances().catch(warn);
   }
 });
 
@@ -194,8 +195,8 @@ wd.addEventListener("submit", async (e) => {
     msg.innerHTML = `Withdrawal started (${txLink(r.transactionHash)}). Your ${TOKEN} can be claimed on ${L2.name} after the challenge window, ${WAIT}. It is listed below.`;
     msg.dataset.kind = "ok";
     $("input[name=amount]", wd).value = "";
-    refreshBalances();
-    loadWithdrawals();
+    refreshBalances().catch(warn);
+    loadWithdrawals().catch(warn);
   } catch (err) {
     status(msg, friendlyError(err), "bad");
   } finally {
@@ -269,7 +270,7 @@ async function claim(a, size, li) {
     msg.innerHTML = `Claimed. Your ${TOKEN} is back on ${L2.name} (${txLink(r.transactionHash)}).`;
     msg.dataset.kind = "ok";
     btn.outerHTML = `<span class="pill ok">Claimed</span>`;
-    refreshBalances();
+    refreshBalances().catch(warn);
   } catch (err) {
     status(msg, friendlyError(err), "bad");
     btn.disabled = false;
@@ -299,7 +300,7 @@ setInterval(() => {
     }
   });
   // once an estimate has passed, look again every minute; the Claim button appears by itself when ready
-  if (due && now - lastRecheck > 60_000 && !loading) { lastRecheck = now; loadWithdrawals(); }
+  if (due && now - lastRecheck > 60_000 && !loading) { lastRecheck = now; loadWithdrawals().catch(warn); }
 }, 1000);
 
 // ---------- testnet faucet: 100 tANT per address per day from the tANT contract itself ----------
@@ -323,7 +324,7 @@ if (faucetCard && NETWORK === "testnet") {
       if (j.tant) parts.push(`${j.tant.amount} tANT`);
       kmsg.innerHTML = parts.length ? `Sent ${parts.join(" and ")} to ${short(state.address)}. Now deposit tANT on the left.` : "Your wallet already has enough ETH and tANT to test. Go ahead and deposit.";
       kmsg.dataset.kind = "ok";
-      refreshBalances();
+      refreshBalances().catch(warn);
     } catch (err) {
       status(kmsg, friendlyError(err), "bad");
     } finally { b.disabled = false; }
@@ -344,7 +345,7 @@ if (faucetCard && NETWORK === "testnet") {
       const r = await write(L2.id, { address: ADDR.ant, abi: parseAbi(["function drip()"]), functionName: "drip" }, (h) => status(fmsg, `Sent ${short(h)}…`));
       fmsg.innerHTML = `100 ${TOKEN} sent to ${short(state.address)} (${txLink(r.transactionHash)}). Now deposit it below.`;
       fmsg.dataset.kind = "ok";
-      refreshBalances();
+      refreshBalances().catch(warn);
     } catch (err) {
       const m = friendlyError(err);
       status(fmsg, /DripCooldown|0x[0-9a-f]{8}/i.test(m) ? "Already claimed today. The faucet gives 100 tANT per address every 24 hours." : m, "bad");
@@ -352,7 +353,7 @@ if (faucetCard && NETWORK === "testnet") {
   });
 }
 
-refreshStats();
+refreshStats().catch(warn);
 setInterval(refreshStats, 20_000);
 setInterval(refreshBalances, 15_000);
 updateButtons();

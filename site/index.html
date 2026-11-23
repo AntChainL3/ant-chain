@@ -76,8 +76,8 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <svg class="orbit" data-orbit aria-hidden="true"></svg>
-      <canvas class="packets" data-packets aria-hidden="true"></canvas>
-      <canvas class="knot" data-stack aria-hidden="true"></canvas>
+      <canvas class="packets" data-packets role="presentation"></canvas>
+      <canvas class="knot" data-stack role="presentation"></canvas>
 
       <div class="hero-in wrap">
         <div class="hero-status">
@@ -488,7 +488,7 @@ forge create src/Counter.sol:Counter \
 
   <script type="module" src="/js/home.js"></script>
   <script type="module" src="/js/stack3d.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>

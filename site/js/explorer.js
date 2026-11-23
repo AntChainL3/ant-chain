@@ -5,8 +5,10 @@
 //   /explorer/[testnet/]tx/<hash>        transaction detail
 //   /explorer/[testnet/]address/<addr>   address detail
 import { PROFILES, MAINNET_OPEN } from "./config.js";
+const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
-const path = location.pathname.replace(/\/+$/, "");
+const stripEnd = (s, c) => { let i = s.length; while (i > 0 && s[i - 1] === c) i--; return s.slice(0, i); }; // trailing-char trim without a regex
+const path = stripEnd(location.pathname, "/");
 const NET = /\/explorer\/testnet(\/|$)/.test(path + "/") ? "testnet" : "mainnet";
 const P = PROFILES[NET];
 const BASE = NET === "testnet" ? "/explorer/testnet" : "/explorer";
@@ -62,13 +64,13 @@ const short = (h, a = 6, b = 4) => (h ? `${h.slice(0, a + 2)}…${h.slice(-b)}` 
 const ago = (ts) => { const s = Math.max(0, Math.floor(Date.now() / 1000 - ts)); return s < 60 ? `${s}s ago` : s < 3600 ? `${Math.floor(s / 60)}m ago` : s < 86400 ? `${Math.floor(s / 3600)}h ago` : `${Math.floor(s / 86400)}d ago`; };
 function units(wei, dp = 6) {
   const neg = wei < 0n; let w = neg ? -wei : wei;
-  const i = w / 10n ** 18n, f = (w % 10n ** 18n).toString().padStart(18, "0").slice(0, dp).replace(/0+$/, "");
+  const i = w / 10n ** 18n, f = stripEnd((w % 10n ** 18n).toString().padStart(18, "0").slice(0, dp), "0");
   return (neg ? "-" : "") + i.toLocaleString("en-US") + (f ? "." + f : "");
 }
 const tiny = (x) => { if (x === 0) return "0"; const e = Math.floor(Math.log10(x)); return e < -4 ? `0.0<sub>${-e - 1}</sub>${Math.round(x * 10 ** (-e + 1))}` : x.toLocaleString("en-US", { maximumSignificantDigits: 3 }); };
 const label = (a) => (a ? KNOWN[a.toLowerCase()] : null);
-const addrLink = (a) => (a ? `<a class="hx" href="${BASE}/address/${a}" title="${a}">${esc(label(a) || short(a))}</a>` : `<span class="muted">contract creation</span>`);
-const txLink = (h, a = 6) => `<a class="hx" href="${BASE}/tx/${h}" title="${h}">${short(h, a, 6)}</a>`;
+const addrLink = (a) => (a ? `<a class="hx" href="${BASE}/address/${esc(a)}" title="${esc(a)}">${esc(label(a) || short(a))}</a>` : `<span class="muted">contract creation</span>`);
+const txLink = (h, a = 6) => `<a class="hx" href="${BASE}/tx/${esc(h)}" title="${esc(h)}">${esc(short(h, a, 6))}</a>`;
 const blkLink = (n) => `<a class="hx" href="${BASE}/block/${n}">#${Number(n).toLocaleString("en-US")}</a>`;
 function method(tx) {
   if (TX_TYPES[tx.type] && !["legacy", "access list", "EIP-1559"].includes(TX_TYPES[tx.type])) return TX_TYPES[tx.type];
@@ -154,7 +156,7 @@ async function blockView(id) {
   const n = hexN(b.number);
   const rows = [
     ["Block", `#${n.toLocaleString("en-US")}`], ["Time", `${new Date(hexN(b.timestamp) * 1000).toLocaleString()} (${ago(hexN(b.timestamp))})`],
-    ["Hash", `<code>${b.hash}</code>`], ["Parent", `<a class="hx" href="${BASE}/block/${Math.max(0, n - 1)}"><code>${b.parentHash}</code></a>`],
+    ["Hash", `<code>${esc(b.hash)}</code>`], ["Parent", `<a class="hx" href="${BASE}/block/${Math.max(0, n - 1)}"><code>${esc(b.parentHash)}</code></a>`],
     ["Transactions", `${b.transactions.length} (${b.transactions.filter((t) => !SYSTEM.has(t.type)).length} user)`],
     ["Gas used", hexN(b.gasUsed).toLocaleString("en-US")], ["Base fee", b.baseFeePerGas ? `${Number(big(b.baseFeePerGas)) / 1e9} gwei` : "—"],
     ["Parent-chain block", b.l1BlockNumber ? hexN(b.l1BlockNumber).toLocaleString("en-US") : "—"],
@@ -173,11 +175,11 @@ async function txView(hash) {
   const ok = r ? r.status === "0x1" : null;
   const fee = r ? big(r.gasUsed) * big(r.effectiveGasPrice || t.gasPrice || "0x0") : 0n;
   const rows = [
-    ["Hash", `<code>${t.hash}</code>`],
+    ["Hash", `<code>${esc(t.hash)}</code>`],
     ["Status", r ? (ok ? `<span class="ok-t">Success</span>` : `<span class="bad-t">Failed</span>`) : `<span class="muted">Pending</span>`],
     ["Block", t.blockNumber ? `${blkLink(hexN(t.blockNumber))}${b ? ` · ${new Date(hexN(b.timestamp) * 1000).toLocaleString()} (${ago(hexN(b.timestamp))})` : ""}` : "—"],
     ["Type", esc(TX_TYPES[t.type] || t.type) + (t.type === "0x64" ? " · ANT bridged in from the parent chain" : "")],
-    ["Method", esc(method(t))], ["From", addrLink(t.from) + ` <code class="dim">${t.from || ""}</code>`], ["To", addrLink(t.to) + (t.to ? ` <code class="dim">${t.to}</code>` : "")],
+    ["Method", esc(method(t))], ["From", addrLink(t.from) + ` <code class="dim">${esc(t.from || "")}</code>`], ["To", addrLink(t.to) + (t.to ? ` <code class="dim">${esc(t.to)}</code>` : "")],
     ["Value", `${units(big(t.value), 8)} ${TOKEN}`], ["Fee", r ? `${units(fee, 10)} ${TOKEN}` : "—"],
     ["Gas used", r ? hexN(r.gasUsed).toLocaleString("en-US") : "—"], ["Logs", r ? String(r.logs.length) : "—"],
     ["Input", t.input && t.input !== "0x" ? `<code class="wrap">${esc(t.input.slice(0, 650))}${t.input.length > 650 ? "…" : ""}</code>` : "—"],
@@ -190,7 +192,7 @@ async function addressView(addr) {
   const head = hexN(headHex), from = Math.max(0, head - SCAN_MAX + 1);
   const isContract = code && code !== "0x";
   const rows = [
-    ["Address", `<code>${addr}</code>`], ["Name", esc(label(addr) || (isContract ? "Contract" : "Account"))],
+    ["Address", `<code>${esc(addr)}</code>`], ["Name", esc(label(addr) || (isContract ? "Contract" : "Account"))],
     ["Balance", `${units(big(bal), 8)} ${TOKEN}`], ["Transactions sent", hexN(nonce).toLocaleString("en-US")],
     ["Type", isContract ? `Contract (${((code.length - 2) / 2).toLocaleString("en-US")} bytes)` : "Externally owned account"],
   ];
@@ -213,13 +215,16 @@ async function route() {
   chrome();
   const rest = path.replace(/^\/explorer(\/testnet)?/, "");
   const m = rest.match(/^\/(block|tx|address)\/([^/]+)$/);
+  // only well-formed ids reach the views: block number or hash, tx hash, address
+  const ID_OK = { block: /^(\d{1,12}|0x[0-9a-fA-F]{64})$/, tx: /^0x[0-9a-fA-F]{64}$/, address: /^0x[0-9a-fA-F]{40}$/ };
   try {
     if (NET === "mainnet") {
       // until mainnet opens, the mainnet explorer shows a notice whether or not the node is running
       const alive = MAINNET_OPEN && await rpc("eth_chainId").then(() => true).catch(() => false);
-      if (!alive) { app.innerHTML = `<p class="notice"><b>Mainnet is not open yet.</b> ${esc(P.L3.name)} mainnet opens after testnet, and it will be announced on this site and on X. Until then, try everything on testnet. <a href="/explorer/testnet${rest}">Open the testnet explorer →</a></p>`; return; }
+      if (!alive) { app.innerHTML = `<p class="notice"><b>Mainnet is not open yet.</b> ${esc(P.L3.name)} mainnet opens after testnet, and it will be announced on this site and on X. Until then, try everything on testnet. <a href="/explorer/testnet${esc(rest)}">Open the testnet explorer →</a></p>`; return; }
     }
-    if (!m) await home();
+    if (m && !ID_OK[m[1]].test(m[2])) notFound("That is not a valid block, transaction or address.");
+    else if (!m) await home();
     else if (m[1] === "block") await blockView(m[2]);
     else if (m[1] === "tx") await txView(m[2]);
     else await addressView(m[2]);
@@ -227,4 +232,4 @@ async function route() {
     app.innerHTML = `<p class="notice"><b>Could not read ${esc(P.L3.name)}.</b> ${esc(e.message || String(e))}</p>`;
   }
 }
-route();
+route().catch(warn);

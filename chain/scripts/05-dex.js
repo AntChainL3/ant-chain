@@ -7,9 +7,11 @@
 //   node scripts/05-dex.js --mainnet         real deployment on ANT CHAIN (asks you to type "deploy mainnet")
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { spawn } from "node:child_process";
 import { createPublicClient, createWalletClient, defineChain, http, parseAbi, parseEther, formatEther, getContractAddress, getAddress } from "viem";
 import { ROOT, NETWORK, S, account, loadDeployment, saveDeployment, confirmMainnet } from "./lib.js";
+const ANVIL = process.env.ANVIL_BIN || path.join(os.homedir(), ".foundry", "bin", process.platform === "win32" ? "anvil.exe" : "anvil"); // absolute path, not a PATH lookup
 
 if (!["mainnet", "testnet"].includes(NETWORK)) throw new Error("Run with --mainnet or --testnet (add --dry for the fork rehearsal).");
 const TESTNET = NETWORK === "testnet";
@@ -33,7 +35,7 @@ const WANT = art("out/WrappedANT.sol/WrappedANT.json");
 let anvil;
 const forkUp = DRY && (await fetch(FORK, { method: "POST", headers: { "content-type": "application/json" }, body: '{"jsonrpc":"2.0","id":1,"method":"eth_chainId","params":[]}' }).then(() => true).catch(() => false));
 if (DRY && !forkUp) {
-  anvil = spawn("anvil", ["--fork-url", L3_RPC, "--port", "8546", "--silent"], { stdio: "ignore" });
+  anvil = spawn(ANVIL, ["--fork-url", L3_RPC, "--port", "8546", "--silent"], { stdio: "ignore" });
   for (let i = 0; i < 60; i++) {
     try { await fetch(FORK, { method: "POST", headers: { "content-type": "application/json" }, body: '{"jsonrpc":"2.0","id":1,"method":"eth_chainId","params":[]}' }); break; } catch { await new Promise((r) => setTimeout(r, 500)); }
   }

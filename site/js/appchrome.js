@@ -2,6 +2,7 @@
 // on Robinhood Chain (kept in line with the market by the keeper). Read-only.
 import { viem } from "./wallet.js";
 import { PRICE_SOURCE } from "./config.js";
+const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const { createPublicClient, http, fallback, parseAbi } = viem;
 const client = createPublicClient({ transport: fallback(PRICE_SOURCE.rpcs.map((u) => http(u, { timeout: 15_000 }))) });
@@ -17,5 +18,5 @@ async function price() {
     els.forEach((el) => { if (el.textContent === "…") el.textContent = "—"; });
   }
 }
-price();
+price().catch(warn);
 setInterval(price, 30_000);

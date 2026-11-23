@@ -1,6 +1,7 @@
 // ANT CHAIN exchange: Uniswap V2 router on ANT CHAIN. Swap, wrap, add and remove liquidity, live price chart.
 import { DEX, L3, TOKEN } from "./config.js";
 import { viem, l3, state, onWallet, connect, write, friendlyError, fmt, short, hasWallet } from "./wallet.js";
+const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const { parseAbi, parseAbiItem, parseUnits, formatUnits, getAddress, isAddress, maxUint256, zeroAddress } = viem;
 const $ = (s, r = document) => r.querySelector(s);
@@ -17,7 +18,7 @@ async function live() {
     $("[data-live-flag]").textContent = "Live";
   } catch { $("[data-live-flag]").dataset.kind = "bad"; $("[data-live-flag]").textContent = "Offline"; }
 }
-live();
+live().catch(warn);
 setInterval(live, 5000);
 
 onWallet((s) => { $$("[data-connect]").forEach((b) => { b.textContent = s.address ? short(s.address) : "Connect wallet"; }); });
@@ -125,21 +126,21 @@ function start() {
   const inAmt = $("input[name=in]", f), outAmt = $("input[name=out]", f);
   const btnIn = $("[data-tok=in]"), btnOut = $("[data-tok=out]"), go = $("[data-submit=swap]"), msg = $(".form-msg", f);
   paintTok(btnIn, S.in); paintTok(btnOut, S.out);
-  btnIn.addEventListener("click", () => openPicker((t) => { if (same(t, S.out)) S.out = S.in; S.in = t; paintTok(btnIn, S.in); paintTok(btnOut, S.out); requote(); }));
-  btnOut.addEventListener("click", () => openPicker((t) => { if (same(t, S.in)) S.in = S.out; S.out = t; paintTok(btnIn, S.in); paintTok(btnOut, S.out); requote(); }));
-  $("[data-flip]").addEventListener("click", () => { [S.in, S.out] = [S.out, S.in]; paintTok(btnIn, S.in); paintTok(btnOut, S.out); inAmt.value = outAmt.value || inAmt.value; requote(); });
+  btnIn.addEventListener("click", () => openPicker((t) => { if (same(t, S.out)) S.out = S.in; S.in = t; paintTok(btnIn, S.in); paintTok(btnOut, S.out); requote().catch(warn); }));
+  btnOut.addEventListener("click", () => openPicker((t) => { if (same(t, S.in)) S.in = S.out; S.out = t; paintTok(btnIn, S.in); paintTok(btnOut, S.out); requote().catch(warn); }));
+  $("[data-flip]").addEventListener("click", () => { [S.in, S.out] = [S.out, S.in]; paintTok(btnIn, S.in); paintTok(btnOut, S.out); inAmt.value = outAmt.value || inAmt.value; requote().catch(warn); });
   $$("[data-slip]").forEach((b) => b.addEventListener("click", () => {
     S.slip = BigInt(b.dataset.slip);
     $$("[data-slip]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-    requote();
+    requote().catch(warn);
   }));
-  inAmt.addEventListener("input", () => { inAmt.value = inAmt.value.replace(",", ".").replace(/[^0-9.]/g, ""); requote(); });
+  inAmt.addEventListener("input", () => { inAmt.value = inAmt.value.replace(",", ".").replace(/[^0-9.]/g, ""); requote().catch(warn); });
   $("[data-max=in]").addEventListener("click", async () => {
     const b = await balanceOf(S.in, state.address);
     if (b === null) return;
     const keep = S.in.address ? 0n : parseUnits("0.0002", 18);
     inAmt.value = formatUnits(b > keep ? b - keep : 0n, S.in.decimals);
-    requote();
+    requote().catch(warn);
   });
 
   let qid = 0;
@@ -226,8 +227,8 @@ function start() {
       msg.dataset.kind = "ok";
       msg.innerHTML = `Done in block ${r.blockNumber.toLocaleString("en-US")} · <code title="${r.transactionHash}">${short(r.transactionHash)}</code>`;
       inAmt.value = "";
-      requote();
-      chart();
+      requote().catch(warn);
+      chart().catch(warn);
     } catch (err) {
       msg.dataset.kind = "bad";
       msg.textContent = friendlyError(err);
@@ -240,8 +241,8 @@ function start() {
   const pa = $("input[name=a]", pf), pb = $("input[name=b]", pf), pmsg = $(".form-msg", pf), pgo = $("[data-submit=pool]");
   const btnA = $("[data-tok=a]"), btnB = $("[data-tok=b]");
   paintTok(btnA, S.pool.a); paintTok(btnB, S.pool.b);
-  btnA.addEventListener("click", () => openPicker((t) => { if (same(t, S.pool.b)) return; S.pool.a = t; paintTok(btnA, t); poolInfo(); }));
-  btnB.addEventListener("click", () => openPicker((t) => { if (same(t, S.pool.a)) return; S.pool.b = t; paintTok(btnB, t); poolInfo(); }));
+  btnA.addEventListener("click", () => openPicker((t) => { if (same(t, S.pool.b)) return; S.pool.a = t; paintTok(btnA, t); poolInfo().catch(warn); }));
+  btnB.addEventListener("click", () => openPicker((t) => { if (same(t, S.pool.a)) return; S.pool.b = t; paintTok(btnB, t); poolInfo().catch(warn); }));
 
   async function pairOf(a, b) {
     const p = await l3.readContract({ address: FACTORY, abi: factoryAbi, functionName: "getPair", args: [addr(a), addr(b)] });
@@ -312,8 +313,8 @@ function start() {
       pmsg.dataset.kind = "ok";
       pmsg.textContent = "Liquidity added.";
       pa.value = pb.value = "";
-      poolInfo();
-      chart();
+      poolInfo().catch(warn);
+      chart().catch(warn);
     } catch (err) {
       pmsg.dataset.kind = "bad";
       pmsg.textContent = friendlyError(err);
@@ -342,8 +343,8 @@ function start() {
       }
       pmsg.dataset.kind = "ok";
       pmsg.textContent = `Removed ${pct}% of your liquidity.`;
-      poolInfo();
-      chart();
+      poolInfo().catch(warn);
+      chart().catch(warn);
     } catch (err) { pmsg.dataset.kind = "bad"; pmsg.textContent = friendlyError(err); }
   });
 
@@ -352,7 +353,7 @@ function start() {
     const sel = (tab, focus) => {
       all.forEach((x) => { const on = x === tab; x.setAttribute("aria-selected", String(on)); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute("aria-controls")).hidden = !on; });
       if (focus) tab.focus();
-      if (tab.id === "tab-pool") poolInfo();
+      if (tab.id === "tab-pool") poolInfo().catch(warn);
     };
     t.addEventListener("click", () => sel(t));
     t.addEventListener("keydown", (e) => {
@@ -396,6 +397,6 @@ function start() {
   }
   [btnIn, btnOut, $("[data-flip]")].forEach((b) => b.addEventListener("click", () => setTimeout(chart, 0)));
   dlg.addEventListener("close", () => setTimeout(chart, 0));
-  chart();
-  requote();
+  chart().catch(warn);
+  requote().catch(warn);
 }
