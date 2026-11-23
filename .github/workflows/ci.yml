@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Contracts (Foundry tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: chain
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: chain/package-lock.json
+
+      - name: Install npm dependencies (OpenZeppelin, viem)
+        run: npm ci
+
+      - uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install forge-std
+        run: forge install foundry-rs/forge-std@v1.17.0 --no-git
+
+      - name: Build
+        run: forge build --sizes
+
+      - name: Test (unit + fuzz)
+        run: forge test -vv
+
+  scripts:
+    name: Scripts and site (syntax)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check every chain script and site script parses
+        run: |
+          set -e
+          for f in chain/scripts/*.js site/js/*.js walletkit/src/*.jsx; do
+            case "$f" in *.jsx) continue ;; esac
+            node --check "$f"
+            echo "ok $f"
+          done
+
+      - name: No secrets committed
+        run: |
+          set -e
+          if git ls-files | grep -E '(^|/)\.env($|\.)|nodeConfig\.[a-z]+(\.railway)?\.(json|b64)$' | grep -v '\.env\.example$'; then
+            echo "Secret files are tracked"; exit 1
+          fi
+          if git grep -n -I -E '(PRIVATE_KEY|private_key)\s*=\s*(0x)?[0-9a-fA-F]{64}' -- . ':!*.md'; then
+            echo "A private key is committed"; exit 1
+          fi
+          echo "no secrets found"

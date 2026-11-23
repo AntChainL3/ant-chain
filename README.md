@@ -5,6 +5,11 @@
 <h1 align="center">ANT CHAIN</h1>
 
 <p align="center">
+  <a href="https://github.com/AntChainL3/ant-chain/actions/workflows/ci.yml"><img src="https://github.com/AntChainL3/ant-chain/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+</p>
+
+<p align="center">
   An independent Arbitrum Layer 3 on Robinhood Chain where every fee is paid in the <b>ANT Stock Token</b>.<br>
   <a href="https://antchain.tech">Website</a> ·
   <a href="https://antchain.tech/bridge/">Bridge</a> ·
@@ -152,7 +157,7 @@ Today one operator runs the sequencer, the batch poster and the validator. That 
 
 ## Security
 
-Found a problem? Please do not open a public issue for anything that could put funds at risk. Contact us privately through [X @antchainl3](https://x.com/antchainl3).
+Found a problem? Please do not open a public issue for anything that could put funds at risk. See [SECURITY.md](SECURITY.md) for how to report it privately.
 
 ## License
 
