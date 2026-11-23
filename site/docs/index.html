@@ -94,6 +94,7 @@
         <p class="side-group">Tokens</p>
         <ul>
           <li><a href="#token">The ANT CHAIN token</a></li>
+          <li><a href="#stake">Staking $ANTC</a></li>
           <li><a href="#ant">About the ANT Stock Token</a></li>
         </ul>
         <p class="side-group">Reference</p>
@@ -280,6 +281,37 @@
           <li><b>Utilities arrive in steps.</b> Staking for gas credits is live first; express-lane bids and the buyback come with ANT CHAIN mainnet.</li>
         </ul>
         <p class="muted-note">Nothing on this page is an offer or a promise of value. Utilities describe how the token will be used on the chain, not what it will be worth.</p>
+      </section>
+
+      <section id="stake" class="doc-sec">
+        <h2>Staking $ANTC for gas credits <span class="tag-soon">Live</span></h2>
+        <p>Stake $ANTC on Robinhood Chain and earn gas credits every second. Credits will pay for your transactions on ANT CHAIN once mainnet opens. Unstake any time.</p>
+        <table class="doc-table addr">
+          <tbody>
+            <tr><th scope="row">Page</th><td><a href="/stake/">antchain.tech/stake</a></td></tr>
+            <tr><th scope="row">Network</th><td>Robinhood Chain, chain ID <code>4663</code>, RPC <code>https://robinhood.drpc.org</code></td></tr>
+            <tr><th scope="row">$ANTC</th><td><code>0x1A9ca5A347c4aeAb4870668E76506E45C23D6281</code></td></tr>
+            <tr><th scope="row">Staking contract</th><td><code>0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac</code></td></tr>
+            <tr><th scope="row">Gas</th><td>A little ETH on Robinhood Chain</td></tr>
+          </tbody>
+        </table>
+        <h3>Stake</h3>
+        <ol class="doc-steps">
+          <li><b>Connect.</b> Open the <a href="/stake/">Stake page</a> and connect a wallet: MetaMask, Rabby, Coinbase Wallet, or a mobile wallet through WalletConnect.</li>
+          <li><b>Switch network.</b> The page asks your wallet to switch to Robinhood Chain and adds the network if needed.</li>
+          <li><b>Enter an amount,</b> or press <em>Max</em>.</li>
+          <li><b>Approve, then stake.</b> The first time there are two transactions: <em>Approve</em>, then <em>Stake</em>. Later stakes need only one.</li>
+          <li><b>Watch credits grow.</b> Your staked amount and credits update every second.</li>
+        </ol>
+        <h3>Credits and unstaking</h3>
+        <ul class="doc-list">
+          <li><b>Token-days.</b> 1 $ANTC staked for 1 day earns 1 credit; 100 staked for 3 days earns 300.</li>
+          <li><b>Unstake any time.</b> Use the <em>Unstake</em> tab: one transaction, no lock, no fee. Earned credits are kept.</li>
+          <li><b>Your tokens stay yours.</b> Nobody, including the ANT CHAIN team, can move staked tokens or block an unstake. The owner can only pause new stakes and choose who records credit use.</li>
+          <li><b>Not a token.</b> Credits cannot be transferred or sold and pay no yield. They are only a right to use gas on ANT CHAIN.</li>
+        </ul>
+        <div class="callout warn"><b>Check the address</b><p>Only <code>0x1A9c…6281</code> is $ANTC. Other tokens named "ANT Chain" are not ours.</p></div>
+        <p class="muted-note">The full guide, with fixes for common problems, is on <a href="https://github.com/AntChainL3/ant-chain/blob/main/docs/staking-guide.md" target="_blank" rel="noopener">GitHub</a>.</p>
       </section>
 
       <section id="ant" class="doc-sec">

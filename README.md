@@ -117,7 +117,7 @@ Only this address is ours. It has three jobs on the chain:
 - a **daily gas allowance** for people who stake it,
 - a **0.01% bridge and swap fee** used to buy $ANTC back and burn it.
 
-The first of these to ship is **staking for gas credits**: stake $ANTC on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once mainnet opens. Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing.
+The first of these to ship is **staking for gas credits**: stake $ANTC on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once mainnet opens. Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing. Step-by-step guide: [docs/staking-guide.md](docs/staking-guide.md).
 
 Staking opens first; express-lane bids and the buyback come with ANT CHAIN mainnet. Gas itself stays ANT. $ANTC is not connected to Anthropic, PBC and gives no rights in Anthropic or in ANT. Nothing in this repository is an offer or investment advice.
 
