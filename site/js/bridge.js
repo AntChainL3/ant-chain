@@ -1,5 +1,5 @@
 // ANT CHAIN bridge: deposit ANT from Robinhood Chain, withdraw back, claim after the challenge window.
-import { ADDR, L2, L3, CONFIRM_BLOCKS, TOKEN, NETWORK } from "./config.js";
+import { ADDR, L2, L3, CONFIRM_BLOCKS, TOKEN, NETWORK, ANTC_BRIDGE } from "./config.js";
 import { viem, l2, l3, state, onWallet, connect, ensureChain, write, friendlyError, fmt, short, hasWallet, addNetwork } from "./wallet.js";
 const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
@@ -28,6 +28,7 @@ const outboxAbi = parseAbi([
   "function roots(bytes32) view returns (bytes32)",
   "function executeTransaction(bytes32[] proof, uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
 ]);
+const finalizeAbi = parseAbi(["function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data)"]);
 const nodeIfaceAbi = parseAbi(["function constructOutboxProof(uint64 size, uint64 leaf) view returns (bytes32 send, bytes32 root, bytes32[] proof)"]);
 const L2ToL1Tx = parseAbiItem("event L2ToL1Tx(address caller, address indexed destination, uint256 indexed hash, uint256 indexed position, uint256 arbBlockNum, uint256 ethBlockNum, uint256 timestamp, uint256 callvalue, bytes data)");
 
@@ -277,6 +278,17 @@ async function loadWithdrawals() {
   list.innerHTML = `<li class="empty">Reading ANT CHAIN…</li>`;
   try {
     const logs = await l3.getLogs({ address: ADDR.arbSys, event: L2ToL1Tx, args: { destination: state.address }, fromBlock: 0n, toBlock: "latest" });
+    // $ANTC withdrawals go to the Robinhood Chain gateway; the receiver is inside the message data
+    if (ANTC_BRIDGE) {
+      const tok = await l3.getLogs({ address: ADDR.arbSys, event: L2ToL1Tx, args: { destination: ANTC_BRIDGE.l2Gateway }, fromBlock: 0n, toBlock: "latest" }).catch(() => []);
+      for (const l of tok) {
+        try {
+          const d = viem.decodeFunctionData({ abi: finalizeAbi, data: l.args.data });
+          if (d.args[2].toLowerCase() === state.address.toLowerCase()) { l.token = { amount: d.args[3], symbol: "$ANTC" }; logs.push(l); }
+        } catch { /* not a token transfer */ }
+      }
+      logs.sort((x, y) => (x.args.position < y.args.position ? -1 : 1));
+    }
     if (!logs.length) { list.innerHTML = `<li class="empty">No withdrawals to ${short(state.address)} yet.</li>`; return; }
     const size = await confirmedSize();
     const rows = await Promise.all(logs.reverse().map(async (l) => {
@@ -291,7 +303,7 @@ async function loadWithdrawals() {
       const li = document.createElement("li");
       const when = new Date(Number(a.timestamp) * 1000).toLocaleString();
       li.innerHTML = `
-        <div><b>${fmt(a.callvalue, 6)} ${TOKEN}</b><span>Started ${when} · ${txLink(l.transactionHash)}</span></div>
+        <div><b>${l.token ? `${fmt(l.token.amount, 4)} ${l.token.symbol}` : `${fmt(a.callvalue, 6)} ${TOKEN}`}</b><span>Started ${when} · ${txLink(l.transactionHash)}</span></div>
         <div class="w-state">${spent ? `<span class="pill ok">Claimed</span>` : ready ? `<button class="btn btn-amber btn-small" type="button">Claim on Robinhood Chain</button>` : `<span class="countdown" data-start="${Number(a.timestamp) * 1000}" data-eta="${eta.getTime()}" title="Estimated: ${eta.toLocaleString()}"><span class="pill" data-cd-text>Claim opens in …</span><i class="cd-bar"><b></b></i></span>`}</div>
         <p class="form-msg" role="status" aria-live="polite"></p>`;
       const btn = li.querySelector("button");
@@ -317,7 +329,7 @@ async function claim(a, size, li) {
       address: ADDR.outbox, abi: outboxAbi, functionName: "executeTransaction",
       args: [proof, a.position, a.caller, a.destination, a.arbBlockNum, a.ethBlockNum, a.timestamp, a.callvalue, a.data],
     }, (h) => status(msg, `Claim sent ${short(h)}…`));
-    msg.innerHTML = `Claimed. Your ${TOKEN} is back on ${L2.name} (${txLink(r.transactionHash)}).`;
+    msg.innerHTML = `Claimed. It is back on ${L2.name} (${txLink(r.transactionHash)}).`;
     msg.dataset.kind = "ok";
     btn.outerHTML = `<span class="pill ok">Claimed</span>`;
     refreshBalances().catch(warn);
@@ -328,6 +340,7 @@ async function claim(a, size, li) {
 }
 
 $("[data-refresh-withdrawals]")?.addEventListener("click", loadWithdrawals);
+document.addEventListener("antchain:withdrawals", () => { loadWithdrawals().catch(warn); });
 
 // ---------- live countdown until a withdrawal can be claimed ----------
 const two = (n) => String(n).padStart(2, "0");

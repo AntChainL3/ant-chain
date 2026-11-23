@@ -44,6 +44,12 @@ const PROFILES = {
     CONFIRM_BLOCKS: 50400, // about 7 days of 12 s Ethereum blocks
     // launchpad: not deployed yet. Quote = $ANTC bridged through the standard gateway (address fixed by the gateway).
     LAUNCHPAD: { address: null, quote: "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c", quoteSymbol: "ANTC", fromBlock: 0, faucet: false },
+    // $ANTC through the standard token gateway: Robinhood Chain <-> ANT CHAIN (fees for the ticket are paid in ANT)
+    ANTC_BRIDGE: {
+      l2Token: "0x1A9ca5A347c4aeAb4870668E76506E45C23D6281", l3Token: "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c",
+      l2Router: "0xCFe1612bA1Fb5c98a6Aaed86c69cE3aE7f632228", l2Gateway: "0x13Cb5e46C2758057582d27760DDC5052FaDC27c8",
+      l3Router: "0xcD71705cA05E7BE5Dd96E0030Ca943EcC78aEb9D", l3Gateway: "0xf5a5B408Bc6Ef7Fe26AB826E5D158775aFc04fF7",
+    },
   },
 };
 
@@ -84,6 +90,7 @@ export const L2 = P.L2;
 export const ADDR = P.ADDR;
 export const DEX = P.DEX;
 export const LAUNCHPAD = P.LAUNCHPAD;
+export const ANTC_BRIDGE = P.ANTC_BRIDGE || null;
 export const CONFIRM_BLOCKS = P.CONFIRM_BLOCKS;
 // Where the site reads the live ANT price: the MAINNET fee pricer on Robinhood Chain, kept in line with the
 // market by the keeper. Read-only, so it works in testnet mode without opening ANT CHAIN mainnet.

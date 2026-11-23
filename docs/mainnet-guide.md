@@ -37,6 +37,10 @@ Every contract address is in [contracts.md](contracts.md).
 - **Trade** on the [exchange](https://antchain.tech/swap/) (Uniswap V2 contracts). Mainnet pools are created by their liquidity providers; if a pair has no pool yet, the page says so.
 - **Look anything up** in the [explorer](https://antchain.tech/explorer/).
 
+## Bridging $ANTC
+
+The **Bridge $ANTC** card on the bridge page moves $ANTC between Robinhood Chain and ANT CHAIN (for example to use the [launchpad](launchpad.md)). Going in takes about a minute and needs about 0.0004 ANT on Robinhood Chain for the ticket (unused part refunded). Going back takes about 7 days and is claimed from **Your withdrawals**, like ANT.
+
 ## 3. Withdraw ANT back to Robinhood Chain
 
 Withdrawing has two steps, and the second one comes about **7 days** later.

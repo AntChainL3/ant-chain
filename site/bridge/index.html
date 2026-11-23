@@ -161,6 +161,24 @@
           <p class="fine">Already have testnet ETH? <button class="link-btn" type="button" data-drip>Claim 100 tANT on chain</button> instead.</p>
           <p class="form-msg" role="status" aria-live="polite"></p>
         </div>
+        <div class="card" data-antc hidden>
+          <p class="label">$ANTC</p>
+          <h2 class="side-title">Bridge $ANTC</h2>
+          <form class="x-form" data-antc-form novalidate>
+            <div class="seg" role="tablist" aria-label="Direction">
+              <button role="tab" type="button" data-antc-dir="in" aria-selected="true">To ANT CHAIN</button>
+              <button role="tab" type="button" data-antc-dir="out" aria-selected="false" tabindex="-1">To Robinhood</button>
+            </div>
+            <div class="leg">
+              <div class="leg-head"><span class="label">From <span data-antc-from>Robinhood Chain</span></span><button type="button" class="link-btn" data-antc-max>Max</button></div>
+              <label class="amount"><span class="sr-only">Amount of $ANTC</span><input data-antc-amt inputmode="decimal" autocomplete="off" placeholder="0.0"><span class="unit">$ANTC</span></label>
+              <div class="leg-foot"><span>Balance <b data-antc-bal>—</b></span><span>On <span data-antc-to>ANT CHAIN</span> <b data-antc-other>—</b></span></div>
+            </div>
+            <p class="fine" data-antc-note></p>
+            <button class="btn btn-amber btn-block" type="submit" data-antc-go>Connect wallet</button>
+            <p class="form-msg" role="status" aria-live="polite" data-antc-msg></p>
+          </form>
+        </div>
         <div class="card">
           <h2 class="side-title">How it moves</h2>
           <ol class="side-steps">
@@ -208,6 +226,7 @@
   </footer>
 
   <script type="module" src="../js/bridge.js"></script>
+  <script type="module" src="../js/bridge-antc.js"></script>
   <script type="module" src="../js/appchrome.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
   <script src="/js/site.js" defer></script>

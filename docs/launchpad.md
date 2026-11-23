@@ -31,7 +31,7 @@ The owner can change the fee (never above 2%), the fee split, the creation fee a
 
 ## Using $ANTC on ANT CHAIN
 
-$ANTC lives on Robinhood Chain. To trade on the launchpad it is bridged into ANT CHAIN through the standard token gateway, where it appears at `0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c`. Bridging back to Robinhood Chain takes about 7 days, like every withdrawal from ANT CHAIN.
+$ANTC lives on Robinhood Chain. To trade on the launchpad, bridge it into ANT CHAIN with the **Bridge $ANTC** card on [antchain.tech/bridge](https://antchain.tech/bridge/). It goes through the standard token gateway and appears at `0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c` on ANT CHAIN, usually within a minute. Bridging in also needs a little ANT on Robinhood Chain for the ticket (about 0.0004 ANT, the unused part is refunded). Bridging back to Robinhood Chain takes about 7 days, like every withdrawal from ANT CHAIN, and is claimed from "Your withdrawals" on the bridge page.
 
 ## Risks
 
