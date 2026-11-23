@@ -94,6 +94,11 @@
         </div>
 
         <div id="panel-in" role="tabpanel" aria-labelledby="tab-in">
+          <div class="notice alias-box" data-alias hidden>
+            <p><b>You have <span data-alias-amount>…</span> waiting on ANT CHAIN.</b> An earlier deposit from a smart account (such as a MetaMask Smart Account) was credited to your account's alias address <code data-alias-addr>…</code>. Only your wallet can move it. One transaction on Robinhood Chain sends it to your own address.</p>
+            <button class="btn btn-amber btn-small" type="button" data-alias-go>Move it to my address</button>
+            <p class="form-msg" role="status" aria-live="polite" data-alias-msg></p>
+          </div>
           <form id="deposit-form" class="x-form" novalidate>
             <div class="leg">
               <div class="leg-head"><span class="label">From</span><span class="chain-tag"><i class="dot-rh"></i><span data-n="l2">Robinhood Chain</span></span></div>
@@ -107,7 +112,7 @@
             <div class="leg-arrow" aria-hidden="true">↓</div>
             <div class="leg">
               <div class="leg-head"><span class="label">To</span><span class="chain-tag"><i class="dot-ant"></i><span data-n="l3">ANT CHAIN</span></span></div>
-              <p class="receive">You receive the same amount as native gas, at the same address.</p>
+              <p class="receive">You receive the same amount as native gas, at the same address, minus a tiny gas fee for the transfer (under 0.0001 ANT).</p>
               <div class="leg-foot"><span>On ANT CHAIN <b data-bal="l3">—</b></span><span>Gas on Robinhood Chain <b data-bal="eth">—</b></span></div>
             </div>
             <ol class="flow-steps" aria-label="Deposit progress">

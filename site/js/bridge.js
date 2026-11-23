@@ -12,7 +12,16 @@ const erc20 = parseAbi([
   "function allowance(address,address) view returns (uint256)",
   "function approve(address,uint256) returns (bool)",
 ]);
-const inboxAbi = parseAbi(["function depositERC20(uint256) returns (uint256)"]);
+const inboxAbi = parseAbi([
+  "function createRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)",
+  "function sendContractTransaction(uint256 gasLimit, uint256 maxFeePerGas, address to, uint256 value, bytes data) returns (uint256)",
+]);
+// Deposits are sent as a retryable ticket addressed to the wallet itself. A plain depositERC20 from a smart account
+// (EIP-7702, e.g. MetaMask Smart Account) is credited to an aliased address instead; this way it always lands on you.
+const DEPOSIT_GAS = 300000n; // gas for the ticket's auto-redeem (a plain transfer); unused gas is refunded
+const RECOVER_GAS = 100000n;
+const aliasOf = (a) => "0x" + ((BigInt(a) + 0x1111000000000000000000000000000000001111n) % (1n << 160n)).toString(16).padStart(40, "0");
+async function feePerGas() { const gp = await l3.getGasPrice(); return gp * 2n; }
 const arbSysAbi = parseAbi(["function withdrawEth(address destination) payable returns (uint256)"]);
 const outboxAbi = parseAbi([
   "function isSpent(uint256 index) view returns (bool)",
@@ -51,8 +60,49 @@ async function refreshStats() {
   set("l3", head.status === "fulfilled" ? `Block ${head.value.toLocaleString("en-US")}` : "Not reachable", head.status === "fulfilled" ? "ok" : "bad");
 }
 
+// ---------- recovery: ANT that an earlier smart-account deposit left at the aliased address ----------
+async function checkAlias() {
+  const box = $("[data-alias]");
+  if (!box || !state.address) { if (box) box.hidden = true; return; }
+  const a = aliasOf(state.address);
+  const b = await l3.getBalance({ address: a }).catch(() => 0n);
+  const fee = await feePerGas().catch(() => 0n);
+  const movable = b - RECOVER_GAS * fee;
+  if (!fee || movable <= 0n) { box.hidden = true; return; }
+  $("[data-alias-amount]", box).textContent = `${fmt(b, 6)} ${TOKEN}`;
+  $("[data-alias-addr]", box).textContent = short(a);
+  box.hidden = false;
+  box.dataset.value = movable.toString();
+  box.dataset.fee = fee.toString();
+}
+async function recoverAlias() {
+  const box = $("[data-alias]"), msg = $("[data-alias-msg]", box), btn = $("[data-alias-go]", box);
+  btn.disabled = true;
+  try {
+    await checkAlias();
+    const value = BigInt(box.dataset.value || "0"), fee = BigInt(box.dataset.fee || "0");
+    if (value <= 0n) throw new Error("Nothing to move.");
+    const before = await l3.getBalance({ address: state.address });
+    status(msg, "Switch to Robinhood Chain and confirm in your wallet…");
+    await ensureChain(L2.id);
+    await write(L2.id, { address: ADDR.inbox, abi: inboxAbi, functionName: "sendContractTransaction", args: [RECOVER_GAS, fee, state.address, value, "0x"] }, (h) => status(msg, `Sent ${short(h)}. Waiting for ANT CHAIN…`));
+    const t0 = Date.now();
+    while (Date.now() - t0 < 10 * 60_000) {
+      await new Promise((res) => setTimeout(res, 4000));
+      const now = await l3.getBalance({ address: state.address }).catch(() => before);
+      if (now > before) { status(msg, `Done. ${fmt(now - before, 6)} ${TOKEN} is now at your address on ANT CHAIN.`, "ok"); refreshBalances().catch(warn); checkAlias().catch(warn); return; }
+    }
+    status(msg, "Sent. It will arrive at your address when ANT CHAIN picks it up; you do not need to do anything.", "warn");
+  } catch (err) {
+    status(msg, friendlyError(err), "bad");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 async function refreshBalances() {
   if (!state.address) return;
+  checkAlias().catch(warn);
   const a = state.address;
   const [ant, eth, allw, l3b] = await Promise.allSettled([
     l2.readContract({ address: ADDR.ant, abi: erc20, functionName: "balanceOf", args: [a] }),
@@ -140,9 +190,6 @@ dep.addEventListener("submit", async (e) => {
   const btn = $("button[type=submit]", dep);
   btn.disabled = true;
   try {
-    // Deposits from smart-contract wallets are credited to an aliased address on ANT CHAIN, not to you.
-    const code = await l2.getBytecode({ address: state.address });
-    if (code && code !== "0x") throw new Error("This looks like a smart-contract wallet. Deposits from contracts arrive at an aliased address, so use a regular wallet (EOA).");
     const before = await l3.getBalance({ address: state.address });
     setStep(dep, 0);
     status(msg, "Switch to Robinhood Chain in your wallet…");
@@ -154,7 +201,10 @@ dep.addEventListener("submit", async (e) => {
     }
     setStep(dep, 1);
     status(msg, "Confirm the deposit in your wallet…");
-    const r = await write(L2.id, { address: ADDR.inbox, abi: inboxAbi, functionName: "depositERC20", args: [amount] }, (h) => status(msg, `Deposit sent ${short(h)}. Waiting for Robinhood Chain…`));
+    const fee = await feePerGas();
+    if (amount <= DEPOSIT_GAS * fee) throw new Error("That amount is too small to bridge.");
+    const me = state.address;
+    const r = await write(L2.id, { address: ADDR.inbox, abi: inboxAbi, functionName: "createRetryableTicket", args: [me, amount - DEPOSIT_GAS * fee, 0n, me, me, DEPOSIT_GAS, fee, amount, "0x"] }, (h) => status(msg, `Deposit sent ${short(h)}. Waiting for Robinhood Chain…`));
     setStep(dep, 2);
     status(msg, "Locked on Robinhood Chain. Waiting for ANT CHAIN to credit it (usually under a minute)…");
     const t0 = Date.now();
@@ -357,3 +407,5 @@ refreshStats().catch(warn);
 setInterval(refreshStats, 20_000);
 setInterval(refreshBalances, 15_000);
 updateButtons();
+
+$("[data-alias-go]")?.addEventListener("click", () => { recoverAlias().catch(warn); });
