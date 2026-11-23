@@ -55,7 +55,9 @@ http.createServer(async (req, res) => {
         "cache-control": "public, max-age=31536000, immutable",
         "x-content-type-options": "nosniff",
         "content-security-policy": "default-src 'none'; sandbox",
-        "cross-origin-resource-policy": "same-origin",
+        // token logos are meant to be shown anywhere (wallets, explorers, listing sites)
+        "cross-origin-resource-policy": "cross-origin",
+        "access-control-allow-origin": "*",
       });
       if (req.method === "HEAD") return res.end();
       return fs.createReadStream(file).pipe(res);

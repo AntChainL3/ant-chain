@@ -227,7 +227,7 @@ dialog.picker { background: linear-gradient(155deg, rgba(28,28,28,.92), rgba(14,
 .app-dotword { height: clamp(96px, 10vw, 140px); }
 
 /* hero: text left, point-cloud visual right (replaces the dot wordmark) */
-.app-hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: 32px; align-items: center; }
+.app-hero { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 32px; align-items: start; }
 .app-hero > :not(.app-visual) { grid-column: 1; }
 .app-visual { grid-column: 2; grid-row: 1 / span 3; position: relative; height: clamp(260px, 30vw, 380px); }
 .app-visual canvas { width: 100%; height: 100%; display: block; }
