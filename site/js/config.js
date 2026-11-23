@@ -42,8 +42,8 @@ const PROFILES = {
     },
     DEX: { wrappedAnt: "0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4", factory: "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A", router: "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF", testUsd: null }, // deployed 22 Nov 2026
     CONFIRM_BLOCKS: 50400, // about 7 days of 12 s Ethereum blocks
-    // launchpad: not deployed yet. Quote = $ANTC bridged through the standard gateway (address fixed by the gateway).
-    LAUNCHPAD: { address: null, quote: "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c", quoteSymbol: "ANTC", fromBlock: 0, faucet: false },
+    // launchpad (deployed 23 Nov 2026, block 28). Quote = $ANTC bridged through the standard gateway.
+    LAUNCHPAD: { address: "0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA", quote: "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c", quoteSymbol: "ANTC", fromBlock: 28, faucet: false },
     // $ANTC through the standard token gateway: Robinhood Chain <-> ANT CHAIN (fees for the ticket are paid in ANT)
     ANTC_BRIDGE: {
       l2Token: "0x1A9ca5A347c4aeAb4870668E76506E45C23D6281", l3Token: "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c",

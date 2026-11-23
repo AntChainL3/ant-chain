@@ -36,14 +36,14 @@ Nothing here is an offer or a promise of value.
 | Bridge with real ANT (deposit, withdraw after the ~7 day challenge window, claim) | Live |
 | Exchange on mainnet: contracts live, anyone can create a pool | Live |
 | First ANT liquidity pool on the mainnet exchange | Soon |
-| Spend gas credits from $ANTC staking on ANT CHAIN | Soon |
+| Claim gas on ANT CHAIN with credits from $ANTC staking ([guide](staking-guide.md)) | Live |
 | Monitoring and alerts for the chain's operators | Planned |
 
 ## Phase 4: $ANTC on mainnet
 
 | | Status |
 |---|---|
-| [Launchpad](launchpad.md): create tokens that trade in $ANTC on a bonding curve and graduate to the exchange | Live on testnet, mainnet soon |
+| [Launchpad](launchpad.md): create tokens that trade in $ANTC on a bonding curve and graduate to the exchange | Live |
 
 ### Also planned
 

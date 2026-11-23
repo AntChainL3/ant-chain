@@ -89,5 +89,12 @@
     "owner": "0x032c47Ff69165F2723BE277A8049Dc9308c8f838",
     "tx": "0xafdcb7a12fd9308ba197359f13dade11ea6a85fd687df67d9e5035b48f081476",
     "deployedAt": "2026-11-23T15:26:22.218Z"
+  },
+  "launchpad": {
+    "address": "0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA",
+    "quote": "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c",
+    "factory": "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A",
+    "target": "1000000000000000000000000",
+    "deployedAt": "2026-11-23T18:09:29.024Z"
   }
 }

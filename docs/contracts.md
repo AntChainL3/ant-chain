@@ -60,6 +60,8 @@ Pair init code hash: `0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7d
 | Exchange router (Uniswap V2 Router02) | `0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF` |
 | Exchange factory (Uniswap V2) | `0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A` |
 | Wrapped ANT | `0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4` |
+| Launchpad (AntcLaunchpad) | `0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA` |
+| $ANTC (bridged, standard gateway) | `0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c` |
 
 The mainnet exchange is open. Pools are created by their liquidity providers; the first ANT pool is listed on the roadmap.
 

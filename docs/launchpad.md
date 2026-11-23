@@ -7,7 +7,7 @@ Page: [antchain.tech/launch](https://antchain.tech/launch/) · Contract: [`chain
 | | Status |
 |---|---|
 | Testnet (tANTC stands in for $ANTC, free from the page's faucet) | **Live** at `0x9b8Ac46DCDe0EA76DaF48a3f370C6DA8A04586a8` |
-| Mainnet (trades in $ANTC bridged to ANT CHAIN) | Soon |
+| Mainnet (trades in $ANTC bridged to ANT CHAIN) | **Live** at `0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA` (graduation at 1,000,000 $ANTC raised) |
 
 ## How a token works
 
