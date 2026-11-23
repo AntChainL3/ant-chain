@@ -72,5 +72,13 @@
     "owner": "0x6c776BF2689F980c284D0fd1F3f6B1bC108BAf78",
     "tx": "0x085bf297c0f6999417e57ed7f8e6a37c480f85378b6afcfee7e4a8ee410f0ee1",
     "deployedAt": "2026-11-23T13:28:47.090Z"
+  },
+  "launchpad": {
+    "address": "0x9b8Ac46DCDe0EA76DaF48a3f370C6DA8A04586a8",
+    "quote": "0xf0E40C26482AdcD2D0e7eB3485E3208F96B4C277",
+    "factory": "0xc90CdDc8B6bC5c1724e10Ccb161d89e12f162Af2",
+    "target": "200000000000000000000000",
+    "deployedAt": "2026-11-23T16:34:46.872Z",
+    "testAntc": "0xf0E40C26482AdcD2D0e7eB3485E3208F96B4C277"
   }
 }

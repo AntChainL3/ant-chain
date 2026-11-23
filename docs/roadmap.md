@@ -43,6 +43,12 @@ Nothing here is an offer or a promise of value.
 
 | | Status |
 |---|---|
+| [Launchpad](launchpad.md): create tokens that trade in $ANTC on a bonding curve and graduate to the exchange | Live on testnet, mainnet soon |
+
+### Also planned
+
+| | Status |
+|---|---|
 | Express lane: bid $ANTC for priority ordering of transactions (Arbitrum Timeboost) | Planned |
 | 0.01% bridge and swap fee that buys $ANTC back and burns it | Planned |
 | Fast withdrawals through liquidity providers, without shortening the challenge window | Planned |

@@ -20,6 +20,8 @@ const PROFILES = {
     },
     DEX: { wrappedAnt: "0xCaab57bf6F4AC057E2024C5778000fb377372548", factory: "0xc90CdDc8B6bC5c1724e10Ccb161d89e12f162Af2", router: "0x2Db8b8200a474F47640f16dB66C0089169b6FDaa", testUsd: "0xA020932FB3D16836B0B8741370a5D4B123eEc43c" },
     CONFIRM_BLOCKS: 150, // ~30 minutes of 12 s Ethereum blocks
+    // launchpad: trades in tANTC (Test ANTC, public faucet) standing in for $ANTC
+    LAUNCHPAD: { address: "0x9b8Ac46DCDe0EA76DaF48a3f370C6DA8A04586a8", quote: "0xf0e40c26482adcd2d0e7eb3485e3208f96b4c277", quoteSymbol: "tANTC", fromBlock: 386, faucet: true },
   },
   mainnet: {
     NETWORK: "mainnet",
@@ -40,6 +42,8 @@ const PROFILES = {
     },
     DEX: { wrappedAnt: "0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4", factory: "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A", router: "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF", testUsd: null }, // deployed 22 Nov 2026
     CONFIRM_BLOCKS: 50400, // about 7 days of 12 s Ethereum blocks
+    // launchpad: not deployed yet. Quote = $ANTC bridged through the standard gateway (address fixed by the gateway).
+    LAUNCHPAD: { address: null, quote: "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c", quoteSymbol: "ANTC", fromBlock: 0, faucet: false },
   },
 };
 
@@ -79,6 +83,7 @@ export const L3 = P.L3;
 export const L2 = P.L2;
 export const ADDR = P.ADDR;
 export const DEX = P.DEX;
+export const LAUNCHPAD = P.LAUNCHPAD;
 export const CONFIRM_BLOCKS = P.CONFIRM_BLOCKS;
 // Where the site reads the live ANT price: the MAINNET fee pricer on Robinhood Chain, kept in line with the
 // market by the keeper. Read-only, so it works in testnet mode without opening ANT CHAIN mainnet.

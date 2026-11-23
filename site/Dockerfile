@@ -7,6 +7,7 @@ COPY js/ /srv/js/
 COPY bridge/ /srv/bridge/
 COPY docs/ /srv/docs/
 COPY explorer/ /srv/explorer/
+COPY launch/ /srv/launch/
 COPY roadmap/ /srv/roadmap/
 COPY stake/ /srv/stake/
 COPY swap/ /srv/swap/

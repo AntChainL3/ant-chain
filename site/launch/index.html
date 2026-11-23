@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANT CHAIN Launchpad</title>
+  <meta name="description" content="Launch a token on ANT CHAIN. It trades on a bonding curve priced in $ANTC and graduates to the exchange with locked liquidity.">
+  <meta name="theme-color" content="#050505">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="canonical" href="https://antchain.tech/launch/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ANT CHAIN">
+  <meta property="og:title" content="ANT CHAIN Launchpad">
+  <meta property="og:description" content="Launch a token on ANT CHAIN. It trades on a bonding curve priced in $ANTC and graduates to the exchange with locked liquidity.">
+  <meta property="og:url" content="https://antchain.tech/launch/">
+  <meta property="og:image" content="https://antchain.tech/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://antchain.tech/og.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0a'/%3E%3Ccircle cx='16' cy='16' r='13.5' fill='none' stroke='%23ffb21a' stroke-width='1.6'/%3E%3Cpath d='M26.6 16.0L26.4 15.0L25.9 14.2L25.1 13.5L24.1 13.0L22.9 12.9L21.6 13.0L20.3 13.5L19.1 14.3L18.1 15.3L17.3 16.6L16.8 18.0L16.6 19.5L16.7 20.9L17.1 22.2L17.8 23.3L18.7 24.2L19.7 24.7L20.8 24.9L21.8 24.7L22.6 24.3L23.2 23.6L23.6 22.6L23.7 21.6L23.4 20.5L22.7 19.4L21.8 18.5L20.6 17.8L19.3 17.3L17.8 17.2L16.3 17.4L14.9 17.9L13.6 18.6L12.6 19.6L11.8 20.8L11.4 22.0L11.3 23.2L11.5 24.3L12.0 25.3L12.7 26.0L13.6 26.3L14.6 26.4L15.6 26.1L16.4 25.5L17.1 24.5L17.5 23.4L17.7 22.1L17.5 20.7L17.0 19.4L16.2 18.2L15.1 17.1L13.9 16.3L12.5 15.8L11.0 15.6L9.7 15.7L8.4 16.1L7.4 16.8L6.7 17.7L6.3 18.7L6.2 19.7L6.4 20.6L7.0 21.4L7.8 21.9L8.9 22.2L10.0 22.2L11.2 21.8L12.3 21.1L13.2 20.1L14.0 18.9L14.4 17.5L14.6 16.0L14.4 14.5L14.0 13.1L13.2 11.9L12.3 10.9L11.2 10.2L10.0 9.8L8.9 9.8L7.8 10.1L7.0 10.6L6.4 11.4L6.2 12.3L6.3 13.3L6.7 14.3L7.4 15.2L8.4 15.9L9.7 16.3L11.0 16.4L12.5 16.2L13.9 15.7L15.1 14.9L16.2 13.8L17.0 12.6L17.5 11.3L17.7 9.9L17.5 8.6L17.1 7.5L16.4 6.5L15.6 5.9L14.6 5.6L13.6 5.7L12.7 6.0L12.0 6.7L11.5 7.7L11.3 8.8L11.4 10.0L11.8 11.2L12.6 12.4L13.6 13.4L14.9 14.1L16.3 14.6L17.8 14.8L19.3 14.7L20.6 14.2L21.8 13.5L22.7 12.6L23.4 11.5L23.7 10.4L23.6 9.4L23.2 8.4L22.6 7.7L21.8 7.3L20.8 7.1L19.7 7.3L18.7 7.8L17.8 8.7L17.1 9.8L16.7 11.1L16.6 12.5L16.8 14.0L17.3 15.4L18.1 16.7L19.1 17.7L20.3 18.5L21.6 19.0L22.9 19.1L24.1 19.0L25.1 18.5L25.9 17.8L26.4 17.0L26.6 16.0Z' fill='none' stroke='%23ffb21a' stroke-width='1.1'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/core.css">
+  <link rel="stylesheet" href="/css/legacy.css">
+  <link rel="stylesheet" href="../app.css">
+  <link rel="stylesheet" href="../walletkit.css">
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+</head>
+<body class="has-strip app">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="none" stroke-width="1.6"/><path d="M27.9 16.0L27.7 14.9L27.1 14.0L26.2 13.2L25.1 12.7L23.7 12.5L22.2 12.6L20.8 13.2L19.5 14.1L18.3 15.3L17.4 16.7L16.8 18.3L16.6 19.9L16.8 21.5L17.3 23.0L18.0 24.2L19.0 25.2L20.2 25.7L21.3 26.0L22.4 25.8L23.4 25.3L24.1 24.5L24.5 23.4L24.6 22.2L24.3 21.0L23.6 19.8L22.5 18.8L21.2 18.0L19.7 17.5L18.0 17.3L16.3 17.5L14.8 18.1L13.3 18.9L12.2 20.1L11.3 21.3L10.8 22.7L10.7 24.1L11.0 25.3L11.5 26.4L12.4 27.1L13.4 27.6L14.4 27.6L15.5 27.3L16.5 26.6L17.2 25.6L17.7 24.3L17.9 22.8L17.7 21.3L17.1 19.8L16.2 18.4L15.0 17.2L13.6 16.3L12.0 15.8L10.5 15.5L8.9 15.7L7.5 16.2L6.4 16.9L5.6 17.9L5.1 19.0L5.0 20.1L5.3 21.2L5.9 22.0L6.9 22.7L8.0 23.0L9.3 22.9L10.6 22.5L11.8 21.7L12.9 20.6L13.7 19.2L14.3 17.7L14.4 16.0L14.3 14.3L13.7 12.8L12.9 11.4L11.8 10.3L10.6 9.5L9.3 9.1L8.0 9.0L6.9 9.3L5.9 10.0L5.3 10.8L5.0 11.9L5.1 13.0L5.6 14.1L6.4 15.1L7.5 15.8L8.9 16.3L10.5 16.5L12.0 16.2L13.6 15.7L15.0 14.8L16.2 13.6L17.1 12.2L17.7 10.7L17.9 9.2L17.7 7.7L17.2 6.4L16.5 5.4L15.5 4.7L14.4 4.4L13.4 4.4L12.4 4.9L11.5 5.6L11.0 6.7L10.7 7.9L10.8 9.3L11.3 10.7L12.2 11.9L13.3 13.1L14.8 13.9L16.3 14.5L18.0 14.7L19.7 14.5L21.2 14.0L22.5 13.2L23.6 12.2L24.3 11.0L24.6 9.8L24.5 8.6L24.1 7.5L23.4 6.7L22.4 6.2L21.3 6.0L20.2 6.3L19.0 6.8L18.0 7.8L17.3 9.0L16.8 10.5L16.6 12.1L16.8 13.7L17.4 15.3L18.3 16.7L19.5 17.9L20.8 18.8L22.2 19.4L23.7 19.5L25.1 19.3L26.2 18.8L27.1 18.0L27.7 17.1L27.9 16.0Z" fill="none" stroke-width="1.1"/></symbol></svg>
+  <!-- test token strip -->
+  <div class="strip" role="note">
+    <span><span class="dot pulse"></span></span>
+    <span data-n="strip">Mainnet live · gas paid in ANT</span>
+    <span>$ANTC <code>0x1A9c…6281</code></span>
+    <button type="button" data-copy="0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" aria-label="Copy $ANTC contract address">Copy</button>
+    <a href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Buy on Pons →</a>
+  </div>
+  <a class="skip" href="#main">Skip to the exchange</a>
+  <!-- header -->
+  <header class="top" data-top>
+    <div class="top-in">
+      <a class="hp brand" href="/" aria-label="ANT CHAIN home">
+        <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span>
+        <span class="brand-name">ANT CHAIN</span>
+        <span class="brand-net">mainnet</span>
+      </a>
+      <nav class="hp menu" aria-label="Primary">
+        <a href="/bridge/">Bridge</a>
+        <a href="/swap/">Swap</a>
+        <a href="/launch/" aria-current="page">Launch</a>
+        <a href="/stake/">Stake</a>
+        <a href="/explorer/" data-explorer>Explorer</a>
+        <a href="/docs/">Docs</a>
+        <a href="/roadmap/">Roadmap</a>
+        <a href="/#build">Build</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <div class="hp actions">
+        <a class="price-chip" href="/#token" title="Live ANT price from the USDG/ANT pool on Robinhood Chain, every 15 seconds"><span class="dot"></span>ANT <b data-app-price>…</b></a>
+        <a class="x-link" href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener" aria-label="ANT CHAIN on GitHub"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg></a>
+        <a class="x-link" href="https://x.com/antchainl3" target="_blank" rel="noopener" aria-label="ANT CHAIN on X"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78L17.75 3Zm-1.08 16.2h1.7L7.4 4.73H5.58L16.67 19.2Z"/></svg></a>
+        <button class="btn" type="button" data-connect>Connect wallet</button>
+        <button class="btn btn-ghost menu-btn" type="button" aria-expanded="false" aria-controls="sheet" data-menu>Menu</button>
+      </div>
+    </div>
+  </header>
+  <nav class="sheet-nav" id="sheet" aria-label="Menu">
+    <button class="btn btn-ghost btn-small sheet-close" type="button" data-menu-close>Close</button>
+    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/launch/">Launch</a><a href="/stake/">Stake</a><a href="/explorer/" data-explorer>Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+
+  <main id="main" class="app-main">
+    <section class="app-hero">
+      <div class="app-visual" aria-hidden="true"><svg class="orbit app-orbit" data-orbit aria-hidden="true"></svg><p class="av-labels"><span class="av-l">Paid in <b data-lp-sym>$ANTC</b></span><span class="av-r">Graduates to <b>the exchange</b></span></p></div>
+      <div class="net-switch" data-net-switch aria-label="Network"></div>
+      <p class="kicker">Launchpad · every trade in <span data-lp-sym>$ANTC</span></p>
+      <h1>Launch <em>on</em> ANT CHAIN</h1>
+      <p class="lede">Create a token in one transaction. It trades on a bonding curve priced in <span data-lp-sym>$ANTC</span>; when 800M of its 1B tokens are sold, it graduates to a pool on the ANT CHAIN exchange with locked liquidity.</p>
+    </section>
+
+    <p class="notice" data-lp-pending hidden><b>The launchpad opens on mainnet soon.</b> It is live on testnet now, with free tANTC standing in for $ANTC. <a href="/launch/?net=testnet">Try it on testnet →</a></p>
+
+    <div class="lp-grid" data-lp-app hidden>
+      <section class="card lp-list-card" aria-label="Tokens">
+        <div class="swap-head"><h2>Tokens</h2>
+          <div class="slip" role="group" aria-label="Sort">
+            <button type="button" data-sort="new" aria-pressed="true">New</button>
+            <button type="button" data-sort="progress" aria-pressed="false">Progress</button>
+            <button type="button" data-sort="grad" aria-pressed="false">Graduated</button>
+          </div>
+        </div>
+        <ul class="lp-list" data-lp-list><li class="empty">Loading tokens…</li></ul>
+      </section>
+
+      <aside class="lp-side">
+        <section class="card" data-lp-detail hidden aria-label="Token">
+          <div class="lp-head">
+            <img class="lp-img" data-d="img" alt="" hidden>
+            <div><h2 data-d="name">…</h2><p class="kicker"><span data-d="symbol"></span> · <a class="link" data-d="explorer" href="#" target="_blank" rel="noopener">explorer ↗</a></p></div>
+          </div>
+          <p class="muted-p lp-desc" data-d="desc"></p>
+          <p class="lp-links" data-d="links"></p>
+          <div class="lp-bar" role="progressbar" aria-label="Bonding curve progress" aria-valuemin="0" aria-valuemax="100" data-d="bar"><i></i></div>
+          <dl class="kv-mini">
+            <dt>Progress</dt><dd data-d="progress">…</dd>
+            <dt>Price</dt><dd data-d="price">…</dd>
+            <dt>Market cap</dt><dd data-d="mcap">…</dd>
+            <dt>Raised</dt><dd data-d="raised">…</dd>
+            <dt>Creator</dt><dd data-d="creator">…</dd>
+          </dl>
+          <p class="notice" data-d="graduated" hidden><b>Graduated.</b> This token now trades on the ANT CHAIN exchange, with its liquidity locked. <a class="link" data-d="swap" href="/swap/">Trade on the exchange →</a></p>
+          <form class="x-form" data-trade novalidate>
+            <div class="seg" role="tablist" aria-label="Buy or sell">
+              <button role="tab" type="button" data-side="buy" aria-selected="true">Buy</button>
+              <button role="tab" type="button" data-side="sell" aria-selected="false" tabindex="-1">Sell</button>
+            </div>
+            <div class="leg">
+              <div class="leg-head"><span class="label" data-t="label">You pay</span><button type="button" class="link-btn" data-t="max">Max</button></div>
+              <div class="amount"><label class="sr-only" for="lp-amt">Amount</label><input id="lp-amt" inputmode="decimal" autocomplete="off" placeholder="0"><span class="unit" data-t="unit">$ANTC</span></div>
+              <div class="leg-foot"><span>Balance <b data-t="bal">—</b></span><span data-t="out"></span></div>
+            </div>
+            <button class="btn btn-amber btn-block" type="submit" data-t="go">Connect wallet</button>
+            <p class="form-msg" role="status" aria-live="polite" data-t="msg"></p>
+          </form>
+        </section>
+
+        <section class="card" aria-label="Create a token">
+          <h2 class="side-title">Create a token</h2>
+          <form class="x-form" data-create novalidate>
+            <label class="lp-field"><span class="label">Name</span><input name="name" maxlength="64" autocomplete="off" placeholder="My Token" required></label>
+            <label class="lp-field"><span class="label">Ticker</span><input name="symbol" maxlength="16" autocomplete="off" placeholder="MYTKN" required></label>
+            <label class="lp-field"><span class="label">Description</span><textarea name="description" maxlength="600" rows="3" placeholder="What is it?"></textarea></label>
+            <label class="lp-field"><span class="label">Image URL (https)</span><input name="image" type="url" maxlength="300" autocomplete="off" placeholder="https://…"></label>
+            <label class="lp-field"><span class="label">Website or X link (optional)</span><input name="link" type="url" maxlength="300" autocomplete="off" placeholder="https://…"></label>
+            <label class="lp-field"><span class="label">First buy in <span data-lp-sym>$ANTC</span> (optional)</span><input name="buy" inputmode="decimal" autocomplete="off" placeholder="0"></label>
+            <p class="fine">Supply 1,000,000,000 · 800M sold on the curve · 200M go to the pool at graduation · trading fee <span data-lp-fee>1%</span> in <span data-lp-sym>$ANTC</span> · creation fee <span data-lp-cfee>0</span></p>
+            <button class="btn btn-amber btn-block" type="submit" data-c="go">Connect wallet</button>
+            <p class="form-msg" role="status" aria-live="polite" data-c="msg"></p>
+          </form>
+        </section>
+
+        <section class="card" data-lp-faucet hidden>
+          <h2 class="side-title">Free tANTC</h2>
+          <p class="muted-p">Testnet only: 100,000 tANTC a day per wallet, to try the launchpad. You also need a little tANT on ANT CHAIN Testnet for gas (get it on the <a class="link" href="/bridge/?net=testnet">bridge page</a>).</p>
+          <button class="btn btn-ghost btn-small" type="button" data-drip>Claim 100,000 tANTC</button>
+          <p class="form-msg" role="status" aria-live="polite" data-drip-msg></p>
+        </section>
+
+        <section class="card">
+          <h2 class="side-title">Before you buy</h2>
+          <p class="muted-p">Anyone can create a token here, including copies of real projects and tokens made to lose you money. ANT CHAIN does not review or endorse any of them. Check the creator and the contract address, and only spend what you can lose. Nothing here is investment advice.</p>
+          <p class="fine">Launchpad <code data-lp-addr>…</code> · <a class="link" href="https://github.com/AntChainL3/ant-chain/blob/main/chain/contracts/AntcLaunchpad.sol" target="_blank" rel="noopener">source ↗</a></p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a class="hp brand" href="/" aria-label="ANT CHAIN home" style="display:inline-flex">
+            <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span><span class="brand-name">ANT CHAIN</span>
+          </a>
+          <p class="muted" style="max-width:36ch">An independent Arbitrum Layer 3 on Robinhood Chain. Gas is the ANT Stock Token.</p>
+        </div>
+        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/launch/">Launch</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/" data-explorer>Explorer</a></li></ul></div>
+        <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
+        <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
+      </div>
+      <p class="foot-word display" aria-hidden="true">ANT CHAIN</p>
+      <div class="foot-legal">
+        <p>ANT CHAIN is independent and not affiliated with Anthropic, PBC, Robinhood Markets, Inc. or Offchain Labs. Names are used only to describe the assets and technology involved. Nothing on this site is investment advice or an offer of securities. Tokenized stocks carry market, issuer and regulatory risk and are not available everywhere.</p>
+        <p>© 2026 ANT CHAIN</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="picker" id="picker" aria-labelledby="picker-title">
+    <div class="picker-head"><h2 id="picker-title" class="label">Select a token</h2><button type="button" class="icon-btn" data-close-picker aria-label="Close">✕</button></div>
+    <div class="picker-body">
+      <label class="sr-only" for="picker-q">Search by symbol or paste an address</label>
+      <input id="picker-q" placeholder="Symbol or 0x address" autocomplete="off">
+      <ul id="picker-list"></ul>
+    </div>
+  </dialog>
+
+  <script type="module" src="../js/launch.js"></script>
+  <script type="module" src="../js/appchrome.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

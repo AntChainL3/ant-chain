@@ -28,6 +28,8 @@ Always check addresses against this page or [antchain.tech](https://antchain.tec
 | Wrapped tANT | `0xCaab57bf6F4AC057E2024C5778000fb377372548` |
 | tUSD (test token) | `0xA020932FB3D16836B0B8741370a5D4B123eEc43c` |
 | tANT / tUSD pool | `0x98B8313367716D1A672194DF10AfB8Bc7cfBdB0a` |
+| Launchpad (AntcLaunchpad) | `0x9b8Ac46DCDe0EA76DaF48a3f370C6DA8A04586a8` |
+| Test ANTC (tANTC, launchpad quote token) | `0xf0e40c26482adcd2d0e7eb3485e3208f96b4c277` |
 | ArbSys (withdrawals) | `0x0000000000000000000000000000000000000064` |
 
 Pair init code hash: `0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f`
