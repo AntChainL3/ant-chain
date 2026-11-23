@@ -27,6 +27,7 @@ const padAbi = parseAbi([
   "function tokensPage(uint256 offset, uint256 limit) view returns (address[])",
   "function feeBps() view returns (uint16)",
   "function createFee() view returns (uint256)",
+  "function graduationTarget() view returns (uint256)",
 ]);
 const Launched = parseAbiItem("event Launched(address indexed token, address indexed creator, string name, string symbol, string metadata, address pair, uint256 target)");
 const erc20 = parseAbi([
@@ -353,6 +354,7 @@ $("[data-drip]")?.addEventListener("click", async () => {
 async function start() {
   read("feeBps").then((f) => { feeBps = BigInt(f); $$("[data-lp-fee]").forEach((el) => { el.textContent = `${Number(f) / 100}%`; }); }).catch(warn);
   read("createFee").then((c) => { $$("[data-lp-cfee]").forEach((el) => { el.textContent = c ? `${fmt(c, 2)} ${SYM}` : "none"; }); }).catch(warn);
+  read("graduationTarget").then((g) => { $$("[data-lp-target]").forEach((el) => { el.textContent = fmt(g, 0); }); }).catch(warn);
   try { await loadAll(); } catch (e) { $("[data-lp-list]").replaceChildren(Object.assign(document.createElement("li"), { className: "empty", textContent: `Could not read the launchpad: ${friendlyError(e)}` })); return; }
   const q = new URLSearchParams(location.search).get("t");
   if (q && isAddress(q) && tokens.has(getAddress(q))) select(getAddress(q), false).catch(warn);
