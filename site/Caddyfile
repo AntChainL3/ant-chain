@@ -36,6 +36,14 @@
 		reverse_proxy http://credits.railway.internal:8080
 	}
 
+	# launchpad token images (upload + content-addressed files)
+	handle_path /media/* {
+		request_body {
+			max_size 400KB
+		}
+		reverse_proxy http://media.railway.internal:8080
+	}
+
 	# explorer: clean URLs for blocks, transactions and addresses
 	handle /explorer/* {
 		try_files {path} {path}/ /explorer/index.html

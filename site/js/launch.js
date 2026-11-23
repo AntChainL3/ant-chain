@@ -225,6 +225,57 @@ $("[data-trade]").addEventListener("submit", async (e) => {
   } finally { btn.disabled = false; }
 });
 
+// ---------------------------------------------------------------- token image (uploaded, not a link)
+// The picture is cropped square and resized to 256 x 256 in the browser, then uploaded to /media, which
+// names it by its SHA-256: the URL saved on chain pins the exact image.
+const IMG_SIZE = 256;
+let imageBlob = null, imageUrl = null;
+const imgInput = $("[data-img-input]"), imgPreview = $("[data-img-preview]"), imgClear = $("[data-img-clear]"), imgNote = $("[data-img-note]");
+const IMG_NOTE = imgNote.textContent;
+
+async function squareImage(file) {
+  const bmp = await createImageBitmap(file);
+  const side = Math.min(bmp.width, bmp.height);
+  const c = document.createElement("canvas");
+  c.width = c.height = IMG_SIZE;
+  c.getContext("2d").drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, IMG_SIZE, IMG_SIZE);
+  bmp.close?.();
+  const toBlob = (type, q) => new Promise((res) => c.toBlob(res, type, q));
+  let blob = await toBlob("image/webp", 0.85);
+  if (!blob || blob.type !== "image/webp") blob = await toBlob("image/jpeg", 0.88); // browsers without WebP encoding
+  if (!blob) throw new Error("This image could not be read.");
+  return blob;
+}
+function showPreview() {
+  if (imageUrl) URL.revokeObjectURL(imageUrl);
+  imageUrl = imageBlob ? URL.createObjectURL(imageBlob) : null;
+  imgPreview.replaceChildren(imageUrl ? Object.assign(document.createElement("img"), { src: imageUrl, alt: "" }) : Object.assign(document.createElement("span"), { textContent: "No image" }));
+  imgClear.hidden = !imageBlob;
+}
+imgInput.addEventListener("change", async () => {
+  const file = imgInput.files?.[0];
+  imgNote.textContent = IMG_NOTE; imgNote.dataset.kind = "";
+  if (!file) return;
+  try {
+    if (!/^image\/(png|jpeg|webp|gif)$/.test(file.type)) throw new Error("Choose a PNG, JPEG, WebP or GIF image.");
+    if (file.size > 10 * 1024 * 1024) throw new Error("That image is over 10 MB.");
+    imageBlob = await squareImage(file);
+    imgNote.textContent = `Ready: ${IMG_SIZE} × ${IMG_SIZE}, ${Math.max(1, Math.round(imageBlob.size / 1024))} KB. Uploaded when you create the token.`;
+  } catch (err) {
+    imageBlob = null;
+    imgNote.textContent = err.message || "This image could not be read."; imgNote.dataset.kind = "bad";
+  }
+  showPreview();
+});
+imgClear.addEventListener("click", () => { imageBlob = null; imgInput.value = ""; imgNote.textContent = IMG_NOTE; showPreview(); });
+
+async function uploadImage(blob) {
+  const r = await fetch("/media/upload", { method: "POST", headers: { "content-type": blob.type }, body: blob });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || !j.url) throw new Error(j.error || "The image upload failed. Try again.");
+  return j.url;
+}
+
 // ---------------------------------------------------------------- create
 $("[data-create]").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -232,12 +283,14 @@ $("[data-create]").addEventListener("submit", async (e) => {
   if (!state.address) { connect().catch((err) => status(msg, friendlyError(err), "bad")); return; }
   const name = f.name.value.trim(), symbol = f.symbol.value.trim().replace(/^\$/, "").toUpperCase();
   if (!name || !symbol) { status(msg, "Name and ticker are required.", "bad"); return; }
-  const image = f.image.value.trim(), link = f.link.value.trim();
-  if ((image && !safeUrl(image)) || (link && !safeUrl(link))) { status(msg, "Links must start with https://", "bad"); return; }
-  const meta = JSON.stringify({ description: f.description.value.trim(), ...(image ? { image } : {}), ...(link ? { link } : {}) });
+  const link = f.link.value.trim();
+  if (link && !safeUrl(link)) { status(msg, "The link must start with https://", "bad"); return; }
   const buyAmt = amountOf(f.buy.value);
   btn.disabled = true;
   try {
+    let image = "";
+    if (imageBlob) { status(msg, "Uploading the image…"); image = await uploadImage(imageBlob); }
+    const meta = JSON.stringify({ description: f.description.value.trim(), ...(image ? { image } : {}), ...(link ? { link } : {}) });
     const cFee = await read("createFee");
     const need = cFee + buyAmt;
     if (need > 0n) {
@@ -254,6 +307,7 @@ $("[data-create]").addEventListener("submit", async (e) => {
     }
     status(msg, created ? `Created $${symbol} at ${short(created)}.` : "Created.", "ok");
     f.reset();
+    imageBlob = null; imgNote.textContent = IMG_NOTE; showPreview();
     await loadAll();
     if (created) select(created).catch(warn);
   } catch (err) {

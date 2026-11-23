@@ -133,7 +133,17 @@
             <label class="lp-field"><span class="label">Name</span><input name="name" maxlength="64" autocomplete="off" placeholder="My Token" required></label>
             <label class="lp-field"><span class="label">Ticker</span><input name="symbol" maxlength="16" autocomplete="off" placeholder="MYTKN" required></label>
             <label class="lp-field"><span class="label">Description</span><textarea name="description" maxlength="600" rows="3" placeholder="What is it?"></textarea></label>
-            <label class="lp-field"><span class="label">Image URL (https)</span><input name="image" type="url" maxlength="300" autocomplete="off" placeholder="https://…"></label>
+            <div class="lp-field">
+              <span class="label" id="lp-img-label">Image</span>
+              <div class="lp-upload">
+                <span class="lp-upload-preview" data-img-preview aria-hidden="true"><span>No image</span></span>
+                <div class="lp-upload-side">
+                  <label class="btn btn-ghost btn-small lp-upload-btn">Choose image<input type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif" aria-labelledby="lp-img-label" data-img-input></label>
+                  <button type="button" class="link-btn" data-img-clear hidden>Remove</button>
+                  <p class="fine" data-img-note>PNG, JPEG, WebP or GIF. Cropped square to 256 × 256.</p>
+                </div>
+              </div>
+            </div>
             <label class="lp-field"><span class="label">Website or X link (optional)</span><input name="link" type="url" maxlength="300" autocomplete="off" placeholder="https://…"></label>
             <label class="lp-field"><span class="label">First buy in <span data-lp-sym>$ANTC</span> (optional)</span><input name="buy" inputmode="decimal" autocomplete="off" placeholder="0"></label>
             <p class="fine">Supply 1,000,000,000 · 800M sold on the curve · 200M go to the pool at graduation · trading fee <span data-lp-fee>1%</span> in <span data-lp-sym>$ANTC</span> · creation fee <span data-lp-cfee>0</span></p>

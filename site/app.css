@@ -281,3 +281,12 @@ dialog.picker { background: linear-gradient(155deg, rgba(28,28,28,.92), rgba(14,
 .lp-field input:focus-visible, .lp-field textarea:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
 [data-trade] { margin-top: 14px; }
 [data-trade] .seg { justify-self: start; }
+.lp-upload { display: flex; gap: 14px; align-items: center; }
+.lp-upload-preview { width: 72px; height: 72px; flex: none; border-radius: 14px; overflow: hidden; display: grid; place-items: center; border: 1px dashed rgba(255,255,255,.18); background: rgba(0,0,0,.38); color: var(--night-mute, #8a8a8a); font: 400 .7rem var(--mono); text-align: center; }
+.lp-upload-preview img { width: 100%; height: 100%; object-fit: cover; }
+.lp-upload-side { display: grid; gap: 6px; justify-items: start; min-width: 0; }
+.lp-upload-side .fine { margin: 0; }
+.lp-upload-side .fine[data-kind="bad"] { color: #ff8a80; }
+.lp-upload-btn { position: relative; overflow: hidden; cursor: pointer; }
+.lp-upload-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.lp-upload-btn:focus-within { outline: 2px solid var(--amber); outline-offset: 2px; }
