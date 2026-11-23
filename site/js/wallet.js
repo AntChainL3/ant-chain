@@ -104,6 +104,14 @@ export function walletFor(id) {
   return createWalletClient({ account: state.address, chain: id === L3.id ? antChain : robinhood, transport: custom(prov()) });
 }
 
+// Ask the connected wallet to sign a plain text message (free, no transaction, works on any network).
+export async function signMessage(message) {
+  if (!state.address) throw new Error("Connect a wallet first.");
+  const p = prov();
+  if (!p) throw new Error("No wallet found.");
+  return createWalletClient({ account: state.address, transport: custom(p) }).signMessage({ account: state.address, message });
+}
+
 // Send a contract write on chain `id` and wait for the receipt on our own RPC.
 export async function write(id, req, onHash) {
   await ensureChain(id);

@@ -31,6 +31,11 @@
 		reverse_proxy http://faucet.railway.internal:8080
 	}
 
+	# gas credits service (mainnet): turns $ANTC staking credits into gas on ANT CHAIN
+	handle_path /api/credits* {
+		reverse_proxy http://credits.railway.internal:8080
+	}
+
 	# explorer: clean URLs for blocks, transactions and addresses
 	handle /explorer/* {
 		try_files {path} {path}/ /explorer/index.html

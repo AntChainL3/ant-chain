@@ -28,7 +28,15 @@ Only the two addresses above are ours. Other tokens with the name "ANT Chain" ar
 
 Credits are **token-days**: 1 $ANTC staked for 1 day earns 1 credit. 100 $ANTC staked for 3 days earns 300. Adding or removing $ANTC changes the rate from that moment; credits already earned stay.
 
-When credit spending opens on ANT CHAIN (coming soon), credits pay for gas there. Every use is recorded on chain by the contract (`spentOf`), so anyone can check it.
+## Use credits: claim gas
+
+On the Stake page, the **Claim gas on ANT CHAIN** card turns credits into gas:
+
+1. Press **Claim gas**. Your wallet asks you to **sign a message**. It is free and is not a transaction; it only proves the wallet is yours, so nobody can spend your credits.
+2. The credits service checks your credits on chain, records the use with `spendCredits` on the staking contract, and sends ANT to the same address on ANT CHAIN.
+3. One claim per wallet per day, and a daily limit for everyone together. The card shows how many credits a claim costs and how much gas it gives.
+
+Every use is recorded on chain (`spentOf` and the `CreditsSpent` event), so anyone can check it. The service's code is [`chain/scripts/credits.js`](../chain/scripts/credits.js).
 
 ## Unstake
 

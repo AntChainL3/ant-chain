@@ -114,12 +114,21 @@
       </section>
 
       <aside class="side">
+        <div class="card" data-claim>
+          <p class="label">Use your credits</p>
+          <h2 class="side-title">Claim gas on ANT CHAIN</h2>
+          <p class="muted-p" data-claim-terms>Checking…</p>
+          <dl class="kv-mini"><dt>Your credits</dt><dd data-claim-credits>—</dd><dt>Gas left today</dt><dd data-claim-budget>—</dd></dl>
+          <button class="btn btn-amber btn-small" type="button" data-claim-go disabled>Claim gas</button>
+          <p class="form-msg" role="status" aria-live="polite" data-claim-msg></p>
+          <p class="fine">You sign a message to prove the wallet is yours (free, no transaction). The credits used are recorded on chain, and the gas arrives at the same address on ANT CHAIN.</p>
+        </div>
         <div class="card">
           <h2 class="side-title">How credits work</h2>
           <ol class="side-steps">
             <li><b>Stake.</b> Approve once, then stake any amount. Credits start right away.</li>
             <li><b>Earn.</b> Credits are token-days: 100 staked for 3 days is 300. They keep counting every second.</li>
-            <li><b>Use.</b> When credit spending opens on ANT CHAIN (coming soon), credits pay for your transactions there. Each use is recorded on chain.</li>
+            <li><b>Use.</b> Claim gas on ANT CHAIN with your credits, once a day. Each use is recorded on chain.</li>
             <li><b>Leave any time.</b> Unstaking is never blocked, and earned credits are kept.</li>
           </ol>
         </div>
@@ -170,6 +179,7 @@
   </dialog>
 
   <script type="module" src="../js/stake.js"></script>
+  <script type="module" src="../js/credits-claim.js"></script>
   <script type="module" src="../js/appchrome.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" defer></script>
   <script src="/js/site.js" defer></script>
