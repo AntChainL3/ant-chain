@@ -4,7 +4,7 @@
 //   /explorer/[testnet/]block/<n|hash>   block detail
 //   /explorer/[testnet/]tx/<hash>        transaction detail
 //   /explorer/[testnet/]address/<addr>   address detail
-import { PROFILES } from "./config.js";
+import { PROFILES, MAINNET_OPEN } from "./config.js";
 
 const path = location.pathname.replace(/\/+$/, "");
 const NET = /\/explorer\/testnet(\/|$)/.test(path + "/") ? "testnet" : "mainnet";
@@ -83,7 +83,7 @@ function chrome() {
   if (toggle) {
     const rest = path.replace(/^\/explorer(\/testnet)?/, "");
     toggle.innerHTML = `
-      <a href="/explorer${rest}" class="${NET === "mainnet" ? "on" : ""}"><i></i>Mainnet <em>paused</em></a>
+      <a href="/explorer${rest}" class="${NET === "mainnet" ? "on" : ""}"><i></i>Mainnet <em>${MAINNET_OPEN ? "live" : "soon"}</em></a>
       <a href="/explorer/testnet${rest}" class="${NET === "testnet" ? "on" : ""}"><i></i>Testnet <em>live</em></a>`;
   }
   $("[data-net-name]").textContent = P.L3.name;
@@ -215,9 +215,9 @@ async function route() {
   const m = rest.match(/^\/(block|tx|address)\/([^/]+)$/);
   try {
     if (NET === "mainnet") {
-      // mainnet is paused: its node is stopped, data and balances are kept
-      const alive = await rpc("eth_chainId").then(() => true).catch(() => false);
-      if (!alive) { app.innerHTML = `<p class="notice"><b>Mainnet is paused.</b> The ${esc(P.L3.name)} node is stopped while the team tests on testnet; its data and every balance are kept. <a href="/explorer/testnet${rest}">Open the testnet explorer →</a></p>`; return; }
+      // until mainnet opens, the mainnet explorer shows a notice whether or not the node is running
+      const alive = MAINNET_OPEN && await rpc("eth_chainId").then(() => true).catch(() => false);
+      if (!alive) { app.innerHTML = `<p class="notice"><b>Mainnet is not open yet.</b> ${esc(P.L3.name)} mainnet opens after testnet, and it will be announced on this site and on X. Until then, try everything on testnet. <a href="/explorer/testnet${rest}">Open the testnet explorer →</a></p>`; return; }
     }
     if (!m) await home();
     else if (m[1] === "block") await blockView(m[2]);

@@ -66,7 +66,7 @@ Your withdrawal then appears under **Your withdrawals** with a **countdown**. It
 
 1. the block with your withdrawal is posted to Robinhood Chain in a batch,
 2. the validator posts a claim (an *assertion*) that includes it,
-3. that claim survives the challenge window (150 parent blocks on testnet).
+3. that claim survives the challenge window (150 Ethereum blocks, about 30 minutes, on testnet).
 
 Altogether this is usually **45 to 60 minutes** on testnet. (On mainnet the window is about **7 days**, the same as Arbitrum One.) When the countdown ends, the status changes to *Finalizing on chain* and then a **Claim** button appears. Press it and confirm in your wallet; your tANT is released on Robinhood Chain Testnet.
 

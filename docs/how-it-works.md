@@ -35,8 +35,8 @@ Posting batches costs ETH on Robinhood Chain, but users pay fees in ANT. The **f
 
 | | Challenge window | Typical total wait |
 |---|---|---|
-| Testnet | 150 parent blocks | 45 to 60 minutes |
-| Mainnet | 50,400 parent blocks | about 7 days |
+| Testnet | 150 Ethereum blocks (about 30 minutes) | 45 to 60 minutes |
+| Mainnet | 50,400 Ethereum blocks (about 7 days) | about 7 days |
 
 The wait is the security model, not a delay we can shorten.
 

@@ -1,5 +1,5 @@
 // ANT CHAIN public configuration. Addresses only, never keys.
-// Two profiles; ACTIVE picks the one the site uses. Mainnet is paused (its data is kept), testnet is live.
+// Two profiles; ACTIVE picks the one the site uses. Testnet is live; mainnet is deployed but not open yet (see MAINNET_OPEN).
 const PROFILES = {
   testnet: {
     NETWORK: "testnet",
@@ -43,6 +43,8 @@ const PROFILES = {
 
 export { PROFILES };
 export const ACTIVE = "testnet";
+// false: mainnet runs but is not announced; the mainnet explorer shows "not open yet" even when the node is up
+export const MAINNET_OPEN = false;
 const P = PROFILES[ACTIVE];
 export const NETWORK = P.NETWORK;
 export const TOKEN = P.TOKEN;
