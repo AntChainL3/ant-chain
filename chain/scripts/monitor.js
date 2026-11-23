@@ -3,7 +3,7 @@
 //
 // Env:
 //   NETWORK=mainnet, PARENT_RPC (archive RPC for Robinhood Chain), L3_RPC
-//   KEEPER_HEALTH_URL (default http://keeper.railway.internal:8080/health)
+//   KEEPER_HEALTH_URL (the keeper's /health endpoint; unset = skip the keeper check)
 //   TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID and/or DISCORD_WEBHOOK_URL (optional)
 import http from "node:http";
 import { createPublicClient, http as viemHttp, parseAbi, formatEther, parseEther } from "viem";
@@ -23,7 +23,7 @@ const ADDR = {
 };
 const CFG = {
   l3Rpc: process.env.L3_RPC || "https://rpc.antchain.tech",
-  keeperHealth: process.env.KEEPER_HEALTH_URL || "http://keeper.railway.internal:8080/health",
+  keeperHealth: process.env.KEEPER_HEALTH_URL || null, // e.g. the keeper's /health on Railway's private network; unset = skip the check
   intervalMs: Number(process.env.MONITOR_INTERVAL_MS || 120_000),
   minEth: {
     batchPoster: parseEther(process.env.MIN_ETH_BATCH_POSTER || "0.003"),
@@ -137,7 +137,7 @@ async function runChecks() {
   });
 
   // keeper + pricer
-  await safe("keeper", "Keeper health", async () => {
+  if (CFG.keeperHealth) await safe("keeper", "Keeper health", async () => {
     const r = await fetch(CFG.keeperHealth, { signal: AbortSignal.timeout(10_000) });
     const j = await r.json().catch(() => ({}));
     add("keeper", "Keeper health", r.ok, `HTTP ${r.status}${j.lastError ? `, last error: ${j.lastError.message}` : ""}${j.frozen ? `, frozen: ${j.frozen}` : ""}`);

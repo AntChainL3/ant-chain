@@ -85,8 +85,10 @@ function chrome() {
   if (toggle) {
     const rest = path.replace(/^\/explorer(\/testnet)?/, "");
     toggle.innerHTML = `
-      <a href="/explorer${rest}" class="${NET === "mainnet" ? "on" : ""}"><i></i>Mainnet <em>${MAINNET_OPEN ? "live" : "soon"}</em></a>
-      <a href="/explorer/testnet${rest}" class="${NET === "testnet" ? "on" : ""}"><i></i>Testnet <em>live</em></a>`;
+      <a class="${NET === "mainnet" ? "on" : ""}"><i></i>Mainnet <em>${MAINNET_OPEN ? "live" : "soon"}</em></a>
+      <a class="${NET === "testnet" ? "on" : ""}"><i></i>Testnet <em>live</em></a>`;
+    const [toMain, toTest] = toggle.querySelectorAll("a"); // hrefs set as properties, never parsed as HTML
+    toMain.href = `/explorer${rest}`; toTest.href = `/explorer/testnet${rest}`;
   }
   $("[data-net-name]").textContent = P.L3.name;
   const f = $("[data-search]");
@@ -215,21 +217,30 @@ async function route() {
   chrome();
   const rest = path.replace(/^\/explorer(\/testnet)?/, "");
   const m = rest.match(/^\/(block|tx|address)\/([^/]+)$/);
-  // only well-formed ids reach the views: block number or hash, tx hash, address
+  // Only well-formed ids reach the views, and they are rebuilt from numbers, so nothing typed in the URL is rendered.
   const ID_OK = { block: /^(\d{1,12}|0x[0-9a-fA-F]{64})$/, tx: /^0x[0-9a-fA-F]{64}$/, address: /^0x[0-9a-fA-F]{40}$/ };
+  const hexOf = (s, len) => "0x" + BigInt(s).toString(16).padStart(len, "0");
+  const CANON = { block: (s) => (s.startsWith("0x") ? hexOf(s, 64) : String(Number(s))), tx: (s) => hexOf(s, 64), address: (s) => hexOf(s, 40) };
+  const kind = m ? m[1] : null;
+  const id = m && ID_OK[kind].test(m[2]) ? CANON[kind](m[2]) : null;
+  const notice = (title, text) => { const p = document.createElement("p"); p.className = "notice"; const b = document.createElement("b"); b.textContent = title; p.append(b, " ", text); app.replaceChildren(p); return p; };
   try {
     if (NET === "mainnet") {
       // until mainnet opens, the mainnet explorer shows a notice whether or not the node is running
       const alive = MAINNET_OPEN && await rpc("eth_chainId").then(() => true).catch(() => false);
-      if (!alive) { app.innerHTML = `<p class="notice"><b>Mainnet is not open yet.</b> ${esc(P.L3.name)} mainnet opens after testnet, and it will be announced on this site and on X. Until then, try everything on testnet. <a href="/explorer/testnet${esc(rest)}">Open the testnet explorer →</a></p>`; return; }
+      if (!alive) {
+        const p = notice("Mainnet is not open yet.", `${P.L3.name} mainnet opens after testnet, and it will be announced on this site and on X. Until then, try everything on testnet. `);
+        const a = document.createElement("a"); a.href = id ? `/explorer/testnet/${kind}/${id}` : "/explorer/testnet/"; a.textContent = "Open the testnet explorer →"; p.append(a);
+        return;
+      }
     }
-    if (m && !ID_OK[m[1]].test(m[2])) notFound("That is not a valid block, transaction or address.");
+    if (m && !id) notFound("That is not a valid block, transaction or address.");
     else if (!m) await home();
-    else if (m[1] === "block") await blockView(m[2]);
-    else if (m[1] === "tx") await txView(m[2]);
-    else await addressView(m[2]);
+    else if (kind === "block") await blockView(id);
+    else if (kind === "tx") await txView(id);
+    else await addressView(id);
   } catch (e) {
-    app.innerHTML = `<p class="notice"><b>Could not read ${esc(P.L3.name)}.</b> ${esc(e.message || String(e))}</p>`;
+    notice(`Could not read ${P.L3.name}.`, e.message || String(e));
   }
 }
 route().catch(warn);
