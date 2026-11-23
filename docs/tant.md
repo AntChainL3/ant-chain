@@ -64,7 +64,7 @@ There are no transfer hooks, fees, pauses or blocklists. The real ANT token on m
 
 ## FAQ
 
-**Is tANT the same as $ANTc?** No. tANT is a test stand-in for ANT, the gas token. $ANTc is the planned ANT CHAIN token, which has not launched.
+**Is tANT the same as $ANTC?** No. tANT is a test stand-in for ANT, the gas token. $ANTC is the planned ANT CHAIN token, which has not launched.
 
 **Will tANT be converted or airdropped into anything?** No. Testnet balances carry no rights and are not converted into anything.
 

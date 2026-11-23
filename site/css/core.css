@@ -57,14 +57,6 @@ code, kbd, pre { font-family: var(--mono); }
 .skip:focus { top: 12px; }
 .wrap { max-width: var(--w); margin: 0 auto; padding: 0 var(--gut); }
 
-/* ---------- viewport frame: corner brackets like an instrument screen ---------- */
-.vf { position: fixed; inset: 10px; pointer-events: none; z-index: 60; }
-.vf i { position: absolute; width: 18px; height: 18px; border: 0 solid var(--ink); opacity: .55; }
-.vf i:nth-child(1) { left: 0; top: 0; border-width: 1.5px 0 0 1.5px; }
-.vf i:nth-child(2) { right: 0; top: 0; border-width: 1.5px 1.5px 0 0; }
-.vf i:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 1.5px 1.5px; }
-.vf i:nth-child(4) { right: 0; bottom: 0; border-width: 0 1.5px 1.5px 0; }
-@media (max-width: 700px) { .vf { display: none; } }
 
 /* ---------- type ---------- */
 .display { font-family: var(--display); font-weight: 800; font-stretch: 118%; letter-spacing: -.035em; line-height: .86; text-transform: uppercase; }

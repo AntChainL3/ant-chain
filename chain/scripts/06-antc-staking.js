@@ -1,5 +1,5 @@
-// Deploys ANTcStaking (stake $ANTc on Robinhood Chain, earn gas credits for ANT CHAIN).
-//   node scripts/06-antc-staking.js --testnet                     rehearsal: tANT stands in for $ANTc, then stake/unstake check
+// Deploys ANTcStaking (stake $ANTC on Robinhood Chain, earn gas credits for ANT CHAIN).
+//   node scripts/06-antc-staking.js --testnet                     rehearsal: tANT stands in for $ANTC, then stake/unstake check
 //   ANTC_TOKEN=0x... node scripts/06-antc-staking.js --mainnet    real deployment on Robinhood Chain (asks you to type "deploy mainnet")
 // The owner is the DEPLOYER key. The owner can only choose the redeemer and pause NEW stakes;
 // it can never move staked tokens or block unstaking.
@@ -20,10 +20,10 @@ const erc = parseAbi([
 
 let tokenAddr;
 if (NETWORK === "mainnet") {
-  if (!isAddress(process.env.ANTC_TOKEN || "")) throw new Error("Set ANTC_TOKEN to the $ANTc contract address on Robinhood Chain.");
+  if (!isAddress(process.env.ANTC_TOKEN || "")) throw new Error("Set ANTC_TOKEN to the $ANTC contract address on Robinhood Chain.");
   tokenAddr = getAddress(process.env.ANTC_TOKEN);
 } else {
-  tokenAddr = getAddress(process.env.ANTC_TOKEN || dep.nativeToken); // tANT stands in for $ANTc on testnet
+  tokenAddr = getAddress(process.env.ANTC_TOKEN || dep.nativeToken); // tANT stands in for $ANTC on testnet
 }
 const code = await pub.getBytecode({ address: tokenAddr });
 if (!code || code === "0x") throw new Error(`No contract at ${tokenAddr} on ${NETWORK}.`);

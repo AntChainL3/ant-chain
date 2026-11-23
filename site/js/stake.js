@@ -1,4 +1,4 @@
-// $ANTc staking page: stake on Robinhood Chain, watch gas credits grow, unstake any time.
+// $ANTC staking page: stake on Robinhood Chain, watch gas credits grow, unstake any time.
 // Network and contract come from STAKING in config.js (test mode uses tANT on Robinhood Chain Testnet).
 import { STAKING } from "./config.js";
 import { viem, state, onWallet, connect, friendlyError, fmt, short } from "./wallet.js";
