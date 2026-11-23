@@ -1,7 +1,7 @@
 // $ANTC staking page: stake on Robinhood Chain, watch gas credits grow, unstake any time.
 // Network and contract come from STAKING in config.js ($ANTC on Robinhood Chain; test: true switches to the tANT rehearsal).
 import { STAKING } from "./config.js";
-import { viem, state, onWallet, connect, friendlyError, fmt, short } from "./wallet.js";
+import { viem, state, onWallet, connect, friendlyError, fmt, short, isUnauthorized } from "./wallet.js";
 const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const { createPublicClient, createWalletClient, custom, http, fallback, defineChain, parseAbi, parseUnits, maxUint256 } = viem;
@@ -76,12 +76,24 @@ tabs.forEach((t) => t.addEventListener("click", () => {
   mode = t.dataset.mode;
   tabs.forEach((o) => { const on = o === t; o.setAttribute("aria-selected", on); o.tabIndex = on ? 0 : -1; });
   $("#amount").value = "";
+  clearPct();
   say("");
   renderButton();
 }));
 const input = $("#amount");
-input.addEventListener("input", renderButton);
-$("[data-max]").addEventListener("click", () => { input.value = viem.formatUnits(mode === "stake" ? me.wallet : me.staked, 18); renderButton(); });
+const pctBtns = $$("[data-pct] button");
+const clearPct = () => pctBtns.forEach((b) => b.setAttribute("aria-pressed", "false"));
+input.addEventListener("input", () => { input.value = input.value.replace(",", ".").replace(/[^0-9.]/g, ""); clearPct(); renderButton(); });
+// 10/25/50/75/100% of the wallet's $ANTC (stake) or of what is staked (unstake), rounded down
+pctBtns.forEach((b) => b.addEventListener("click", () => {
+  if (!state.address) { say("Connect a wallet first.", "bad"); return; }
+  const base = mode === "stake" ? me.wallet : me.staked;
+  if (base <= 0n) { say(mode === "stake" ? `No ${SYM} in this wallet on ${C.name}.` : "Nothing staked yet.", "bad"); return; }
+  input.value = viem.formatUnits((base * BigInt(b.dataset.p)) / 100n, 18);
+  pctBtns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  say("");
+  renderButton();
+}));
 
 const go = $("[data-go]");
 function amount() { try { const v = input.value.trim(); return v ? parseUnits(v, 18) : 0n; } catch { return -1n; } }
@@ -117,11 +129,26 @@ async function onChain() {
     } else throw e;
   }
 }
+// A wallet that has not allowed this site on the staking chain answers 4100 (new MetaMask grants sites access
+// per network). Ask for it once (switching prompts for it; failing that, ask for permissions again) and retry.
+const NOT_ALLOWED = `Your wallet has not allowed antchain.tech to use ${C.name} yet. Open your wallet, allow this site on ${C.name} (or disconnect and connect again), then try once more.`;
+async function grantChain() {
+  const p = prov();
+  try { await p.request({ method: "wallet_switchEthereumChain", params: [{ chainId: C.hex }] }); return; } catch (e) {
+    if (e && (e.code === 4902 || e.data?.originalError?.code === 4902)) { await onChain(); return; }
+    if (!isUnauthorized(e)) throw e;
+  }
+  await p.request({ method: "wallet_requestPermissions", params: [{ eth_accounts: {} }] });
+}
+async function permitted(fn) {
+  try { return await fn(); } catch (e) { if (!isUnauthorized(e)) throw e; }
+  try { await grantChain(); } catch (e) { if (e?.code === 4001) throw e; throw new Error(NOT_ALLOWED); }
+  try { return await fn(); } catch (e) { if (isUnauthorized(e)) throw new Error(NOT_ALLOWED); throw e; }
+}
 async function send(req, label) {
-  await onChain();
-  const w = createWalletClient({ account: state.address, chain, transport: custom(prov()) });
+  await permitted(onChain);
   say(`${label}: confirm in your wallet…`);
-  const hash = await w.writeContract({ ...req, account: state.address, chain });
+  const hash = await permitted(() => createWalletClient({ account: state.address, chain, transport: custom(prov()) }).writeContract({ ...req, account: state.address, chain }));
   say(`${label}: waiting for ${C.name}…`);
   const r = await pub.waitForTransactionReceipt({ hash, timeout: 180_000 });
   if (r.status !== "success") throw new Error(`Transaction reverted (${hash.slice(0, 10)}…)`);
@@ -143,6 +170,7 @@ go.addEventListener("click", async () => {
       say(`Unstaked ${input.value} ${SYM}. Credits you earned stay yours.`, "ok");
     }
     input.value = "";
+    clearPct();
   } catch (e) {
     say(friendlyError(e), "bad");
   }
