@@ -7,6 +7,10 @@
 <p align="center">
   <a href="https://github.com/AntChainL3/ant-chain/actions/workflows/ci.yml"><img src="https://github.com/AntChainL3/ant-chain/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=AntChainL3_ant-chain"><img src="https://sonarcloud.io/api/project_badges/measure?project=AntChainL3_ant-chain&metric=alert_status" alt="Quality gate"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=AntChainL3_ant-chain"><img src="https://sonarcloud.io/api/project_badges/measure?project=AntChainL3_ant-chain&metric=security_rating" alt="Security rating"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=AntChainL3_ant-chain"><img src="https://sonarcloud.io/api/project_badges/measure?project=AntChainL3_ant-chain&metric=reliability_rating" alt="Reliability rating"></a>
+  <a href="https://sonarcloud.io/summary/new_code?id=AntChainL3_ant-chain"><img src="https://sonarcloud.io/api/project_badges/measure?project=AntChainL3_ant-chain&metric=sqale_rating" alt="Maintainability rating"></a>
 </p>
 
 <p align="center">
@@ -14,7 +18,8 @@
   <a href="https://antchain.tech">Website</a> ·
   <a href="https://antchain.tech/bridge/">Bridge</a> ·
   <a href="https://antchain.tech/swap/">Swap</a> ·
-  <a href="https://antchain.tech/explorer/testnet/">Explorer</a> ·
+  <a href="https://antchain.tech/launch/">Launchpad</a> ·
+  <a href="https://antchain.tech/explorer/">Explorer</a> ·
   <a href="https://antchain.tech/docs/">Docs</a> ·
   <a href="https://x.com/antchainl3">X</a>
 </p>
