@@ -110,7 +110,8 @@ export const erc20Abi = [
 export const CHAINLINK_ETH_USD_MAINNET = "0x78F3556b67E17Df817D51Ef5a990cDaF09E8d3A9";
 
 const SETTINGS = {
-  mainnet: { parentChain: rhMainnet, rpc: process.env.PARENT_RPC || rhMainnet.rpcUrls.default.http[0], chainId: 26800, chainName: "ANT CHAIN", nativeToken: ANT_TOKEN, ethUsdFeed: CHAINLINK_ETH_USD_MAINNET, deploymentFile: "deployment.mainnet.json" },
+  // the official Robinhood RPC does not answer from some networks (ISP DNS), so scripts default to dRPC
+  mainnet: { parentChain: rhMainnet, rpc: process.env.PARENT_RPC || "https://robinhood.drpc.org", chainId: 26800, chainName: "ANT CHAIN", nativeToken: ANT_TOKEN, ethUsdFeed: CHAINLINK_ETH_USD_MAINNET, deploymentFile: "deployment.mainnet.json" },
   fork: { parentChain: rhMainnet, rpc: FORK_RPC, chainId: 26800, chainName: "ANT CHAIN (fork rehearsal)", nativeToken: ANT_TOKEN, ethUsdFeed: CHAINLINK_ETH_USD_MAINNET, deploymentFile: "deployment.fork.json" },
   testnet: { parentChain: rhTestnet, rpc: process.env.PARENT_RPC || rhTestnet.rpcUrls.default.http[0], chainId: 26801, chainName: "ANT CHAIN Testnet", nativeToken: null, ethUsdFeed: process.env.TESTNET_ETH_USD_FEED || null, deploymentFile: "deployment.testnet.json" },
 };
@@ -121,6 +122,19 @@ export const parentChain = S.parentChain;
 
 const transport = http(S.rpc, { timeout: 120_000 });
 export const parentPublicClient = createPublicClient({ chain: parentChain, transport });
+
+// Mainnet scripts run from a terminal check the parent RPC first: it must answer as Robinhood Chain (4663)
+// and see the ANT token. A wrong or blocked RPC otherwise shows up later as confusing "returned no data" errors.
+if (NETWORK === "mainnet" && !process.env.RAILWAY_ENVIRONMENT) {
+  const fail = (why) => {
+    console.error(`\nRobinhood Chain RPC problem: ${why}\nRPC in use: ${S.rpc}\nFix: set a working RPC first, e.g. PowerShell:  $env:PARENT_RPC="https://robinhood.drpc.org"\nNothing was sent.\n`);
+    process.exit(1);
+  };
+  const id = await parentPublicClient.getChainId().catch((e) => fail(`it did not answer (${e.shortMessage || e.message})`));
+  if (id !== 4663) fail(`it answered as chain ${id}, not Robinhood Chain (4663)`);
+  const code = await parentPublicClient.getBytecode({ address: ANT_TOKEN }).catch(() => null);
+  if (!code || code === "0x") fail("it does not see the ANT token contract");
+}
 
 export function env(name) {
   const v = process.env[name];
