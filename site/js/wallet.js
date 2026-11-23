@@ -144,6 +144,14 @@ async function withPermission(id, fn) {
   }
 }
 
+// Show an ERC-20 on ANT CHAIN in the wallet's token list (EIP-747). Switches the wallet to ANT CHAIN first.
+export async function watchToken({ address, symbol, decimals = 18, image }) {
+  await withPermission(L3.id, () => ensureChain(L3.id));
+  const options = { address, symbol: String(symbol).slice(0, 11), decimals };
+  if (image) options.image = image;
+  return withPermission(L3.id, () => prov().request({ method: "wallet_watchAsset", params: { type: "ERC20", options } }));
+}
+
 // Ask the connected wallet to sign a plain text message (free, no transaction, works on any network).
 export async function signMessage(message) {
   if (!state.address) throw new Error("Connect a wallet first.");

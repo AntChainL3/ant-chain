@@ -25,6 +25,13 @@ function apply() {
   document.querySelectorAll("[data-n]").forEach((el) => { const t = TEXT[el.dataset.n]; if (t !== undefined) el.textContent = t; });
   document.querySelectorAll("[data-show]").forEach((el) => { el.hidden = el.dataset.show !== ACTIVE; });
   document.querySelectorAll(".brand-net").forEach((el) => { el.textContent = ACTIVE; });
+  // on testnet pages, keep testnet when moving between the apps (the choice is not stored anywhere)
+  if (ACTIVE === "testnet") {
+    document.querySelectorAll('a[href^="/"]').forEach((a) => {
+      const href = a.getAttribute("href");
+      if (/^\/(bridge|swap|launch|stake)\/?(\?|#|$)/.test(href) && !/[?&]net=/.test(href)) a.setAttribute("href", href.replace(/^([^?#]*)(\?[^#]*)?(#.*)?$/, (m, path, qs, hash) => `${path}${qs ? qs + "&" : "?"}net=testnet${hash || ""}`));
+    });
+  }
   // explorer links follow the active network: in the menus (data-explorer) and in live-data links
   const exBase = ACTIVE === "mainnet" ? "/explorer" : "/explorer/testnet";
   document.querySelectorAll("a[data-explorer]").forEach((a) => { a.setAttribute("href", `${exBase}/`); });

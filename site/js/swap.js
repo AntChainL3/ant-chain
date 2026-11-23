@@ -1,5 +1,5 @@
 // ANT CHAIN exchange: Uniswap V2 router on ANT CHAIN. Swap, wrap, add and remove liquidity, live price chart.
-import { DEX, L3, TOKEN } from "./config.js";
+import { DEX, L3, TOKEN, LAUNCHPAD, ACTIVE } from "./config.js";
 import { viem, l3, state, onWallet, connect, write, friendlyError, fmt, short, hasWallet } from "./wallet.js";
 const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
@@ -63,8 +63,11 @@ function start() {
   const WANT_T = { address: WANT, symbol: TOKEN === "ANT" ? "WANT" : "W" + TOKEN, name: `Wrapped ${TOKEN}`, decimals: 18 };
   let tokens = [ANT, WANT_T];
   if (DEX.testUsd) tokens.push({ address: DEX.testUsd, symbol: "tUSD", name: "Test USD (testnet)", decimals: 18 });
+  const QUOTE = LAUNCHPAD?.quote ? getAddress(LAUNCHPAD.quote) : null;
+  if (QUOTE) tokens.push({ address: QUOTE, symbol: LAUNCHPAD.quoteSymbol, name: ACTIVE === "mainnet" ? "$ANTC (bridged from Robinhood Chain)" : "Test ANTC (launchpad)", decimals: 18 });
   const BUILTIN = tokens.length;
-  try { (JSON.parse(localStorage.getItem("antchain-tokens") || "[]")).forEach((t) => { if (isAddress(t.address)) tokens.push(t); }); } catch {}
+  const known = (a) => tokens.some((t) => (t.address || "").toLowerCase() === String(a).toLowerCase());
+  try { (JSON.parse(localStorage.getItem("antchain-tokens") || "[]")).forEach((t) => { if (isAddress(t.address) && !known(t.address)) tokens.push(t); }); } catch {}
   const saveTokens = () => { try { localStorage.setItem("antchain-tokens", JSON.stringify(tokens.slice(BUILTIN))); } catch {} };
   const addr = (t) => t.address ?? WANT;
   const same = (a, b) => (a.address ?? "native") === (b.address ?? "native");
@@ -155,23 +158,23 @@ function start() {
     if (amount <= 0n) return setGo();
     if (isWrap(S.in, S.out)) { S.quote = amount; outAmt.value = formatUnits(amount, 18); return setGo(amount); }
     const a = addr(S.in), b = addr(S.out);
-    const paths = [[a, b]];
-    if (a !== WANT && b !== WANT) paths.push([a, WANT, b]);
-    for (const p of paths) {
-      try {
-        const amounts = await l3.readContract({ address: ROUTER, abi: routerAbi, functionName: "getAmountsOut", args: [amount, p] });
-        if (id !== qid) return;
-        S.quote = amounts[amounts.length - 1]; S.path = p;
-        outAmt.value = formatUnits(S.quote, S.out.decimals);
-        const minOut = (S.quote * (10_000n - S.slip)) / 10_000n;
-        $("[data-q=rate]").textContent = `1 ${S.in.symbol} ≈ ${fmt((S.quote * 10n ** BigInt(S.in.decimals)) / amount, 6, S.out.decimals)} ${S.out.symbol}`;
-        $("[data-q=min]").textContent = `${fmt(minOut, 6, S.out.decimals)} ${S.out.symbol}`;
-        $("[data-q=route]").textContent = p.length === 2 ? "Direct" : `via WANT`;
-        $("[data-quote]").hidden = false;
-        return setGo(amount);
-      } catch { /* no pool on this path */ }
-    }
-    if (id === qid) setGo(amount, "No pool for this pair yet");
+    const hops = [WANT, QUOTE].filter(Boolean);
+    const cands = [[a, b], ...hops.map((h) => [a, h, b]), ...hops.flatMap((h1) => hops.filter((h2) => h2 !== h1).map((h2) => [a, h1, h2, b]))];
+    const lc = (x) => x.toLowerCase();
+    const paths = cands.filter((p) => new Set(p.map(lc)).size === p.length); // no token twice in a route
+    const results = await Promise.all(paths.map((p) => l3.readContract({ address: ROUTER, abi: routerAbi, functionName: "getAmountsOut", args: [amount, p] }).then((am) => ({ p, out: am[am.length - 1] })).catch(() => null)));
+    if (id !== qid) return;
+    const best = results.filter((r) => r && r.out > 0n).sort((x, y) => (y.out > x.out ? 1 : y.out < x.out ? -1 : x.p.length - y.p.length))[0];
+    if (!best) return setGo(amount, "No pool for this pair yet");
+    S.quote = best.out; S.path = best.p;
+    outAmt.value = formatUnits(S.quote, S.out.decimals);
+    const minOut = (S.quote * (10_000n - S.slip)) / 10_000n;
+    const nameOf = (x) => (lc(x) === lc(WANT) ? WANT_T.symbol : QUOTE && lc(x) === lc(QUOTE) ? (LAUNCHPAD.quoteSymbol === "ANTC" ? "$ANTC" : LAUNCHPAD.quoteSymbol) : short(x));
+    $("[data-q=rate]").textContent = `1 ${S.in.symbol} ≈ ${fmt((S.quote * 10n ** BigInt(S.in.decimals)) / amount, 6, S.out.decimals)} ${S.out.symbol}`;
+    $("[data-q=min]").textContent = `${fmt(minOut, 6, S.out.decimals)} ${S.out.symbol}`;
+    $("[data-q=route]").textContent = best.p.length === 2 ? "Direct" : `via ${best.p.slice(1, -1).map(nameOf).join(" → ")}`;
+    $("[data-quote]").hidden = false;
+    return setGo(amount);
   }
   async function paintBalances() {
     const [bi, bo] = await Promise.all([balanceOf(S.in, state.address).catch(() => null), balanceOf(S.out, state.address).catch(() => null)]);
@@ -397,6 +400,27 @@ function start() {
   }
   [btnIn, btnOut, $("[data-flip]")].forEach((b) => b.addEventListener("click", () => setTimeout(chart, 0)));
   dlg.addEventListener("close", () => setTimeout(chart, 0));
-  chart().catch(warn);
-  requote().catch(warn);
+  async function tokenFor(v) {
+    if (!v) return null;
+    if (/^(ant|native)$/i.test(v)) return ANT;
+    if (!isAddress(v)) return null;
+    const hit = tokens.find((t) => (t.address || "").toLowerCase() === v.toLowerCase());
+    if (hit) return hit;
+    const a = getAddress(v);
+    const [symbol, decimals, name] = await Promise.all([
+      l3.readContract({ address: a, abi: erc20, functionName: "symbol" }),
+      l3.readContract({ address: a, abi: erc20, functionName: "decimals" }),
+      l3.readContract({ address: a, abi: erc20, functionName: "name" }).catch(() => "Imported token"),
+    ]);
+    const t = { address: a, symbol: String(symbol).slice(0, 12), name: String(name).slice(0, 40), decimals: Number(decimals) };
+    tokens.push(t); saveTokens();
+    return t;
+  }
+  (async () => {
+    const q = new URLSearchParams(location.search);
+    const [tin, tout] = await Promise.all([tokenFor(q.get("in")).catch(() => null), tokenFor(q.get("out")).catch(() => null)]);
+    if (tin && !(tout && same(tin, tout))) S.in = tin;
+    if (tout && !same(tout, S.in)) S.out = tout;
+    paintTok(btnIn, S.in); paintTok(btnOut, S.out);
+  })().catch(warn).finally(() => { chart().catch(warn); requote().catch(warn); });
 }

@@ -101,3 +101,30 @@
   }, { rootMargin: "0px 0px -6% 0px" });
   els.forEach((el) => io.observe(el));
 })();
+
+// Copy buttons on every page: any element with data-copy="<text>", including ones added later.
+(() => {
+  "use strict";
+  let live = document.querySelector("[data-copy-msg]");
+  if (!live) { live = document.createElement("p"); live.className = "sr-only"; live.setAttribute("role", "status"); live.setAttribute("aria-live", "polite"); document.body.appendChild(live); }
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch { /* fall back below */ }
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch { ok = false; }
+    ta.remove();
+    return ok;
+  }
+  document.addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-copy]");
+    if (!b) return;
+    e.preventDefault();
+    const v = b.dataset.copy, label = b.textContent.trim() === "Copy";
+    if (await copyText(v)) {
+      b.classList.add("done"); if (label) b.textContent = "Copied";
+      live.textContent = `Copied ${v}`;
+      setTimeout(() => { b.classList.remove("done"); if (label) b.textContent = "Copy"; }, 1500);
+    } else live.textContent = "Copy is blocked in this browser.";
+  });
+})();

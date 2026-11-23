@@ -314,16 +314,7 @@ $$("[data-add-network]").forEach((b) => b.addEventListener("click", addNetwork))
 
 // ---------- copy ----------
 $$(".copy.addr").forEach((b) => { const f = b.dataset.copy; b.textContent = `${f.slice(0, 8)}…${f.slice(-6)}`; b.title = f; b.setAttribute("aria-label", `Copy address ${f}`); });
-const copyMsg = $("[data-copy-msg]");
-$$("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
-  const v = b.dataset.copy, label = b.textContent.trim() === "Copy";
-  try {
-    await navigator.clipboard.writeText(v);
-    b.classList.add("done"); if (label) b.textContent = "Copied";
-    if (copyMsg) copyMsg.textContent = `Copied ${v}`;
-    setTimeout(() => { b.classList.remove("done"); if (label) b.textContent = "Copy"; }, 1500);
-  } catch { if (copyMsg) copyMsg.textContent = "Copy is blocked in this browser."; }
-}));
+// copying itself is handled for every page by site.js ([data-copy] buttons)
 
 // ---------- hero lines rise on load ----------
 requestAnimationFrame(() => $$(".hero .line-mask").forEach((m) => m.classList.add("in")));

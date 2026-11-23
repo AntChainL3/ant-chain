@@ -313,3 +313,13 @@ dialog.picker { background: linear-gradient(155deg, rgba(28,28,28,.92), rgba(14,
 .lp-table .pill.bad { color: #ff6b6b; border-color: rgba(255,107,107,.4); }
 .lp-table td .pill { margin-left: 6px; }
 @media (max-width: 640px) { .lp-chart { height: 170px; } .lp-live-meta { justify-items: start; } }
+/* launchpad: contract address block */
+.lp-ca { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: rgba(0,0,0,.38); border: 1px solid rgba(255,255,255,.08); display: grid; gap: 6px; }
+.lp-ca-row { display: flex; align-items: center; gap: 10px; min-width: 0; margin: 0; }
+.lp-ca-row code { font: 500 .78rem var(--mono); overflow-wrap: anywhere; min-width: 0; flex: 1; }
+.lp-ca-row .copy { flex: none; }
+.lp-ca-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.lp-ca-actions .form-msg { margin: 0; }
+.lp-grad { display: grid; gap: 10px; }
+.lp-grad p { margin: 0; }
+.lp-pool .label { flex: none; }

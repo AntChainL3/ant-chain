@@ -61,13 +61,11 @@ function pickNetwork() {
   if (!MAINNET_OPEN) return "testnet";
   // the explorer's network is in its URL: /explorer/... is mainnet, /explorer/testnet/... is testnet
   if (typeof location !== "undefined" && /^\/explorer(\/|$)/.test(location.pathname)) return /^\/explorer\/testnet(\/|$)/.test(location.pathname) ? "testnet" : "mainnet";
-  let net = null;
-  try {
-    const q = new URLSearchParams(location.search).get("net");
-    if (q === "mainnet" || q === "testnet") { net = q; localStorage.setItem("antchain.net", q); }
-    else net = localStorage.getItem("antchain.net");
-  } catch { /* storage blocked: use the default */ }
-  return net === "testnet" ? "testnet" : "mainnet";
+  // Mainnet unless the URL says ?net=testnet. The choice is not remembered between visits, so nobody lands on
+  // testnet by accident; links inside testnet pages carry ?net=testnet along (netui.js).
+  try { localStorage.removeItem("antchain.net"); } catch { /* storage blocked */ }
+  const q = typeof location !== "undefined" ? new URLSearchParams(location.search).get("net") : null;
+  return q === "testnet" ? "testnet" : "mainnet";
 }
 export const ACTIVE = pickNetwork();
 

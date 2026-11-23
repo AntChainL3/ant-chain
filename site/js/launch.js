@@ -3,7 +3,7 @@
 // Everything shown here is read from the AntcLaunchpad contract; text from token creators is always
 // rendered as text (textContent), never as HTML.
 import { LAUNCHPAD, L3, ACTIVE } from "./config.js";
-import { viem, l3, state, onWallet, connect, write, friendlyError, fmt, short } from "./wallet.js";
+import { viem, l3, state, onWallet, connect, write, friendlyError, fmt, short, watchToken } from "./wallet.js";
 import { showLive, refreshLive } from "./launch-live.js";
 
 const warn = (e) => console.warn(e);
@@ -131,6 +131,9 @@ function renderDetail() {
   D("name").textContent = t.name;
   D("symbol").textContent = `$${t.symbol}`;
   D("explorer").href = `${EXPLORER}/address/${t.address}`;
+  D("ca").textContent = t.address;
+  D("ca-copy").dataset.copy = t.address;
+  D("watch-msg").textContent = "";
   D("desc").textContent = String(t.meta.description || "");
   const img = D("img"); const src = safeUrl(t.meta.image);
   if (src) { img.src = src; img.referrerPolicy = "no-referrer"; img.hidden = false; img.onerror = () => { img.hidden = true; }; } else img.hidden = true;
@@ -145,10 +148,25 @@ function renderDetail() {
   D("raised").textContent = t.graduated ? `${fmt(t.target, 0)} ${SYM} (moved to the pool)` : `${fmt(t.realQuote, 2)} / ${fmt(t.target, 0)} ${SYM}`;
   D("creator").replaceChildren(Object.assign(document.createElement("a"), { className: "link", href: `${EXPLORER}/address/${t.creator}`, textContent: short(t.creator) }));
   D("graduated").hidden = !t.graduated;
-  D("swap").href = `/swap/?net=${ACTIVE}`;
+  // the pool and a swap link with the pair already chosen ($ANTC -> this token)
+  D("pair").textContent = t.pair || "…";
+  D("pair-copy").dataset.copy = t.pair || "";
+  D("swap").href = `/swap/?net=${ACTIVE}&in=${LAUNCHPAD.quote}&out=${t.address}`;
   $("[data-trade]").hidden = t.graduated;
   showLive(t);
 }
+
+// add the selected token to the wallet's token list
+D("watch").addEventListener("click", async () => {
+  const t = tokens.get(selected), msg = D("watch-msg");
+  if (!t) return;
+  if (!state.address) { connect().catch((e) => status(msg, friendlyError(e), "bad")); return; }
+  try {
+    status(msg, "Confirm in your wallet…");
+    const ok = await watchToken({ address: t.address, symbol: t.symbol, image: safeUrl(t.meta.image) || undefined });
+    status(msg, ok === false ? "Not added." : `$${t.symbol} is in your wallet on ANT CHAIN.`, ok === false ? "bad" : "ok");
+  } catch (e) { status(msg, friendlyError(e), "bad"); }
+});
 
 // ---------------------------------------------------------------- trade
 const T = (k) => $(`[data-t="${k}"]`, $("[data-trade]"));

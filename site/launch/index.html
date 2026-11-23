@@ -119,6 +119,11 @@
             <img class="lp-img" data-d="img" alt="" hidden>
             <div><h2 data-d="name">…</h2><p class="kicker"><span data-d="symbol"></span> · <a class="link" data-d="explorer" href="#" target="_blank" rel="noopener">explorer ↗</a></p></div>
           </div>
+          <div class="lp-ca">
+            <span class="label">Contract address</span>
+            <div class="lp-ca-row"><code data-d="ca">…</code><button class="copy" type="button" data-d="ca-copy" data-copy="">Copy</button></div>
+            <div class="lp-ca-actions"><button type="button" class="link-btn" data-d="watch">Add to wallet</button><span class="form-msg" role="status" aria-live="polite" data-d="watch-msg"></span></div>
+          </div>
           <p class="muted-p lp-desc" data-d="desc"></p>
           <p class="lp-links" data-d="links"></p>
           <div class="lp-bar" role="progressbar" aria-label="Bonding curve progress" aria-valuemin="0" aria-valuemax="100" data-d="bar"><i></i></div>
@@ -129,7 +134,11 @@
             <dt>Raised</dt><dd data-d="raised">…</dd>
             <dt>Creator</dt><dd data-d="creator">…</dd>
           </dl>
-          <p class="notice" data-d="graduated" hidden><b>Graduated.</b> This token now trades on the ANT CHAIN exchange, with its liquidity locked. <a class="link" data-d="swap" href="/swap/">Trade on the exchange →</a></p>
+          <div class="notice lp-grad" data-d="graduated" hidden>
+            <p><b>Graduated.</b> This token now trades on the ANT CHAIN exchange, and its liquidity is locked forever.</p>
+            <p class="lp-ca-row lp-pool"><span class="label">Pool</span><code data-d="pair">…</code><button class="copy" type="button" data-d="pair-copy" data-copy="">Copy</button></p>
+            <a class="btn btn-amber btn-small" data-d="swap" href="/swap/">Trade on the exchange →</a>
+          </div>
           <form class="x-form" data-trade novalidate>
             <div class="seg" role="tablist" aria-label="Buy or sell">
               <button role="tab" type="button" data-side="buy" aria-selected="true">Buy</button>
