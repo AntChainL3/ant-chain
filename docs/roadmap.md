@@ -26,7 +26,7 @@ Nothing here is an offer or a promise of value.
 |---|---|
 | $ANTC on [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281), contract `0x1A9ca5A347c4aeAb4870668E76506E45C23D6281` | Live |
 | [Staking for gas credits](https://antchain.tech/stake/): stake $ANTC on Robinhood Chain, contract `0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac` | Live |
-| Live ANT price on the site, from the mainnet fee pricer kept up to date by the price keeper | Soon |
+| Live ANT price on the site, read from the USDG/ANT pool on Robinhood Chain every 15 seconds; the price keeper keeps the fee pricer in line | Live |
 
 ## Phase 3: Mainnet opens
 

@@ -68,4 +68,4 @@ There are no transfer hooks, fees, pauses or blocklists. The real ANT token on m
 
 **Will tANT be converted or airdropped into anything?** No. Testnet balances carry no rights and are not converted into anything.
 
-**The dollar amounts on testnet: are they real?** They use the live ANT price from our fee pricer to show what the same fee *would* cost on mainnet. Your tANT itself is worth nothing.
+**The dollar amounts on testnet: are they real?** They use the live ANT market price (the USDG/ANT pool on Robinhood Chain) to show what the same fee *would* cost on mainnet. Your tANT itself is worth nothing.

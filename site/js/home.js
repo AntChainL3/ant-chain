@@ -1,6 +1,7 @@
 // ANT CHAIN home: live chain readout, block ledger, orbit linework, data packets,
 // scroll-driven fee route, console "Run it", copy, add network.
-import { L3, L2, ADDR, TOKEN, PRICE_SOURCE } from "./config.js";
+import { L3, L2, ADDR, TOKEN } from "./config.js";
+import { onAntPrice } from "./antprice.js";
 const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -71,27 +72,12 @@ async function refreshBlockTime() {
 }
 setInterval(() => { if (lastTs) document.querySelectorAll('[data-live="lastblock"]').forEach((el) => { el.textContent = ago(lastTs); }); }, 1000);
 
-// live ANT market price: the mainnet fee pricer on Robinhood Chain (read-only)
-async function priceCall(data) {
-  for (const url of PRICE_SOURCE.rpcs) {
-    try { return await rpc(url, "eth_call", [{ to: PRICE_SOURCE.pricer, data }, "latest"]); } catch { /* next RPC */ }
-  }
-  throw new Error("price RPC unavailable");
-}
-
 async function refreshL2() {
   const SEL = { batchCount: "0x06f13056", balanceOf: "0x70a08231", antUsd: "0xca3d55bd", currentRate: "0xf9f8bdb7", isStaked: "0x6177fd18" };
   const VALIDATOR = "0x08d03d05ffe87bE0f234af772Dea69Af98895d59";
   await Promise.allSettled([
     call(ADDR.sequencerInbox, SEL.batchCount).then((h) => setLive("batches", fmtInt(BigInt(h)))),
     call(ADDR.ant, SEL.balanceOf + pad(ADDR.bridge)).then((h) => setLive("escrow", `${units(BigInt(h), 2)} ${TOKEN}`)),
-    priceCall(SEL.antUsd).then((h) => {
-      antUsd = Number(BigInt(h)) / 1e18;
-      const t = `$${antUsd.toFixed(2)}`;
-      setLive("antusd", t);
-      $$("[data-app-price]").forEach((el) => { el.textContent = t; });
-      renderFee();
-    }),
     call(ADDR.pricer, SEL.currentRate).then((h) => setLive("rate", `${(Number(BigInt(h)) / 1e18).toFixed(1)} ANT/ETH`)),
     call(ADDR.rollup, SEL.isStaked + pad(VALIDATOR)).then((h) => {
       const ok = BigInt(h) === 1n;
@@ -111,6 +97,8 @@ function renderFee() {
     setLive("fee", t); setLive("fee-usd", t);
   } else setLive("fee", `${sig(feeAnt, 2)} ${TOKEN}`);
 }
+
+onAntPrice((p) => { antUsd = p; renderFee(); }); // live market price, refreshed every 15 s
 
 // ---------- ledger ----------
 const ledger = $("[data-ledger]");
