@@ -167,6 +167,10 @@ Today one operator runs the sequencer, the batch poster and the validator. That 
 
 Found a problem? Please do not open a public issue for anything that could put funds at risk. See [SECURITY.md](SECURITY.md) for how to report it privately.
 
+## Transparency
+
+Every contract, every wallet the team operates and what it can do, where fees go, and what is not in place yet: [TRANSPARENCY.md](TRANSPARENCY.md). Anyone can check that the code running on chain is the code in this repository with `node chain/scripts/verify-bytecode.js` (also run by CI on every push).
+
 ## License
 
 The code in this repository is released under the [MIT License](LICENSE), with these exceptions:

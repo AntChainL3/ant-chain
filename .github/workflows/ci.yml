@@ -38,6 +38,9 @@ jobs:
       - name: Test (unit + fuzz)
         run: forge test -vv
 
+      - name: Deployed contracts match this source (bytecode check against mainnet)
+        run: node scripts/verify-bytecode.js
+
   scripts:
     name: Scripts and site (syntax)
     runs-on: ubuntu-latest
