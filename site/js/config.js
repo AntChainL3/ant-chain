@@ -65,7 +65,10 @@ export const L2 = P.L2;
 export const ADDR = P.ADDR;
 export const DEX = P.DEX;
 export const CONFIRM_BLOCKS = P.CONFIRM_BLOCKS;
-export const VIEM = "https://cdn.jsdelivr.net/npm/viem@2.21.60/+esm";
+// Where the site reads the live ANT price: the MAINNET fee pricer on Robinhood Chain, kept in line with the
+// market by the keeper. Read-only, so it works in testnet mode without opening ANT CHAIN mainnet.
+export const PRICE_SOURCE = { pricer: PROFILES.mainnet.ADDR.pricer, rpcs: PROFILES.mainnet.L2.rpcs };
+export const VIEM ="https://cdn.jsdelivr.net/npm/viem@2.21.60/+esm";
 
 // WalletConnect Cloud project id (cloud.reown.com). Empty = browser wallets only in the RainbowKit modal.
 export const WALLETCONNECT_PROJECT_ID = "f654849c063f77ee18b8da47a1475593";
