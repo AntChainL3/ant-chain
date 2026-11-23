@@ -36,8 +36,10 @@ Everything else works like any EVM chain: MetaMask, Rabby, Foundry, Hardhat, vie
 | Exchange (Uniswap V2, tANT/tUSD pool) | Live on testnet |
 | Explorer (blocks, transactions, addresses) | Live for testnet and mainnet |
 | Test kit faucet | Live on testnet |
-| $ANTC, the ANT CHAIN token | **Planned**. Not launched; there is no presale or airdrop. See [Token](#the-antc-token-planned). |
-| $ANTC staking for gas credits | Contract ready and **live in test mode** on testnet (tANT stands in for $ANTC) at [antchain.tech/stake](https://antchain.tech/stake/). Goes live for $ANTC at launch. |
+| $ANTC, the ANT CHAIN token | **Live** on [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281), Robinhood Chain. Contract `0x1A9ca5A347c4aeAb4870668E76506E45C23D6281`. See [Token](#the-antc-token). |
+| $ANTC staking for gas credits | Contract ready and tested; **opening soon** for $ANTC. Try it now in test mode at [antchain.tech/stake](https://antchain.tech/stake/). |
+
+Full roadmap, kept up to date: [docs/roadmap.md](docs/roadmap.md) · [antchain.tech/roadmap](https://antchain.tech/roadmap/)
 
 ## Meet tANT, the testnet gas token
 
@@ -93,9 +95,18 @@ flowchart LR
 
 More: [docs/how-it-works.md](docs/how-it-works.md)
 
-## The $ANTC token (planned)
+## The $ANTC token
 
-An ANT CHAIN token, **$ANTC**, is planned with three jobs on the chain:
+**$ANTC** is the ANT CHAIN token. It launched on [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281), the token launchpad on Robinhood Chain.
+
+| | |
+|---|---|
+| Contract (Robinhood Chain, 4663) | `0x1A9ca5A347c4aeAb4870668E76506E45C23D6281` |
+| Name / ticker | ANT Chain / ANTC |
+| Supply | 1,000,000,000 |
+| Decimals | 18 |
+
+Only this address is ours. It has three jobs on the chain:
 
 - bidding for the **express lane** (priority ordering of transactions, Arbitrum Timeboost),
 - a **daily gas allowance** for people who stake it,
@@ -103,7 +114,7 @@ An ANT CHAIN token, **$ANTC**, is planned with three jobs on the chain:
 
 The first of these to ship is **staking for gas credits**: stake $ANTC on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once mainnet opens. Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing.
 
-Gas itself stays ANT. Supply and launch terms will be published on [antchain.tech](https://antchain.tech) before launch, with the contract address added to the network details. **Until then there is no ANT CHAIN token, presale or airdrop, and anything claiming to be one is not ours.** Nothing in this repository is an offer or investment advice.
+Staking opens first; express-lane bids and the buyback come with ANT CHAIN mainnet. Gas itself stays ANT. $ANTC is not connected to Anthropic, PBC and gives no rights in Anthropic or in ANT. Nothing in this repository is an offer or investment advice.
 
 ## Know the token you pay with
 

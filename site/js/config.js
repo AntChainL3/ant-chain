@@ -55,7 +55,7 @@ export const STAKING = {
   contract: "0xf3ab16504dcb85390924662f780f49d91387b857",
   token: "0xbf10d827020a5f4260e27a005ae0034d97514b17",
   symbol: "tANT",
-  buyUrl: null, // Pons page of $ANTC, once launched
+  buyUrl: "https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281", // $ANTC on Pons
 };
 const P = PROFILES[ACTIVE];
 export const NETWORK = P.NETWORK;

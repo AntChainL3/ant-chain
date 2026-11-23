@@ -63,6 +63,13 @@ The mainnet exchange is deployed but not opened yet: there are no pools, and the
 
 > **Beware of impostors.** A different token at `0x36c2861a1f94c6f277a388338a4f8a686e0d9b30` also uses the name "Anthropic" with a 1B supply. It is **not** the ANT Stock Token and has nothing to do with ANT CHAIN.
 
-## Planned
+## $ANTC, the ANT CHAIN token
 
-$ANTC, the ANT CHAIN token, has **no address yet**. When it launches, its address will be added here and on [antchain.tech](https://antchain.tech) first. Anything claiming to be $ANTC before then is not ours.
+| | |
+|---|---|
+| Contract (Robinhood Chain, 4663) | `0x1A9ca5A347c4aeAb4870668E76506E45C23D6281` |
+| Name / ticker | ANT Chain / ANTC |
+| Supply / decimals | 1,000,000,000 / 18 |
+| Launched on | [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281) |
+
+Only this address is ours. Anything else using the name is not.
