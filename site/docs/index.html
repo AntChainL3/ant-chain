@@ -438,6 +438,13 @@ forge create src/Counter.sol:Counter \
           <li><b>Beta software.</b> The bridge and swap pages are new and unaudited interfaces over audited Arbitrum and Uniswap V2 contracts. Use amounts you can afford to have delayed.</li>
           <li><b>Price risk.</b> ANT tracks a share price. Your gas balance's dollar value moves with it.</li>
         </ul>
+        <h3>How the code is checked</h3>
+        <ul class="doc-list">
+          <li><b>Open source.</b> Every contract, script and page is on <a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub</a> (MIT).</li>
+          <li><b>Automatic tests.</b> Every change runs the contract tests (unit and fuzz) and a check that no keys are committed: <a href="https://github.com/AntChainL3/ant-chain/actions/workflows/ci.yml" target="_blank" rel="noopener">CI results</a>.</li>
+          <li><b>Static analysis.</b> SonarCloud scans every change for bugs and security issues. The live result is public: <a href="https://sonarcloud.io/summary/overall?id=AntChainL3_ant-chain&amp;branch=main" target="_blank" rel="noopener">SonarCloud report</a>.</li>
+          <li><b>Not an audit.</b> These are automatic checks. The contracts have not had an external audit yet.</li>
+        </ul>
       </section>
 
       <section id="faq" class="doc-sec">
@@ -484,7 +491,7 @@ forge create src/Counter.sol:Counter \
         </div>
         <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/launch/">Launch</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/" data-explorer>Explorer</a></li></ul></div>
         <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
-        <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
+        <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li><li><a href="https://sonarcloud.io/summary/overall?id=AntChainL3_ant-chain&amp;branch=main" target="_blank" rel="noopener">Code quality ↗</a></li></ul></div>
       </div>
       <p class="foot-word display" aria-hidden="true">ANT CHAIN</p>
       <div class="foot-legal">
