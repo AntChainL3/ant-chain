@@ -44,21 +44,44 @@ async function getCode(chain, address) {
 // its length is in the last two bytes. It is not executed, and it changes with the build machine's folder
 // layout, so like block-explorer verifiers we report it separately: "exact" = code + metadata identical,
 // "code" = every executed byte identical, only the build metadata differs.
-const metaLen = (buf) => (buf.length >= 2 ? buf.readUInt16BE(buf.length - 2) + 2 : 0);
+// A contract that creates other contracts (the launchpad creates LaunchTokens) carries their code, and their
+// metadata blocks, inside its own. So every metadata hash is located by its CBOR marker {"ipfs": <34 bytes>}
+// and set aside, wherever it sits; every other byte must be identical.
+const IPFS_KEY = Buffer.from("a2646970667358", "hex"); // CBOR map(2), text "ipfs", bytes(34)
+function metadataHashes(buf) {
+  const out = [];
+  for (let i = buf.indexOf(IPFS_KEY); i !== -1; i = buf.indexOf(IPFS_KEY, i + 1)) {
+    if (buf[i + 7] === 0x22) out.push([i + 8, i + 8 + 34]); // 0x22 = length 34: multihash 0x1220 + sha256
+  }
+  return out;
+}
 
-// compare byte by byte, skipping the immutable ranges
+// compare byte by byte, skipping the immutable ranges; metadata hashes decide only exact vs code match
 function compare(onchain, compiled, imm) {
   const a = Buffer.from(onchain.replace(/^0x/, ""), "hex");
   const b = Buffer.from(compiled.replace(/^0x/, ""), "hex");
   if (a.length !== b.length) return { ok: false, why: `length differs (${a.length} on chain vs ${b.length} compiled)` };
-  const ma = metaLen(a), mb = metaLen(b);
-  const codeEnd = ma === mb && ma < a.length ? a.length - ma : a.length;
   const skip = new Uint8Array(a.length);
   let immBytes = 0;
   for (const refs of Object.values(imm)) for (const { start, length } of refs) { skip.fill(1, start, start + length); immBytes += length; }
-  for (let i = 0; i < codeEnd; i++) if (!skip[i] && a[i] !== b[i]) return { ok: false, why: `executed code differs at byte ${i}` };
-  const exact = a.subarray(codeEnd).equals(b.subarray(codeEnd));
+  const metaA = metadataHashes(a), metaB = metadataHashes(b);
+  if (JSON.stringify(metaA) !== JSON.stringify(metaB)) return { ok: false, why: "metadata blocks sit in different places" };
+  const meta = new Uint8Array(a.length);
+  for (const [s, e] of metaA) meta.fill(1, s, e);
+  for (let i = 0; i < a.length; i++) if (!skip[i] && !meta[i] && a[i] !== b[i]) return { ok: false, why: `executed code differs at byte ${i}` };
+  const exact = metaA.every(([s, e]) => a.subarray(s, e).equals(b.subarray(s, e)));
   return { ok: true, exact, bytes: a.length, immBytes };
+}
+
+// Self-test: the check must catch a single changed executed byte (proves it is not a rubber stamp).
+{
+  const { code, imm } = CHECKS[2].art(); // the launchpad: immutables and a nested metadata block
+  const buf = Buffer.from(code.replace(/^0x/, ""), "hex");
+  const i = 100; // inside executed code, before any metadata or immutable
+  const tampered = Buffer.from(buf); tampered[i] ^= 0xff;
+  const r = compare("0x" + tampered.toString("hex"), code, imm);
+  if (r.ok) { console.log("SELF-TEST FAILED: a changed byte was not detected"); process.exit(1); }
+  console.log(`self-test: a single changed byte is detected (${r.why})\n`);
 }
 
 let failed = 0;
