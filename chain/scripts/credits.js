@@ -29,9 +29,16 @@ const me = account("REDEEMER");
 const l2w = walletClient("REDEEMER");
 const l3w = createWalletClient({ account: me, chain: l3chain, transport: viemHttp(L3_RPC, { timeout: 60_000 }) });
 
-const GAS = parseEther(process.env.GAS_PER_CLAIM || (NETWORK === "testnet" ? "0.01" : "0.0005"));
-const COST = process.env.CREDITS_PER_CLAIM ? parseEther(process.env.CREDITS_PER_CLAIM) : null; // credits are token-days, 18 decimals
-const BUDGET = process.env.DAILY_BUDGET ? parseEther(process.env.DAILY_BUDGET) : GAS * 50n;
+// numbers are plain decimals like 1000 or 0.0005 (no thousands separators)
+const num = (name, fallback) => {
+  const v = (process.env[name] ?? fallback ?? "").trim();
+  if (v === "") return null;
+  if (!/^\d+(\.\d{1,18})?$/.test(v) || Number(v) <= 0) throw new Error(`${name}="${v}" is not a positive plain number (write 1000, not 1,000).`);
+  return parseEther(v);
+};
+const GAS = num("GAS_PER_CLAIM", NETWORK === "testnet" ? "0.01" : "0.0005");
+const COST = num("CREDITS_PER_CLAIM"); // credits are token-days, 18 decimals; unset = claims closed
+const BUDGET = num("DAILY_BUDGET") ?? GAS * 50n;
 const DAY = 24 * 3600 * 1000, MAX_AGE = 10 * 60 * 1000;
 const PORT = Number(process.env.PORT || 8080);
 const stakingAbi = parseAbi([
