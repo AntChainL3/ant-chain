@@ -93,7 +93,20 @@ if (card && ANTC_BRIDGE) {
     status($("[data-antc-msg]", card), "");
     refresh().catch(warn);
   }));
-  $("[data-antc-max]", card).addEventListener("click", () => { $("[data-antc-amt]", card).value = viem.formatUnits(dir === "in" ? bal.l2 : bal.l3, 18); });
+  // 10/25/50/75/100% of the $ANTC on the chain it leaves from (rounded down)
+  const pctBtns = [...card.querySelectorAll("[data-antc-pct] button")];
+  const clearPct = () => pctBtns.forEach((b) => b.setAttribute("aria-pressed", "false"));
+  pctBtns.forEach((b) => b.addEventListener("click", () => {
+    const msg = $("[data-antc-msg]", card);
+    if (!state.address) { status(msg, "Connect a wallet first.", "bad"); return; }
+    const base = dir === "in" ? bal.l2 : bal.l3;
+    if (base <= 0n) { status(msg, `No $ANTC on ${dir === "in" ? "Robinhood Chain" : "ANT CHAIN"} yet.`, "bad"); return; }
+    $("[data-antc-amt]", card).value = viem.formatUnits((base * BigInt(b.dataset.p)) / 100n, 18);
+    pctBtns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    status(msg, "");
+  }));
+  $("[data-antc-amt]", card).addEventListener("input", (e) => { e.target.value = e.target.value.replace(",", ".").replace(/[^0-9.]/g, ""); clearPct(); });
+  card.querySelectorAll("[data-antc-dir]").forEach((b) => b.addEventListener("click", () => { $("[data-antc-amt]", card).value = ""; clearPct(); }));
   $("[data-antc-form]", card).addEventListener("submit", async (e) => {
     e.preventDefault();
     const msg = $("[data-antc-msg]", card), btn = $("[data-antc-go]", card);

@@ -251,3 +251,10 @@ h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.025em; }
 .net-switch { justify-self: start; align-self: start; width: max-content; }
 .alias-box { margin: 0 0 16px; display: grid; gap: 10px; }
 .alias-box p { margin: 0; }
+
+/* amount presets: 10 / 25 / 50 / 75 / 100% */
+.pct-row { display: inline-flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+.pct-row button { font: 500 .66rem var(--mono); letter-spacing: .02em; padding: 4px 7px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, .12); background: transparent; color: var(--muted); cursor: pointer; transition: color .15s, border-color .15s, background .15s; }
+.pct-row button:hover, .pct-row button:focus-visible { color: var(--amber); border-color: rgba(255, 178, 26, .5); }
+.pct-row button[aria-pressed="true"] { color: #0a0a0a; background: var(--amber); border-color: var(--amber); }
+@media (max-width: 640px) { .pct-row { gap: 6px; } .pct-row button { padding: 8px 9px; font-size: .7rem; min-width: 40px; } }

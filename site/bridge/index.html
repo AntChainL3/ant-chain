@@ -108,7 +108,7 @@
                 <input name="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="dep-bal">
                 <span class="unit" data-n="tok">ANT</span>
               </label>
-              <div class="leg-foot" id="dep-bal"><span>Balance <b data-bal="ant">—</b></span><button type="button" class="link-btn" data-max="deposit">Max</button></div>
+              <div class="leg-foot" id="dep-bal"><span>Balance <b data-bal="ant">—</b></span><span class="pct-row" role="group" aria-label="Amount" data-pct="deposit"><button type="button" data-p="10" aria-pressed="false">10%</button><button type="button" data-p="25" aria-pressed="false">25%</button><button type="button" data-p="50" aria-pressed="false">50%</button><button type="button" data-p="75" aria-pressed="false">75%</button><button type="button" data-p="100" aria-pressed="false">100%</button></span></div>
             </div>
             <div class="leg-arrow" aria-hidden="true">↓</div>
             <div class="leg">
@@ -133,7 +133,7 @@
                 <input name="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="wd-bal">
                 <span class="unit" data-n="tok">ANT</span>
               </label>
-              <div class="leg-foot" id="wd-bal"><span>Balance <b data-bal="l3">—</b></span><button type="button" class="link-btn" data-max="withdraw">Max</button></div>
+              <div class="leg-foot" id="wd-bal"><span>Balance <b data-bal="l3">—</b></span><span class="pct-row" role="group" aria-label="Amount" data-pct="withdraw"><button type="button" data-p="10" aria-pressed="false">10%</button><button type="button" data-p="25" aria-pressed="false">25%</button><button type="button" data-p="50" aria-pressed="false">50%</button><button type="button" data-p="75" aria-pressed="false">75%</button><button type="button" data-p="100" aria-pressed="false">100%</button></span></div>
             </div>
             <div class="leg-arrow" aria-hidden="true">↓</div>
             <div class="leg">
@@ -170,7 +170,7 @@
               <button role="tab" type="button" data-antc-dir="out" aria-selected="false" tabindex="-1">To Robinhood</button>
             </div>
             <div class="leg">
-              <div class="leg-head"><span class="label">From <span data-antc-from>Robinhood Chain</span></span><button type="button" class="link-btn" data-antc-max>Max</button></div>
+              <div class="leg-head"><span class="label">From <span data-antc-from>Robinhood Chain</span></span><span class="pct-row" role="group" aria-label="Amount" data-antc-pct><button type="button" data-p="10" aria-pressed="false">10%</button><button type="button" data-p="25" aria-pressed="false">25%</button><button type="button" data-p="50" aria-pressed="false">50%</button><button type="button" data-p="75" aria-pressed="false">75%</button><button type="button" data-p="100" aria-pressed="false">100%</button></span></div>
               <label class="amount"><span class="sr-only">Amount of $ANTC</span><input data-antc-amt inputmode="decimal" autocomplete="off" placeholder="0.0"><span class="unit">$ANTC</span></label>
               <div class="leg-foot"><span>Balance <b data-antc-bal>—</b></span><span>On <span data-antc-to>ANT CHAIN</span> <b data-antc-other>—</b></span></div>
             </div>

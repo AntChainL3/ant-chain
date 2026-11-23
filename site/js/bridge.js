@@ -161,12 +161,23 @@ function updateButtons() {
 }
 $$("input[name=amount]").forEach((i) => i.addEventListener("input", () => {
   i.value = i.value.replace(",", ".").replace(/[^0-9.]/g, "");
+  i.closest("form")?.querySelectorAll(".pct-row button").forEach((b) => b.setAttribute("aria-pressed", "false"));
   updateButtons();
 }));
-$("[data-max=deposit]").addEventListener("click", () => { if (bal.ant !== null) { $("input[name=amount]", dep).value = formatEther(bal.ant); updateButtons(); } });
-$("[data-max=withdraw]").addEventListener("click", () => {
-  if (bal.l3 !== null && bal.l3 > GAS_RESERVE) { $("input[name=amount]", wd).value = formatEther(bal.l3 - GAS_RESERVE); updateButtons(); }
-});
+// 10/25/50/75/100% of what can be moved: the whole ANT balance for deposits; for withdrawals the ANT on
+// ANT CHAIN minus a small reserve for the withdrawal's own gas (so 100% always goes through). Rounded down.
+function setPct(form, spendable, pct, btn) {
+  const msg = $(".form-msg", form);
+  if (!state.address) { status(msg, "Connect a wallet first.", "bad"); return; }
+  if (spendable === null) { status(msg, "Still reading your balance…"); return; }
+  if (spendable <= 0n) { status(msg, "Nothing to move yet.", "bad"); return; }
+  $("input[name=amount]", form).value = formatEther((spendable * BigInt(pct)) / 100n);
+  form.querySelectorAll(".pct-row button").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+  status(msg, "");
+  updateButtons();
+}
+$$("[data-pct=deposit] button").forEach((b) => b.addEventListener("click", () => setPct(dep, bal.ant, Number(b.dataset.p), b)));
+$$("[data-pct=withdraw] button").forEach((b) => b.addEventListener("click", () => setPct(wd, bal.l3 === null ? null : bal.l3 - GAS_RESERVE, Number(b.dataset.p), b)));
 
 onWallet((s) => {
   $$("[data-connect]").forEach((b) => { b.textContent = s.address ? short(s.address) : "Connect wallet"; });
