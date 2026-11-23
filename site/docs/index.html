@@ -32,7 +32,7 @@
   <!-- test token strip -->
   <div class="strip" role="note">
     <span><span class="dot pulse"></span></span>
-    <span>Testnet live · test tokens have no value</span>
+    <span data-n="strip">Mainnet live · gas paid in ANT</span>
     <span>$ANTC <code>0x1A9c…6281</code></span>
     <button type="button" data-copy="0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" aria-label="Copy $ANTC contract address">Copy</button>
     <a href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Buy on Pons →</a>
@@ -44,13 +44,13 @@
       <a class="hp brand" href="/" aria-label="ANT CHAIN home">
         <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span>
         <span class="brand-name">ANT CHAIN</span>
-        <span class="brand-net">testnet</span>
+        <span class="brand-net">mainnet</span>
       </a>
       <nav class="hp menu" aria-label="Primary">
         <a href="/bridge/">Bridge</a>
         <a href="/swap/">Swap</a>
         <a href="/stake/">Stake</a>
-        <a href="/explorer/testnet/">Explorer</a>
+        <a href="/explorer/" data-explorer>Explorer</a>
         <a href="/docs/" aria-current="page">Docs</a>
         <a href="/roadmap/">Roadmap</a>
         <a href="/#build">Build</a>
@@ -67,7 +67,7 @@
   </header>
   <nav class="sheet-nav" id="sheet" aria-label="Menu">
     <button class="btn btn-ghost btn-small sheet-close" type="button" data-menu-close>Close</button>
-    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/testnet/">Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/" data-explorer>Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
   </nav>
 
   <main class="docs-main">
@@ -77,7 +77,8 @@
       <nav aria-label="Sections">
         <p class="side-group">Start</p>
         <ul>
-          <li><a href="#testnet">Testnet is live</a></li>
+          <li><a href="#mainnet">Mainnet is live</a></li>
+          <li><a href="#testnet">Testnet</a></li>
           <li><a href="#tant">What is tANT</a></li>
           <li><a href="/roadmap/">Roadmap ↗</a></li>
           <li><a href="#intro">What is ANT CHAIN</a></li>
@@ -121,9 +122,35 @@
         </dl>
       </header>
 
-      <section id="testnet" class="doc-sec">
-        <h2>Testnet is live <span class="tag-soon">Now</span></h2>
-        <p>ANT CHAIN Testnet runs the same software as mainnet, with <strong>tANT</strong>, a free test token with no value, as gas. Mainnet is deployed and opens to users after testnet; it will be announced on this site and on X.</p>
+      <section id="mainnet" class="doc-sec">
+        <h2>Mainnet is live <span class="tag-soon">Live</span></h2>
+        <p>ANT CHAIN mainnet runs on Robinhood Chain, and every fee is paid in real <strong>ANT</strong>. Want to practice first? Press <em>Testnet</em> on the bridge page and use free test tokens.</p>
+        <table class="doc-table">
+          <tbody>
+            <tr><th scope="row">Network name</th><td>ANT CHAIN</td></tr>
+            <tr><th scope="row">Chain ID</th><td><code>26800</code> (<code>0x68b0</code>)</td></tr>
+            <tr><th scope="row">RPC</th><td><code>https://rpc.antchain.tech</code></td></tr>
+            <tr><th scope="row">Gas token</th><td>ANT <code>0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</code> on Robinhood Chain</td></tr>
+            <tr><th scope="row">Parent chain</th><td>Robinhood Chain, chain ID <code>4663</code></td></tr>
+            <tr><th scope="row">Explorer</th><td><a href="/explorer/" data-keep-net>ANT CHAIN Explorer</a></td></tr>
+            <tr><th scope="row">Withdrawals</th><td>Claimable about 7 days after you start (the challenge window, the same rule as Arbitrum One); the bridge page shows a countdown</td></tr>
+          </tbody>
+        </table>
+        <h3>Bridge in, use it, withdraw</h3>
+        <ol class="doc-steps">
+          <li><b>Have ANT and a little ETH</b> on Robinhood Chain. ANT becomes your gas; ETH pays for the approve and deposit there.</li>
+          <li><b>Connect.</b> Open the <a href="/bridge/?net=mainnet">bridge page</a>, connect a wallet and check that the switch says <em>Mainnet</em>.</li>
+          <li><b>Deposit.</b> Enter an amount, approve once, then deposit. The ANT arrives on ANT CHAIN as gas, usually within a minute. Press <em>Add network</em> to see it in your wallet.</li>
+          <li><b>Use it.</b> Send, deploy contracts, or trade on the <a href="/swap/?net=mainnet">exchange</a>. A transfer costs a fraction of a cent.</li>
+          <li><b>Withdraw.</b> Start a withdrawal on the bridge page. After about 7 days the countdown ends; press <em>Claim</em> to get your ANT back on Robinhood Chain.</li>
+        </ol>
+        <div class="callout warn"><b>Real funds</b><p>One operator runs the sequencer, batch poster and validator today, ANT can be paused by its issuer, and the contracts have not had an external audit yet. Start with amounts you are comfortable with. Withdrawals cannot be sped up or cancelled once started.</p></div>
+        <p class="muted-note">The full guide, with fixes for common problems, is on <a href="https://github.com/AntChainL3/ant-chain/blob/main/docs/mainnet-guide.md" target="_blank" rel="noopener">GitHub</a>.</p>
+      </section>
+
+      <section id="testnet" class="doc-sec" data-keep-net>
+        <h2>Testnet <span class="tag-soon">Free</span></h2>
+        <p>ANT CHAIN Testnet runs the same software as mainnet, with <strong>tANT</strong>, a free test token with no value, as gas. Use it to practice before using real ANT on mainnet.</p>
         <table class="doc-table">
           <tbody>
             <tr><th scope="row">Network name</th><td>ANT CHAIN Testnet</td></tr>
@@ -255,7 +282,7 @@
           <li><b>Pools start empty.</b> The first deposit into a pool sets its starting price.</li>
           <li><b>Check addresses.</b> Anyone can create a token with any name. Trade only tokens whose contract you have verified.</li>
         </ul>
-        <div class="callout warn"><b>Status</b><p>The exchange is live on testnet, with a seeded tANT / tUSD pool on the <a href="../swap/">swap page</a>. On mainnet it opens together with mainnet.</p></div>
+        <div class="callout warn"><b>Status</b><p>The exchange is live on mainnet and on testnet (with a seeded tANT / tUSD pool) on the <a href="../swap/">swap page</a>. Mainnet pools are created by their liquidity providers.</p></div>
       </section>
 
       <section id="token" class="doc-sec">
@@ -271,7 +298,7 @@
         <p>It has three jobs:</p>
         <div class="doc-cards">
           <div class="doc-card"><h3>Express lane</h3><p>Bid for priority ordering of your transactions in each round. Arbitrum's Timeboost runs a sealed-bid auction for an "express lane"; on ANT CHAIN the bids are paid in the ANT CHAIN token. Useful for traders and bots that need to land first.</p></div>
-          <div class="doc-card"><h3>Gas credits</h3><p>Stake $ANTC on Robinhood Chain and earn gas credits every second (token-days). Credits pay for your transactions on ANT CHAIN once mainnet opens. Unstake any time. Live on the <a href="/stake/">Stake page</a>, contract <code>0xfd0d…b1ac</code>.</p></div>
+          <div class="doc-card"><h3>Gas credits</h3><p>Stake $ANTC on Robinhood Chain and earn gas credits every second (token-days). Credits pay for your transactions on ANT CHAIN once credit spending opens (coming soon). Unstake any time. Live on the <a href="/stake/">Stake page</a>, contract <code>0xfd0d…b1ac</code>.</p></div>
           <div class="doc-card"><h3>Buyback and burn</h3><p>A 0.01% fee on bridge deposits and swaps buys the ANT CHAIN token on the market and burns it. The fee and the burns are on chain for anyone to check.</p></div>
         </div>
         <h3>What it is not</h3>
@@ -285,7 +312,7 @@
 
       <section id="stake" class="doc-sec">
         <h2>Staking $ANTC for gas credits <span class="tag-soon">Live</span></h2>
-        <p>Stake $ANTC on Robinhood Chain and earn gas credits every second. Credits will pay for your transactions on ANT CHAIN once mainnet opens. Unstake any time.</p>
+        <p>Stake $ANTC on Robinhood Chain and earn gas credits every second. Credits will pay for your transactions on ANT CHAIN once credit spending opens (coming soon). Unstake any time.</p>
         <table class="doc-table addr">
           <tbody>
             <tr><th scope="row">Page</th><td><a href="/stake/">antchain.tech/stake</a></td></tr>
@@ -454,7 +481,7 @@ forge create src/Counter.sol:Counter \
           </a>
           <p class="muted" style="max-width:36ch">An independent Arbitrum Layer 3 on Robinhood Chain. Gas is the ANT Stock Token.</p>
         </div>
-        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/testnet/">Explorer</a></li></ul></div>
+        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/" data-explorer>Explorer</a></li></ul></div>
         <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
         <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
       </div>

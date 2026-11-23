@@ -28,14 +28,15 @@ Nothing here is an offer or a promise of value.
 | [Staking for gas credits](https://antchain.tech/stake/): stake $ANTC on Robinhood Chain, contract `0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac` | Live |
 | Live ANT price on the site, read from the USDG/ANT pool on Robinhood Chain every 15 seconds; the price keeper keeps the fee pricer in line | Live |
 
-## Phase 3: Mainnet opens
+## Phase 3: Mainnet
 
 | | Status |
 |---|---|
-| ANT CHAIN mainnet (chain 26800) on Robinhood Chain, gas paid in ANT | Deployed, opening after testnet |
-| Bridge with real ANT (deposit, withdraw after the ~7 day challenge window, claim) | Opens with mainnet |
-| Exchange on mainnet: contracts deployed, first liquidity pool | Opens with mainnet |
-| Spend gas credits from $ANTC staking on ANT CHAIN | Soon, before mainnet opens |
+| ANT CHAIN mainnet (chain 26800) on Robinhood Chain, gas paid in ANT ([guide](mainnet-guide.md)) | Live |
+| Bridge with real ANT (deposit, withdraw after the ~7 day challenge window, claim) | Live |
+| Exchange on mainnet: contracts live, anyone can create a pool | Live |
+| First ANT liquidity pool on the mainnet exchange | Soon |
+| Spend gas credits from $ANTC staking on ANT CHAIN | Soon |
 | Monitoring and alerts for the chain's operators | Planned |
 
 ## Phase 4: $ANTC on mainnet

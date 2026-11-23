@@ -35,10 +35,10 @@ Everything else works like any EVM chain: MetaMask, Rabby, Foundry, Hardhat, vie
 
 | Part | Status |
 |---|---|
-| **Testnet** (chain 26801) | **Live**: try it at [antchain.tech](https://antchain.tech) |
-| Mainnet (chain 26800) | Deployed on Robinhood Chain, **not open to users yet**. Opens after testnet; it will be announced on [antchain.tech](https://antchain.tech) and [X](https://x.com/antchainl3). |
-| Bridge (deposit, withdraw, claim) | Live on testnet |
-| Exchange (Uniswap V2, tANT/tUSD pool) | Live on testnet |
+| **Mainnet** (chain 26800) | **Live** on Robinhood Chain, gas paid in ANT. Guide: [docs/mainnet-guide.md](docs/mainnet-guide.md) |
+| **Testnet** (chain 26801) | **Live**: free test tokens, switch to Testnet on [antchain.tech/bridge](https://antchain.tech/bridge/) |
+| Bridge (deposit, withdraw, claim) | Live on mainnet (withdrawals ~7 days) and testnet (~1 hour) |
+| Exchange (Uniswap V2) | Live on mainnet; tANT/tUSD pool on testnet |
 | Explorer (blocks, transactions, addresses) | Live for testnet and mainnet |
 | Test kit faucet | Live on testnet |
 | $ANTC, the ANT CHAIN token | **Live** on [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281), Robinhood Chain. Contract `0x1A9ca5A347c4aeAb4870668E76506E45C23D6281`. See [Token](#the-antc-token). |
@@ -66,9 +66,11 @@ Full details: [docs/tant.md](docs/tant.md)
 
 Step by step, with what to expect at each step and fixes for common problems: [docs/testnet-guide.md](docs/testnet-guide.md)
 
+Using real ANT on mainnet: [docs/mainnet-guide.md](docs/mainnet-guide.md)
+
 ## Network details
 
-| | Testnet | Mainnet (not open yet) |
+| | Testnet | Mainnet (live) |
 |---|---|---|
 | Network name | ANT CHAIN Testnet | ANT CHAIN |
 | Chain ID | `26801` (`0x68b1`) | `26800` (`0x68b0`) |
@@ -117,7 +119,7 @@ Only this address is ours. It has three jobs on the chain:
 - a **daily gas allowance** for people who stake it,
 - a **0.01% bridge and swap fee** used to buy $ANTC back and burn it.
 
-The first of these to ship is **staking for gas credits**: stake $ANTC on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once mainnet opens. Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing. Step-by-step guide: [docs/staking-guide.md](docs/staking-guide.md).
+The first of these to ship is **staking for gas credits**: stake $ANTC on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once credit spending opens (coming soon). Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing. Step-by-step guide: [docs/staking-guide.md](docs/staking-guide.md).
 
 Staking opens first; express-lane bids and the buyback come with ANT CHAIN mainnet. Gas itself stays ANT. $ANTC is not connected to Anthropic, PBC and gives no rights in Anthropic or in ANT. Nothing in this repository is an offer or investment advice.
 

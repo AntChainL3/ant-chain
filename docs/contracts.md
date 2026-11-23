@@ -32,7 +32,7 @@ Always check addresses against this page or [antchain.tech](https://antchain.tec
 
 Pair init code hash: `0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f`
 
-## Mainnet (not open to users yet)
+## Mainnet (live)
 
 ### On Robinhood Chain (4663)
 
@@ -59,7 +59,7 @@ Pair init code hash: `0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7d
 | Exchange factory (Uniswap V2) | `0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A` |
 | Wrapped ANT | `0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4` |
 
-The mainnet exchange is deployed but not opened yet: there are no pools, and the website does not link to it until mainnet reopens.
+The mainnet exchange is open. Pools are created by their liquidity providers; the first ANT pool is listed on the roadmap.
 
 > **Beware of impostors.** A different token at `0x36c2861a1f94c6f277a388338a4f8a686e0d9b30` also uses the name "Anthropic" with a 1B supply. It is **not** the ANT Stock Token and has nothing to do with ANT CHAIN.
 

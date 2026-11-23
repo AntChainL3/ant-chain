@@ -159,7 +159,7 @@ async function blockView(id) {
   const rows = [
     ["Block", `#${n.toLocaleString("en-US")}`], ["Time", `${new Date(hexN(b.timestamp) * 1000).toLocaleString()} (${ago(hexN(b.timestamp))})`],
     ["Hash", `<code>${esc(b.hash)}</code>`], ["Parent", `<a class="hx" href="${BASE}/block/${Math.max(0, n - 1)}"><code>${esc(b.parentHash)}</code></a>`],
-    ["Transactions", `${b.transactions.length} (${b.transactions.filter((t) => !SYSTEM.has(t.type)).length} user)`],
+    ["Transactions", `${Number(b.transactions.length)} (${Number(b.transactions.filter((t) => !SYSTEM.has(t.type)).length)} user)`],
     ["Gas used", hexN(b.gasUsed).toLocaleString("en-US")], ["Base fee", b.baseFeePerGas ? `${Number(big(b.baseFeePerGas)) / 1e9} gwei` : "—"],
     ["Parent-chain block", b.l1BlockNumber ? hexN(b.l1BlockNumber).toLocaleString("en-US") : "—"],
   ];
@@ -183,7 +183,7 @@ async function txView(hash) {
     ["Type", esc(TX_TYPES[t.type] || t.type) + (t.type === "0x64" ? " · ANT bridged in from the parent chain" : "")],
     ["Method", esc(method(t))], ["From", addrLink(t.from) + ` <code class="dim">${esc(t.from || "")}</code>`], ["To", addrLink(t.to) + (t.to ? ` <code class="dim">${esc(t.to)}</code>` : "")],
     ["Value", `${units(big(t.value), 8)} ${TOKEN}`], ["Fee", r ? `${units(fee, 10)} ${TOKEN}` : "—"],
-    ["Gas used", r ? hexN(r.gasUsed).toLocaleString("en-US") : "—"], ["Logs", r ? String(r.logs.length) : "—"],
+    ["Gas used", r ? hexN(r.gasUsed).toLocaleString("en-US") : "—"], ["Logs", r ? String(Number(r.logs.length)) : "—"],
     ["Input", t.input && t.input !== "0x" ? `<code class="wrap">${esc(t.input.slice(0, 650))}${t.input.length > 650 ? "…" : ""}</code>` : "—"],
   ];
   app.innerHTML = `${crumb("Transaction")}${table(rows)}`;

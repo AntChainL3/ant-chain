@@ -1,13 +1,14 @@
 // ANT CHAIN home: live chain readout, block ledger, orbit linework, data packets,
 // scroll-driven fee route, console "Run it", copy, add network.
-import { L3, L2, ADDR, TOKEN } from "./config.js";
+import { L3, L2, ADDR, TOKEN, ACTIVE } from "./config.js";
 import { onAntPrice } from "./antprice.js";
+import "./netui.js";
 const warn = (e) => console.warn(e); // background refreshes: log failures instead of leaving promises unhandled
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const EXPLORER = "/explorer/testnet";
+const EXPLORER = ACTIVE === "mainnet" ? "/explorer" : "/explorer/testnet";
 const TRANSFER_GAS = 28402n; // measured on mainnet, 20 Nov 2026
 
 // ---------- live values ----------
@@ -74,7 +75,7 @@ setInterval(() => { if (lastTs) document.querySelectorAll('[data-live="lastblock
 
 async function refreshL2() {
   const SEL = { batchCount: "0x06f13056", balanceOf: "0x70a08231", antUsd: "0xca3d55bd", currentRate: "0xf9f8bdb7", isStaked: "0x6177fd18" };
-  const VALIDATOR = "0x08d03d05ffe87bE0f234af772Dea69Af98895d59";
+  const VALIDATOR = ADDR.validator;
   await Promise.allSettled([
     call(ADDR.sequencerInbox, SEL.batchCount).then((h) => setLive("batches", fmtInt(BigInt(h)))),
     call(ADDR.ant, SEL.balanceOf + pad(ADDR.bridge)).then((h) => setLive("escrow", `${units(BigInt(h), 2)} ${TOKEN}`)),

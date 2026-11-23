@@ -1,6 +1,6 @@
 # Staking $ANTC for gas credits
 
-Stake $ANTC on Robinhood Chain and earn gas credits every second. Credits will pay for your transactions on ANT CHAIN once mainnet opens. You can unstake at any time.
+Stake $ANTC on Robinhood Chain and earn gas credits every second. Credits will pay for your transactions on ANT CHAIN once credit spending opens (coming soon). You can unstake at any time.
 
 Page: [antchain.tech/stake](https://antchain.tech/stake/)
 
@@ -28,7 +28,7 @@ Only the two addresses above are ours. Other tokens with the name "ANT Chain" ar
 
 Credits are **token-days**: 1 $ANTC staked for 1 day earns 1 credit. 100 $ANTC staked for 3 days earns 300. Adding or removing $ANTC changes the rate from that moment; credits already earned stay.
 
-When ANT CHAIN mainnet opens, credits pay for gas there. Every use is recorded on chain by the contract (`spentOf`), so anyone can check it.
+When credit spending opens on ANT CHAIN (coming soon), credits pay for gas there. Every use is recorded on chain by the contract (`spentOf`), so anyone can check it.
 
 ## Unstake
 

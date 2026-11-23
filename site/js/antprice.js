@@ -49,7 +49,7 @@ async function fromPricer() {
   return Number(BigInt(h)) / 1e18;
 }
 
-export let antUsd = null;
+let antUsd = null;
 const listeners = new Set();
 /** Calls fn(price) now (if known) and on every update. */
 export function onAntPrice(fn) { listeners.add(fn); if (antUsd !== null) fn(antUsd); }

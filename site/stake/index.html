@@ -32,7 +32,7 @@
   <!-- test token strip -->
   <div class="strip" role="note">
     <span><span class="dot pulse"></span></span>
-    <span>Testnet live · test tokens have no value</span>
+    <span data-n="strip">Mainnet live · gas paid in ANT</span>
     <span>$ANTC <code>0x1A9c…6281</code></span>
     <button type="button" data-copy="0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" aria-label="Copy $ANTC contract address">Copy</button>
     <a href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Buy on Pons →</a>
@@ -44,13 +44,13 @@
       <a class="hp brand" href="/" aria-label="ANT CHAIN home">
         <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span>
         <span class="brand-name">ANT CHAIN</span>
-        <span class="brand-net">testnet</span>
+        <span class="brand-net">mainnet</span>
       </a>
       <nav class="hp menu" aria-label="Primary">
         <a href="/bridge/">Bridge</a>
         <a href="/swap/">Swap</a>
         <a href="/stake/" aria-current="page">Stake</a>
-        <a href="/explorer/testnet/">Explorer</a>
+        <a href="/explorer/" data-explorer>Explorer</a>
         <a href="/docs/">Docs</a>
         <a href="/roadmap/">Roadmap</a>
         <a href="/#build">Build</a>
@@ -67,7 +67,7 @@
   </header>
   <nav class="sheet-nav" id="sheet" aria-label="Menu">
     <button class="btn btn-ghost btn-small sheet-close" type="button" data-menu-close>Close</button>
-    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/testnet/">Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/" data-explorer>Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
   </nav>
 
   <main id="main" class="app-main">
@@ -75,7 +75,7 @@
       <div class="app-visual" aria-hidden="true"><svg class="orbit app-orbit" data-orbit></svg><p class="av-labels"><span class="av-l">Stake on <b data-chain-name>Robinhood Chain</b></span><span class="av-r">Gas on <b>ANT CHAIN</b></span></p></div>
       <p class="kicker"><span class="tag live">staking</span> Robinhood Chain → gas credits for ANT CHAIN</p>
       <h1>Stake <em>$ANTC</em>, earn gas credits</h1>
-      <p class="lede">While your $ANTC is staked, you earn gas credits every second. Credits pay for transactions on ANT CHAIN once mainnet opens. Unstake any time: no lock, no fee, and the credits you earned stay yours.</p>
+      <p class="lede">While your $ANTC is staked, you earn gas credits every second. Credits pay for transactions on ANT CHAIN once credit spending opens (coming soon). Unstake any time: no lock, no fee, and the credits you earned stay yours.</p>
       <dl class="stat-row">
         <div><dt>Total staked</dt><dd data-total>…</dd></div>
         <div><dt>Your stake</dt><dd data-staked>—</dd></div>
@@ -118,7 +118,7 @@
           <ol class="side-steps">
             <li><b>Stake.</b> Approve once, then stake any amount. Credits start right away.</li>
             <li><b>Earn.</b> Credits are token-days: 100 staked for 3 days is 300. They keep counting every second.</li>
-            <li><b>Use.</b> When ANT CHAIN mainnet opens, credits pay for your transactions there. Each use is recorded on chain.</li>
+            <li><b>Use.</b> When credit spending opens on ANT CHAIN (coming soon), credits pay for your transactions there. Each use is recorded on chain.</li>
             <li><b>Leave any time.</b> Unstaking is never blocked, and earned credits are kept.</li>
           </ol>
         </div>
@@ -147,7 +147,7 @@
           </a>
           <p class="muted" style="max-width:36ch">An independent Arbitrum Layer 3 on Robinhood Chain. Gas is the ANT Stock Token.</p>
         </div>
-        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/testnet/">Explorer</a></li></ul></div>
+        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/" data-explorer>Explorer</a></li></ul></div>
         <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
         <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
       </div>

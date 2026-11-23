@@ -237,3 +237,14 @@ h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.025em; }
 .orbit .o-tick { stroke-opacity: .38; stroke-width: 1; }
 .orbit text { fill: var(--cobalt); fill-opacity: .45; font: 500 11px var(--mono); letter-spacing: .04em; }
 .orbit .o-sweep { stroke: var(--cobalt); stroke-opacity: .55; stroke-width: 1.4; }
+
+/* network switch on the app pages (Mainnet / Testnet) */
+.net-switch { display: inline-flex; padding: 3px; gap: 3px; border-radius: 10px; border: 1px solid var(--line); background: rgba(0, 0, 0, .35); margin: 0 0 14px; }
+.net-switch a { padding: 7px 12px; border-radius: 7px; text-decoration: none; font: 500 .6875rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); transition: background .2s, color .2s; }
+.net-switch a.on { background: rgba(255, 178, 26, .14); color: var(--ink); }
+.net-switch a:hover:not(.on), .net-switch a:focus-visible { color: var(--ink); }
+.net-more { margin-top: 28px; }
+.net-more > summary { cursor: pointer; list-style: none; display: inline-flex; gap: 8px; align-items: center; padding: 8px 0; }
+.net-more > summary::before { content: "+"; color: var(--amber); font-weight: 600; }
+.net-more[open] > summary::before { content: "−"; }
+.net-more > .net-grid { margin-top: 16px; }

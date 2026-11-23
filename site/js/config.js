@@ -1,5 +1,5 @@
 // ANT CHAIN public configuration. Addresses only, never keys.
-// Two profiles; ACTIVE picks the one the site uses. Testnet is live; mainnet is deployed but not open yet (see MAINNET_OPEN).
+// Two profiles; ACTIVE picks the one the apps use. Mainnet is live; testnet stays open for trying things with free tokens.
 const PROFILES = {
   testnet: {
     NETWORK: "testnet",
@@ -14,6 +14,7 @@ const PROFILES = {
       rollup: "0xe5336CD5C0A0a9f26967FB4C2F14a8F1109Cd62D",
       sequencerInbox: "0x6908E358ff65aed84c44C3Df699262f5B6CBD151",
       pricer: "0x545328faa9c28fda8d9c1d23ad4bd32f52b2daa7",
+      validator: "0x08d03d05ffe87bE0f234af772Dea69Af98895d59",
       arbSys: "0x0000000000000000000000000000000000000064",
       nodeInterface: "0x00000000000000000000000000000000000000C8",
     },
@@ -33,18 +34,32 @@ const PROFILES = {
       rollup: "0xe3A87D0cDA39c335cb2Bbaf4DE1f052fe41aeE06",
       sequencerInbox: "0xCBD854bbAf1580123cE9f7DF5bac3bFc6C33bf9E",
       pricer: "0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab",
+      validator: "0x98136b570891de44dAfeC819491b7a5A546faC1E",
       arbSys: "0x0000000000000000000000000000000000000064",
       nodeInterface: "0x00000000000000000000000000000000000000C8",
     },
-    DEX: { wrappedAnt: "0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4", factory: "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A", router: "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF", testUsd: null }, // deployed 22 Nov 2026, no pools yet
+    DEX: { wrappedAnt: "0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4", factory: "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A", router: "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF", testUsd: null }, // deployed 22 Nov 2026
     CONFIRM_BLOCKS: 50400, // about 7 days of 12 s Ethereum blocks
   },
 };
 
 export { PROFILES };
-export const ACTIVE = "testnet";
-// false: mainnet runs but is not announced; the mainnet explorer shows "not open yet" even when the node is up
-export const MAINNET_OPEN = false;
+// true: mainnet is open to users. false: it runs but is not announced, and the site stays on testnet.
+export const MAINNET_OPEN = true;
+// Which network the apps use. Mainnet by default once open; ?net=testnet (remembered per browser) switches.
+function pickNetwork() {
+  if (!MAINNET_OPEN) return "testnet";
+  // the explorer's network is in its URL: /explorer/... is mainnet, /explorer/testnet/... is testnet
+  if (typeof location !== "undefined" && /^\/explorer(\/|$)/.test(location.pathname)) return /^\/explorer\/testnet(\/|$)/.test(location.pathname) ? "testnet" : "mainnet";
+  let net = null;
+  try {
+    const q = new URLSearchParams(location.search).get("net");
+    if (q === "mainnet" || q === "testnet") { net = q; localStorage.setItem("antchain.net", q); }
+    else net = localStorage.getItem("antchain.net");
+  } catch { /* storage blocked: use the default */ }
+  return net === "testnet" ? "testnet" : "mainnet";
+}
+export const ACTIVE = pickNetwork();
 
 // $ANTC staking for gas credits. It lives on Robinhood Chain (where $ANTC trades on Pons), independent of ACTIVE.
 // Until $ANTC exists, the page runs in test mode: tANT stands in for $ANTC on Robinhood Chain Testnet.

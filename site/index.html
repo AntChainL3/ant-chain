@@ -34,7 +34,7 @@
   <!-- test token strip -->
   <div class="strip" role="note">
     <span><span class="dot pulse"></span></span>
-    <span>Testnet live · test tokens have no value</span>
+    <span data-n="strip">Mainnet live · gas paid in ANT</span>
     <span>$ANTC <code>0x1A9c…6281</code></span>
     <button type="button" data-copy="0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" aria-label="Copy $ANTC contract address">Copy</button>
     <a href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Buy on Pons →</a>
@@ -46,13 +46,13 @@
       <a class="hp brand" href="/" aria-label="ANT CHAIN home">
         <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span>
         <span class="brand-name">ANT CHAIN</span>
-        <span class="brand-net">testnet</span>
+        <span class="brand-net">mainnet</span>
       </a>
       <nav class="hp menu" aria-label="Primary">
         <a href="/bridge/">Bridge</a>
         <a href="/swap/">Swap</a>
         <a href="/stake/">Stake</a>
-        <a href="/explorer/testnet/">Explorer</a>
+        <a href="/explorer/" data-explorer>Explorer</a>
         <a href="/docs/">Docs</a>
         <a href="/roadmap/">Roadmap</a>
         <a href="/#build">Build</a>
@@ -69,7 +69,7 @@
   </header>
   <nav class="sheet-nav" id="sheet" aria-label="Menu">
     <button class="btn btn-ghost btn-small sheet-close" type="button" data-menu-close>Close</button>
-    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/testnet/">Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/" data-explorer>Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
   </nav>
 
   <main id="main">
@@ -81,9 +81,9 @@
 
       <div class="hero-in wrap">
         <div class="hero-status">
-          <span>ANT CHAIN // TESTNET</span>
+          <span>ANT CHAIN // <span data-n="NET">MAINNET</span></span>
           <span data-clock>--:--:-- UTC</span>
-          <span class="hide-sm">CHAIN 26801</span>
+          <span class="hide-sm">CHAIN <span data-n="l3id">26800</span></span>
           <span class="live-word"><span class="dot pulse" data-live-dot></span>Live</span>
         </div>
 
@@ -100,10 +100,10 @@
 
         <div class="hero-row">
           <div class="hero-card card rv" style="--i:2">
-            <p class="kicker"><span class="tag live">testnet live</span> <span>mainnet opens after testnet</span></p>
+            <p class="kicker"><span class="tag live"><span data-n="net">mainnet</span> live</span> <span data-show="mainnet">testnet stays open with free tokens</span><span data-show="testnet" hidden>mainnet is live too</span></p>
             <p class="hero-claim">An Arbitrum chain where every fee is paid in <b>ANT</b>, Robinhood's token for Anthropic, PBC stock.</p>
                         <div class="hero-cta">
-              <a class="btn" href="/bridge/">Bridge tANT in <span class="ar" aria-hidden="true">→</span></a>
+              <a class="btn" href="/bridge/">Bridge <span data-n="tok">ANT</span> in <span class="ar" aria-hidden="true">→</span></a>
               <button class="btn btn-ghost" type="button" data-add-network>Add to wallet</button>
             </div>
             <p class="wallet-msg" role="status" aria-live="polite" data-wallet-msg></p>
@@ -112,7 +112,7 @@
           <aside class="link-card card corners rv" style="--i:3" aria-label="Live chain readout">
             <div class="lc-head"><span>CHAIN LINK</span><span class="muted">read live</span></div>
             <dl class="lc">
-              <div><dt>Network</dt><dd>ANT CHAIN Testnet</dd></div>
+              <div><dt>Network</dt><dd data-n="l3">ANT CHAIN</dd></div>
               <div><dt>Latest block</dt><dd><a class="lc-link" data-live-href="block" href="/explorer/testnet/">#<span data-live="block">…</span></a></dd></div>
               <div><dt>Last block</dt><dd data-live="lastblock">…</dd></div>
               <div><dt>Gas price</dt><dd data-live="gas">…</dd></div>
@@ -125,7 +125,7 @@
 
         <div class="hero-foot">
           <span>BLOCK #<b data-live="block2">…</b></span>
-          <span class="hide-sm">RPC rpc.testnet.antchain.tech</span>
+          <span class="hide-sm">RPC <span data-n="rpc">rpc.antchain.tech</span></span>
           <span>SCROLL ↓</span>
         </div>
       </div>
@@ -161,9 +161,9 @@
               <h3 class="h3">You sign, gas is ANT</h3>
               <p>Your wallet sends the transaction to ANT CHAIN and pays gas in ANT. Balances, <code>msg.value</code> and fees are all in ANT, no ETH needed here.</p>
               <pre class="term"><code><span class="c">wallet / sign</span>
-<span class="k">$</span> send 0.001 tANT → 0x…
+<span class="k">$</span> send 0.001 ANT → 0x…
 <span class="ok">✓</span> chain id 26801
-<span class="ok">✓</span> fee paid in tANT</code></pre>
+<span class="ok">✓</span> fee paid in ANT</code></pre>
             </li>
             <li class="stop" data-stop>
               <p class="stop-n mono">Order</p>
@@ -237,25 +237,25 @@
     <section class="sec apps-sec" id="apps" aria-labelledby="apps-title">
       <div class="wrap">
         <div class="sec-head">
-          <p class="kicker"><span class="tag live">3 apps</span> Everything runs on testnet today</p>
+          <p class="kicker"><span class="tag live">3 apps</span> Live on mainnet; testnet for free practice</p>
           <h2 class="h2 rv" id="apps-title">Bridge in. Trade. <span class="it">Check every step.</span></h2>
-          <p class="lede rv" style="--i:1">Bring tANT over from Robinhood Chain Testnet, trade it on the ANT CHAIN exchange, and look up every block and transaction on the explorer.</p>
+          <p class="lede rv" style="--i:1">Bring ANT over from Robinhood Chain, trade it on the ANT CHAIN exchange, and look up every block and transaction on the explorer. Switch to testnet any time to try it with free tokens.</p>
         </div>
         <div class="apps">
           <a class="app rv" href="/bridge/">
             <svg class="app-art" viewBox="0 0 320 150" aria-hidden="true"><g class="art"><circle cx="70" cy="75" r="44"/><circle cx="250" cy="75" r="44"/><path d="M114 62h92M114 88h92"/><path d="M196 54l10 8-10 8M124 80l-10 8 10 8"/><text x="70" y="79">4663</text><text x="250" y="79">26801</text></g></svg>
             <span class="app-top"><span class="tag live">live</span><span class="mono muted">In: seconds · out: ~1 h</span></span>
             <span class="app-name">Bridge</span>
-            <span class="app-desc">Deposit tANT on Robinhood Chain Testnet and it arrives as gas. Withdraw back with a countdown and a Claim button.</span>
-            <span class="app-meta"><span>tANT in the bridge</span><b data-live="escrow">…</b></span>
+            <span class="app-desc">Deposit ANT on Robinhood Chain and it arrives as gas. Withdraw back with a countdown and a Claim button.</span>
+            <span class="app-meta"><span><span data-n="tok">ANT</span> in the bridge</span><b data-live="escrow">…</b></span>
             <span class="app-go">Open bridge <span class="ar" aria-hidden="true">→</span></span>
           </a>
           <a class="app rv" style="--i:1" href="/swap/">
             <svg class="app-art" viewBox="0 0 320 150" aria-hidden="true"><g class="art"><path d="M20 110 C80 110 90 40 160 40 S240 110 300 110"/><path d="M20 40 C80 40 90 110 160 110 S240 40 300 40"/><circle cx="160" cy="40" r="5"/><circle cx="160" cy="110" r="5"/><text x="40" y="30">tANT</text><text x="268" y="30">tUSD</text></g></svg>
             <span class="app-top"><span class="tag live">live</span><span class="mono muted">Uniswap V2 · 0.3% to LPs</span></span>
             <span class="app-name">Swap</span>
-            <span class="app-desc">The exchange of ANT CHAIN. Swap tANT and tUSD, or add liquidity. Gas is the tANT you bridged.</span>
-            <span class="app-meta"><span>Pool</span><b>tANT / tUSD</b></span>
+            <span class="app-desc">The exchange of ANT CHAIN. Swap tokens or add liquidity. Gas is the ANT you bridged.</span>
+            <span class="app-meta"><span>Exchange</span><b>Uniswap V2</b></span>
             <span class="app-go">Open swap <span class="ar" aria-hidden="true">→</span></span>
           </a>
           <a class="app rv" style="--i:2" href="/explorer/testnet/">
@@ -280,12 +280,12 @@
         </div>
         <ul class="board">
           <li class="rv"><span class="b-name">Gas paid in ANT</span><span class="b-desc">Native currency of the chain; every fee is taken from it.</span><span class="tag live">live</span></li>
-          <li class="rv"><span class="b-name">Bridge deposits</span><span class="b-desc">From Robinhood Chain Testnet, credited as gas.</span><span class="tag live">live</span></li>
+          <li class="rv"><span class="b-name">Bridge deposits</span><span class="b-desc">From Robinhood Chain, credited as gas. Withdrawals take about 7 days.</span><span class="tag live">live</span></li>
           <li class="rv"><span class="b-name">Withdrawals and claims</span><span class="b-desc">Countdown on the bridge page, claim after the challenge window.</span><span class="tag live">live</span></li>
-          <li class="rv"><span class="b-name">Exchange</span><span class="b-desc">Uniswap V2 contracts, seeded tANT / tUSD pool.</span><span class="tag live">live</span></li>
+          <li class="rv"><span class="b-name">Exchange</span><span class="b-desc">Uniswap V2 contracts on mainnet; tANT / tUSD pool on testnet.</span><span class="tag live">live</span></li>
           <li class="rv"><span class="b-name">Explorer</span><span class="b-desc">Blocks, transactions and addresses for testnet and mainnet.</span><span class="tag live">live</span></li>
           <li class="rv"><span class="b-name">Test kit faucet</span><span class="b-desc">Testnet ETH and 100 tANT, once a day per wallet.</span><span class="tag live">live</span></li>
-          <li class="rv"><span class="b-name">Mainnet</span><span class="b-desc">Deployed on Robinhood Chain; opens to users after testnet. It will be announced here and on X.</span><span class="tag warn">not open yet</span></li>
+          <li class="rv"><span class="b-name">Mainnet</span><span class="b-desc">ANT CHAIN (26800) on Robinhood Chain, gas paid in real ANT.</span><span class="tag live">live</span></li>
           <li class="rv"><span class="b-name">$ANTC token</span><span class="b-desc">Live on <a class="link" href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Pons</a>, Robinhood Chain. Contract 0x1A9c…6281.</span><span class="tag live">live</span></li>
           <li class="rv"><span class="b-name">Express lane bids</span><span class="b-desc">Bid $ANTC for priority ordering of transactions (Timeboost).</span><span class="tag planned">planned</span></li>
           <li class="rv"><span class="b-name">Gas credits</span><span class="b-desc">Stake $ANTC, earn credits that pay for gas on ANT CHAIN. Live on the <a class="link" href="/stake/">Stake page</a>.</span><span class="tag live">live</span></li>
@@ -302,8 +302,9 @@
           <h2 class="h2 rv" id="build-title">Point your tools. <span class="it">Deploy.</span></h2>
           <p class="lede rv" style="--i:1">ANT CHAIN runs the same software as Arbitrum One. The one difference: <code>msg.value</code> and balances are in ANT, not ETH.</p>
           <ul class="facts rv" style="--i:2">
-            <li>Chain ID <button class="copy" type="button" data-copy="26801">26801</button> · currency tANT, 18 decimals</li>
-            <li>RPC <button class="copy" type="button" data-copy="https://rpc.testnet.antchain.tech">rpc.testnet.antchain.tech</button></li>
+            <li>Chain ID <button class="copy" type="button" data-copy="26800">26800</button> · currency ANT, 18 decimals</li>
+            <li>RPC <button class="copy" type="button" data-copy="https://rpc.antchain.tech">rpc.antchain.tech</button></li>
+            <li>Testnet: chain <button class="copy" type="button" data-copy="26801">26801</button>, RPC <button class="copy" type="button" data-copy="https://rpc.testnet.antchain.tech">rpc.testnet.antchain.tech</button></li>
             <li>CREATE2 deployer and Multicall are deployed</li>
             <li>Bridged ERC-20s arrive through the standard gateway</li>
           </ul>
@@ -318,7 +319,7 @@
           </div>
           <div role="tabpanel" id="p-run" aria-labelledby="t-run">
             <pre class="term" data-run-out><code><span class="c"># ask the chain itself, from your browser</span>
-<span class="k">$</span> curl https://rpc.testnet.antchain.tech \
+<span class="k">$</span> curl https://rpc.antchain.tech \
   -d '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}'</code></pre>
             <button class="btn btn-small run-btn" type="button" data-run>Run it <span class="ar" aria-hidden="true">→</span></button>
           </div>
@@ -326,16 +327,16 @@
             <pre class="term"><code>import { defineChain } from "viem";
 
 export const antChain = defineChain({
-  id: 26801,
-  name: "ANT CHAIN Testnet",
-  nativeCurrency: { name: "tANT", symbol: "tANT", decimals: 18 },
-  rpcUrls: { default: { http: ["https://rpc.testnet.antchain.tech"] } },
+  id: 26800,
+  name: "ANT CHAIN",
+  nativeCurrency: { name: "ANT", symbol: "ANT", decimals: 18 },
+  rpcUrls: { default: { http: ["https://rpc.antchain.tech"] } },
 });</code></pre>
           </div>
           <div role="tabpanel" id="p-forge" aria-labelledby="t-forge" hidden>
             <pre class="term"><code><span class="c"># foundry.toml</span>
 [rpc_endpoints]
-antchain = "https://rpc.testnet.antchain.tech"
+antchain = "https://rpc.antchain.tech"
 
 <span class="c"># deploy</span>
 forge create src/Counter.sol:Counter \
@@ -377,9 +378,43 @@ forge create src/Counter.sol:Counter \
         <div class="sec-head">
           <p class="kicker"><span class="tag plain">network</span> Click a value to copy it</p>
           <h2 class="h2 rv" id="network-title">Everything a wallet <span class="it">needs.</span></h2>
-          <p class="lede rv" style="--i:1">Add the network with one click, or by hand with these values. Contract addresses are on Robinhood Chain Testnet and ANT CHAIN Testnet.</p>
+          <p class="lede rv" style="--i:1">Add the network with one click, or by hand with these values. Testnet values are below the mainnet ones.</p>
         </div>
         <div class="net-grid">
+          <table class="kv rv">
+            <caption class="kicker">ANT CHAIN mainnet</caption>
+            <tbody>
+              <tr><th scope="row">Network name</th><td>ANT CHAIN</td></tr>
+              <tr><th scope="row">Chain ID</th><td><button class="copy" type="button" data-copy="26800">26800</button> <span class="muted">0x68b0</span></td></tr>
+              <tr><th scope="row">RPC URL</th><td><button class="copy" type="button" data-copy="https://rpc.antchain.tech">rpc.antchain.tech</button></td></tr>
+              <tr><th scope="row">Currency</th><td>ANT, 18 decimals</td></tr>
+              <tr><th scope="row">Parent chain</th><td>Robinhood Chain, 4663</td></tr>
+              <tr><th scope="row">Explorer</th><td><a class="link" href="/explorer/" data-keep-net>antchain.tech/explorer</a></td></tr>
+            </tbody>
+          </table>
+          <table class="kv rv" style="--i:1">
+            <caption class="kicker">On Robinhood Chain</caption>
+            <tbody>
+              <tr><th scope="row">ANT</th><td><button class="copy addr" type="button" data-copy="0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373">0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373</button></td></tr>
+              <tr><th scope="row">Inbox</th><td><button class="copy addr" type="button" data-copy="0x13be8403DdeA7826a6f46904344d4a9431c28Efa">0x13be8403DdeA7826a6f46904344d4a9431c28Efa</button></td></tr>
+              <tr><th scope="row">Bridge escrow</th><td><button class="copy addr" type="button" data-copy="0x3c7218E4E7a0819C3C83065d030BB3502AE76F1a">0x3c7218E4E7a0819C3C83065d030BB3502AE76F1a</button></td></tr>
+              <tr><th scope="row">Rollup</th><td><button class="copy addr" type="button" data-copy="0xe3A87D0cDA39c335cb2Bbaf4DE1f052fe41aeE06">0xe3A87D0cDA39c335cb2Bbaf4DE1f052fe41aeE06</button></td></tr>
+              <tr><th scope="row">Sequencer inbox</th><td><button class="copy addr" type="button" data-copy="0xCBD854bbAf1580123cE9f7DF5bac3bFc6C33bf9E">0xCBD854bbAf1580123cE9f7DF5bac3bFc6C33bf9E</button></td></tr>
+              <tr><th scope="row">Fee pricer</th><td><button class="copy addr" type="button" data-copy="0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab">0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab</button></td></tr>
+            </tbody>
+          </table>
+          <table class="kv rv" style="--i:2">
+            <caption class="kicker">On ANT CHAIN mainnet</caption>
+            <tbody>
+              <tr><th scope="row">Exchange router</th><td><button class="copy addr" type="button" data-copy="0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF">0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF</button></td></tr>
+              <tr><th scope="row">Exchange factory</th><td><button class="copy addr" type="button" data-copy="0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A">0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A</button></td></tr>
+              <tr><th scope="row">Wrapped ANT</th><td><button class="copy addr" type="button" data-copy="0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4">0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="net-more">
+          <summary class="kicker">Testnet values (free test tokens)</summary>
+        <div class="net-grid" data-keep-net>
           <table class="kv rv">
             <caption class="kicker">ANT CHAIN Testnet</caption>
             <tbody>
@@ -412,6 +447,7 @@ forge create src/Counter.sol:Counter \
             </tbody>
           </table>
         </div>
+        </details>
       </div>
     </section>
 
@@ -437,7 +473,7 @@ forge create src/Counter.sol:Counter \
           </details>
           <details>
             <summary>How long does withdrawing take?</summary>
-            <p>About an hour on testnet and about 7 days on mainnet. Withdrawals wait for the validator's claim about the chain's state to pass a challenge window, the same rule Arbitrum One uses; testnet uses a much shorter window so you can try the whole flow. The bridge page shows a countdown, and the Claim button appears when it ends. Deposits do not wait.</p>
+            <p>About 7 days on mainnet and about an hour on testnet. Withdrawals wait for the validator's claim about the chain's state to pass a challenge window, the same rule Arbitrum One uses; testnet uses a much shorter window so you can try the whole flow. The bridge page shows a countdown, and the Claim button appears when it ends. Deposits do not wait.</p>
           </details>
           <details>
             <summary>Who runs the chain?</summary>
@@ -473,7 +509,7 @@ forge create src/Counter.sol:Counter \
           </a>
           <p class="muted" style="max-width:36ch">An independent Arbitrum Layer 3 on Robinhood Chain. Gas is the ANT Stock Token.</p>
         </div>
-        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/testnet/">Explorer</a></li></ul></div>
+        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/" data-explorer>Explorer</a></li></ul></div>
         <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
         <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
       </div>

@@ -4,6 +4,7 @@
 // when it is made. Batch packets sink through the pillars to Robinhood Chain and on to Ethereum
 // (that flow is an illustration of the route; the bars are live data).
 import * as THREE from "three";
+import { L2, L3 } from "./config.js";
 
 const canvas = document.querySelector("[data-stack]");
 if (canvas) init(canvas);
@@ -33,8 +34,8 @@ function init(canvas) {
   const SIZE = 6.2, GAP = 1.95;
   const plates = [
     { name: "ETHEREUM", sub: "settles", y: -GAP, edge: 0x4d4d4d, fill: 0x0b0b0b },
-    { name: "ROBINHOOD CHAIN", sub: "46630", y: 0, edge: 0x8c8c8c, fill: 0x0d0d0d },
-    { name: "ANT CHAIN", sub: "26801", y: GAP, edge: AMBER, fill: 0x120d04 },
+    { name: "ROBINHOOD CHAIN", sub: String(L2.id), y: 0, edge: 0x8c8c8c, fill: 0x0d0d0d },
+    { name: "ANT CHAIN", sub: String(L3.id), y: GAP, edge: AMBER, fill: 0x120d04 },
   ];
   function label(text, sub, color) {
     const c = document.createElement("canvas"); c.width = 512; c.height = 96;

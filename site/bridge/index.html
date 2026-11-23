@@ -33,7 +33,7 @@
   <!-- test token strip -->
   <div class="strip" role="note">
     <span><span class="dot pulse"></span></span>
-    <span>Testnet live · test tokens have no value</span>
+    <span data-n="strip">Mainnet live · gas paid in ANT</span>
     <span>$ANTC <code>0x1A9c…6281</code></span>
     <button type="button" data-copy="0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" aria-label="Copy $ANTC contract address">Copy</button>
     <a href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Buy on Pons →</a>
@@ -45,13 +45,13 @@
       <a class="hp brand" href="/" aria-label="ANT CHAIN home">
         <span class="brand-mark"><svg aria-hidden="true"><use href="#mark"/></svg></span>
         <span class="brand-name">ANT CHAIN</span>
-        <span class="brand-net">testnet</span>
+        <span class="brand-net">mainnet</span>
       </a>
       <nav class="hp menu" aria-label="Primary">
         <a href="/bridge/" aria-current="page">Bridge</a>
         <a href="/swap/">Swap</a>
         <a href="/stake/">Stake</a>
-        <a href="/explorer/testnet/">Explorer</a>
+        <a href="/explorer/" data-explorer>Explorer</a>
         <a href="/docs/">Docs</a>
         <a href="/roadmap/">Roadmap</a>
         <a href="/#build">Build</a>
@@ -68,13 +68,14 @@
   </header>
   <nav class="sheet-nav" id="sheet" aria-label="Menu">
     <button class="btn btn-ghost btn-small sheet-close" type="button" data-menu-close>Close</button>
-    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/testnet/">Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="/bridge/">Bridge</a><a href="/swap/">Swap</a><a href="/stake/">Stake</a><a href="/explorer/" data-explorer>Explorer</a><a href="/docs/">Docs</a><a href="/roadmap/">Roadmap</a><a href="/#build">Build</a><a href="/#faq">FAQ</a><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X / Twitter ↗</a><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a>
   </nav>
 
   <main id="main" class="app-main">
     <section class="app-hero">
-      <div class="app-visual" aria-hidden="true"><svg class="orbit app-orbit" data-orbit aria-hidden="true"></svg><p class="av-labels"><span class="av-l">Robinhood Testnet <b>46630</b></span><span class="av-r">ANT CHAIN Testnet <b>26801</b></span></p></div>
-      <p class="kicker">Testnet · Robinhood Chain Testnet (46630) → ANT CHAIN Testnet (26801)</p>
+      <div class="app-visual" aria-hidden="true"><svg class="orbit app-orbit" data-orbit aria-hidden="true"></svg><p class="av-labels"><span class="av-l"><span data-n="l2">Robinhood Chain</span> <b data-n="l2id">4663</b></span><span class="av-r"><span data-n="l3">ANT CHAIN</span> <b data-n="l3id">26800</b></span></p></div>
+      <div class="net-switch" data-net-switch aria-label="Network"></div>
+      <p class="kicker"><span data-n="l2">Robinhood Chain</span> (<span data-n="l2id">4663</span>) → <span data-n="l3">ANT CHAIN</span> (<span data-n="l3id">26800</span>)</p>
       <h1>Bridge ANT <em>into</em> ANT CHAIN</h1>
       <p class="lede">ANT pays every fee on ANT CHAIN. Deposit it on Robinhood Chain and it arrives as native gas. Withdraw it back from this page.</p>
       <dl class="stat-row">
@@ -95,17 +96,17 @@
         <div id="panel-in" role="tabpanel" aria-labelledby="tab-in">
           <form id="deposit-form" class="x-form" novalidate>
             <div class="leg">
-              <div class="leg-head"><span class="label">From</span><span class="chain-tag"><i class="dot-rh"></i>Robinhood Testnet</span></div>
+              <div class="leg-head"><span class="label">From</span><span class="chain-tag"><i class="dot-rh"></i><span data-n="l2">Robinhood Chain</span></span></div>
               <label class="amount">
                 <span class="sr-only">Amount of ANT to deposit</span>
                 <input name="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="dep-bal">
-                <span class="unit">tANT</span>
+                <span class="unit" data-n="tok">ANT</span>
               </label>
               <div class="leg-foot" id="dep-bal"><span>Balance <b data-bal="ant">—</b></span><button type="button" class="link-btn" data-max="deposit">Max</button></div>
             </div>
             <div class="leg-arrow" aria-hidden="true">↓</div>
             <div class="leg">
-              <div class="leg-head"><span class="label">To</span><span class="chain-tag"><i class="dot-ant"></i>ANT CHAIN Testnet</span></div>
+              <div class="leg-head"><span class="label">To</span><span class="chain-tag"><i class="dot-ant"></i><span data-n="l3">ANT CHAIN</span></span></div>
               <p class="receive">You receive the same amount as native gas, at the same address.</p>
               <div class="leg-foot"><span>On ANT CHAIN <b data-bal="l3">—</b></span><span>Gas on Robinhood Chain <b data-bal="eth">—</b></span></div>
             </div>
@@ -120,18 +121,18 @@
         <div id="panel-out" role="tabpanel" aria-labelledby="tab-out" hidden>
           <form id="withdraw-form" class="x-form" novalidate>
             <div class="leg">
-              <div class="leg-head"><span class="label">From</span><span class="chain-tag"><i class="dot-ant"></i>ANT CHAIN Testnet</span></div>
+              <div class="leg-head"><span class="label">From</span><span class="chain-tag"><i class="dot-ant"></i><span data-n="l3">ANT CHAIN</span></span></div>
               <label class="amount">
                 <span class="sr-only">Amount of ANT to withdraw</span>
                 <input name="amount" inputmode="decimal" autocomplete="off" placeholder="0.0" aria-describedby="wd-bal">
-                <span class="unit">tANT</span>
+                <span class="unit" data-n="tok">ANT</span>
               </label>
               <div class="leg-foot" id="wd-bal"><span>Balance <b data-bal="l3">—</b></span><button type="button" class="link-btn" data-max="withdraw">Max</button></div>
             </div>
             <div class="leg-arrow" aria-hidden="true">↓</div>
             <div class="leg">
-              <div class="leg-head"><span class="label">To</span><span class="chain-tag"><i class="dot-rh"></i>Robinhood Testnet</span></div>
-              <p class="receive">Two transactions: start it here now, then claim it on Robinhood Chain Testnet, usually 45 to 60 minutes later. This page shows a countdown.</p>
+              <div class="leg-head"><span class="label">To</span><span class="chain-tag"><i class="dot-rh"></i><span data-n="l2">Robinhood Chain</span></span></div>
+              <p class="receive">Two transactions: start it here now, then claim it on <span data-n="l2">Robinhood Chain</span> <span data-show="mainnet">about 7 days later, after the challenge window</span><span data-show="testnet" hidden>usually 45 to 60 minutes later</span>. This page shows a countdown.</p>
             </div>
             <button class="btn btn-amber btn-block" type="submit">Connect wallet</button>
             <p class="form-msg" role="status" aria-live="polite"></p>
@@ -159,12 +160,12 @@
           <ol class="side-steps">
             <li><b>Lock.</b> Your ANT goes into the ANT CHAIN bridge contract on Robinhood Chain.</li>
             <li><b>Credit.</b> The sequencer reads the deposit and credits the same amount as gas, usually within a minute.</li>
-            <li><b>Withdraw.</b> Burning ANT on ANT CHAIN creates a message. After a validator's claim survives the challenge window (about 30 minutes on testnet, so claims open roughly 45 to 60 minutes after you withdraw), you claim it on Robinhood Chain.</li>
+            <li><b>Withdraw.</b> Burning ANT on ANT CHAIN creates a message. After a validator's claim survives the challenge window, you claim it on Robinhood Chain: <span data-show="mainnet">about 7 days on mainnet, the same rule as Arbitrum One.</span><span data-show="testnet" hidden>roughly 45 to 60 minutes on testnet.</span></li>
           </ol>
         </div>
         <div class="card">
-          <h2 class="side-title">Add ANT CHAIN Testnet to your wallet</h2>
-          <p class="muted-p">Chain ID 26801 · currency tANT</p>
+          <h2 class="side-title">Add <span data-n="l3">ANT CHAIN</span> to your wallet</h2>
+          <p class="muted-p">Chain ID <span data-n="l3id">26800</span> · currency <span data-n="tok">ANT</span></p>
           <button class="btn btn-ghost btn-small" type="button" data-add-l3>Add network</button>
           <p class="form-msg" role="status" aria-live="polite" data-add-msg></p>
         </div>
@@ -188,7 +189,7 @@
           </a>
           <p class="muted" style="max-width:36ch">An independent Arbitrum Layer 3 on Robinhood Chain. Gas is the ANT Stock Token.</p>
         </div>
-        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/testnet/">Explorer</a></li></ul></div>
+        <div><h4>Apps</h4><ul><li><a href="/bridge/">Bridge</a></li><li><a href="/swap/">Swap</a></li><li><a href="/stake/">Stake</a></li><li><a href="/explorer/" data-explorer>Explorer</a></li></ul></div>
         <div><h4>Learn</h4><ul><li><a href="/docs/">Docs</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/#build">Build</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
         <div><h4>Network</h4><ul><li><a href="/#network">Network details</a></li><li><a href="/#status">Status</a></li><li><a href="/#token">About ANT</a></li><li><a href="https://x.com/antchainl3" target="_blank" rel="noopener">X @antchainl3 ↗</a></li><li><a href="https://github.com/AntChainL3/ant-chain" target="_blank" rel="noopener">GitHub ↗</a></li></ul></div>
       </div>
