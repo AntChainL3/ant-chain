@@ -104,19 +104,58 @@ export function walletFor(id) {
   return createWalletClient({ account: state.address, chain: id === L3.id ? antChain : robinhood, transport: custom(prov()) });
 }
 
+// EIP-1193 error 4100: the wallet has not authorised this site for that account or network. New MetaMask
+// versions grant sites access per network, and a WalletConnect session only covers the chains it was opened
+// with, so a site connected on Robinhood Chain can be refused on ANT CHAIN until the user allows it.
+export const isUnauthorized = (e) => {
+  for (let x = e, i = 0; x && i < 5; x = x.cause, i++) {
+    if (x.code === 4100 || /not been authori[sz]ed|unauthori[sz]ed/i.test(x.shortMessage || x.message || "")) return true;
+  }
+  return false;
+};
+const UNAUTHORIZED_HELP = "Your wallet has not allowed antchain.tech to use this network yet. Open your wallet, allow this site on ANT CHAIN (or disconnect and connect again), then try once more.";
+
+// Ask the wallet to grant this site the network: switching prompts for it; failing that, ask for permissions again.
+async function permitChain(id) {
+  const p = prov();
+  try {
+    await p.request({ method: "wallet_switchEthereumChain", params: [{ chainId: PARAMS[id].chainId }] });
+    return;
+  } catch (e) {
+    if (e && (e.code === 4902 || e.data?.originalError?.code === 4902)) { await p.request({ method: "wallet_addEthereumChain", params: [PARAMS[id]] }); return; }
+    if (!isUnauthorized(e)) throw e;
+  }
+  await p.request({ method: "wallet_requestPermissions", params: [{ eth_accounts: {} }] });
+}
+
+// Run a wallet request; if the wallet answers 4100 (site not allowed on this network), ask for the
+// permission once and retry. A second refusal gets a clear explanation instead of the raw wallet error.
+async function withPermission(id, fn) {
+  try { return await fn(); } catch (e) {
+    if (!isUnauthorized(e)) throw e;
+  }
+  try { await permitChain(id); } catch (e) {
+    if (e?.code === 4001) throw e; // the user said no to the permission prompt
+    throw new Error(UNAUTHORIZED_HELP); // the wallet cannot grant it from here (e.g. an old WalletConnect session)
+  }
+  try { return await fn(); } catch (e) {
+    if (isUnauthorized(e)) throw new Error(UNAUTHORIZED_HELP);
+    throw e;
+  }
+}
+
 // Ask the connected wallet to sign a plain text message (free, no transaction, works on any network).
 export async function signMessage(message) {
   if (!state.address) throw new Error("Connect a wallet first.");
   const p = prov();
   if (!p) throw new Error("No wallet found.");
-  return createWalletClient({ account: state.address, transport: custom(p) }).signMessage({ account: state.address, message });
+  return withPermission(state.chainId || L2.id, () => createWalletClient({ account: state.address, transport: custom(prov()) }).signMessage({ account: state.address, message }));
 }
 
 // Send a contract write on chain `id` and wait for the receipt on our own RPC.
 export async function write(id, req, onHash) {
-  await ensureChain(id);
-  const w = walletFor(id);
-  const hash = await w.writeContract({ ...req, account: state.address, chain: id === L3.id ? antChain : robinhood });
+  await withPermission(id, () => ensureChain(id));
+  const hash = await withPermission(id, () => walletFor(id).writeContract({ ...req, account: state.address, chain: id === L3.id ? antChain : robinhood }));
   onHash?.(hash);
   const client = id === L3.id ? l3 : l2;
   const r = await client.waitForTransactionReceipt({ hash, timeout: 180_000 });
@@ -127,6 +166,7 @@ export async function write(id, req, onHash) {
 export function friendlyError(e) {
   const m = e?.shortMessage || e?.message || String(e);
   if (e?.code === 4001 || /User rejected|denied/i.test(m)) return "Cancelled in your wallet.";
+  if (isUnauthorized(e)) return UNAUTHORIZED_HELP;
   if (/insufficient funds/i.test(m)) return "Not enough gas in your wallet for this network.";
   return m.split("\n")[0].slice(0, 220);
 }
