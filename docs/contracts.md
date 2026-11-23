@@ -71,5 +71,6 @@ The mainnet exchange is deployed but not opened yet: there are no pools, and the
 | Name / ticker | ANT Chain / ANTC |
 | Supply / decimals | 1,000,000,000 / 18 |
 | Launched on | [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281) |
+| Staking for gas credits (Robinhood Chain, 4663) | `0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac` |
 
 Only this address is ours. Anything else using the name is not.

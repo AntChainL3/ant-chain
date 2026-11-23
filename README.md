@@ -42,7 +42,7 @@ Everything else works like any EVM chain: MetaMask, Rabby, Foundry, Hardhat, vie
 | Explorer (blocks, transactions, addresses) | Live for testnet and mainnet |
 | Test kit faucet | Live on testnet |
 | $ANTC, the ANT CHAIN token | **Live** on [Pons](https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281), Robinhood Chain. Contract `0x1A9ca5A347c4aeAb4870668E76506E45C23D6281`. See [Token](#the-antc-token). |
-| $ANTC staking for gas credits | Contract ready and tested; **opening soon** for $ANTC. Try it now in test mode at [antchain.tech/stake](https://antchain.tech/stake/). |
+| $ANTC staking for gas credits | **Live** at [antchain.tech/stake](https://antchain.tech/stake/), contract `0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac` on Robinhood Chain. |
 
 Full roadmap, kept up to date: [docs/roadmap.md](docs/roadmap.md) · [antchain.tech/roadmap](https://antchain.tech/roadmap/)
 

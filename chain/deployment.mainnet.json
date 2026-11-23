@@ -82,5 +82,12 @@
     "router": "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF",
     "initCodeHash": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
     "deployedAt": "2026-11-22T16:23:43.740Z"
+  },
+  "antcStaking": {
+    "address": "0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac",
+    "token": "0x1A9ca5A347c4aeAb4870668E76506E45C23D6281",
+    "owner": "0x032c47Ff69165F2723BE277A8049Dc9308c8f838",
+    "tx": "0xafdcb7a12fd9308ba197359f13dade11ea6a85fd687df67d9e5035b48f081476",
+    "deployedAt": "2026-11-23T15:26:22.218Z"
   }
 }
