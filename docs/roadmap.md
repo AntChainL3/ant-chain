@@ -37,7 +37,6 @@ Nothing here is an offer or a promise of value.
 | Exchange on mainnet: contracts deployed, first liquidity pool | Opens with mainnet |
 | Spend gas credits from $ANTC staking on ANT CHAIN | Soon, before mainnet opens |
 | Monitoring and alerts for the chain's operators | Planned |
-| Chain ownership moved to a multisig | Planned |
 
 ## Phase 4: $ANTC on mainnet
 
