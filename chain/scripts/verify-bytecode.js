@@ -40,16 +40,25 @@ async function getCode(chain, address) {
   return j.result;
 }
 
+// The compiler appends a CBOR metadata block (a hash of the build settings and file paths) to the code;
+// its length is in the last two bytes. It is not executed, and it changes with the build machine's folder
+// layout, so like block-explorer verifiers we report it separately: "exact" = code + metadata identical,
+// "code" = every executed byte identical, only the build metadata differs.
+const metaLen = (buf) => (buf.length >= 2 ? buf.readUInt16BE(buf.length - 2) + 2 : 0);
+
 // compare byte by byte, skipping the immutable ranges
 function compare(onchain, compiled, imm) {
   const a = Buffer.from(onchain.replace(/^0x/, ""), "hex");
   const b = Buffer.from(compiled.replace(/^0x/, ""), "hex");
   if (a.length !== b.length) return { ok: false, why: `length differs (${a.length} on chain vs ${b.length} compiled)` };
+  const ma = metaLen(a), mb = metaLen(b);
+  const codeEnd = ma === mb && ma < a.length ? a.length - ma : a.length;
   const skip = new Uint8Array(a.length);
   let immBytes = 0;
   for (const refs of Object.values(imm)) for (const { start, length } of refs) { skip.fill(1, start, start + length); immBytes += length; }
-  for (let i = 0; i < a.length; i++) if (!skip[i] && a[i] !== b[i]) return { ok: false, why: `first difference at byte ${i}` };
-  return { ok: true, bytes: a.length, immBytes };
+  for (let i = 0; i < codeEnd; i++) if (!skip[i] && a[i] !== b[i]) return { ok: false, why: `executed code differs at byte ${i}` };
+  const exact = a.subarray(codeEnd).equals(b.subarray(codeEnd));
+  return { ok: true, exact, bytes: a.length, immBytes };
 }
 
 let failed = 0;
@@ -60,7 +69,7 @@ for (const c of CHECKS) {
     const { code, imm } = c.art();
     const r = compare(onchain, code, imm);
     if (!r.ok) failed++;
-    console.log(`${r.ok ? "MATCH   " : "MISMATCH"}  ${c.name}\n          ${c.chain === "robinhood" ? "Robinhood Chain" : "ANT CHAIN"} ${c.address}\n          source ${c.src}${r.ok ? ` · ${r.bytes} bytes, ${r.immBytes} constructor-set bytes skipped` : ` · ${r.why}`}`);
+    console.log(`${r.ok ? "MATCH   " : "MISMATCH"}  ${c.name}\n          ${c.chain === "robinhood" ? "Robinhood Chain" : "ANT CHAIN"} ${c.address}\n          source ${c.src}${r.ok ? ` · ${r.exact ? "exact match" : "code match (build metadata differs)"} · ${r.bytes} bytes, ${r.immBytes} constructor-set bytes skipped` : ` · ${r.why}`}`);
   } catch (e) {
     failed++;
     console.log(`ERROR     ${c.name} ${c.address}: ${e.message}`);

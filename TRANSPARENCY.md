@@ -12,7 +12,7 @@ Every ANT CHAIN contract on chain is exactly the code in this repository. You ca
 cd chain && npm ci && forge build && node scripts/verify-bytecode.js
 ```
 
-It compiles the sources here and compares them byte for byte with the code deployed on Robinhood Chain and on ANT CHAIN. Only constructor-set values may differ. The same check runs in [CI](.github/workflows/ci.yml) on every push.
+It compiles the sources here and compares them byte for byte with the code deployed on Robinhood Chain and on ANT CHAIN. Only constructor-set values may differ. "Exact match" means the compiler's metadata hash is identical too; "code match" means every executed byte is identical and only that build fingerprint differs (it changes with the build machine's folder layout, so the [CI](.github/workflows/ci.yml) run on every push usually shows code matches). On the deployer's machine all six are exact matches:
 
 ```text
 MATCH  ANTcStaking ($ANTC staking for gas credits)   Robinhood Chain 0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac
