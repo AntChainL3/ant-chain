@@ -251,7 +251,7 @@ if (route) {
     const p = Math.min(1, Math.max(0, -r.top / total));
     fill.style.setProperty("--p", p.toFixed(4));
     packet.setAttribute("cx", (40 + 920 * p).toFixed(1));
-    frame.textContent = String(Math.max(1, Math.round(p * 240))).padStart(3, "0");
+    if (frame) frame.textContent = String(Math.max(1, Math.round(p * 240))).padStart(3, "0");
     const idx = Math.min(4, Math.floor(p * 5 * 0.999));
     nodes.forEach((n, i) => n.classList.toggle("on", i <= idx));
     if (idx !== current) { stops[current]?.classList.remove("on"); stops[idx]?.classList.add("on"); current = idx; }

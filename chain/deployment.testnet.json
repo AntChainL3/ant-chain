@@ -65,5 +65,12 @@
     "deployedAt": "2026-11-21T11:53:44.439Z",
     "testUsd": "0xA020932FB3D16836B0B8741370a5D4B123eEc43c",
     "seedPair": "0x98B8313367716D1A672194DF10AfB8Bc7cfBdB0a"
+  },
+  "antcStaking": {
+    "address": "0xf3ab16504dcb85390924662f780f49d91387b857",
+    "token": "0xBF10D827020A5f4260E27a005Ae0034D97514B17",
+    "owner": "0x6c776BF2689F980c284D0fd1F3f6B1bC108BAf78",
+    "tx": "0x085bf297c0f6999417e57ed7f8e6a37c480f85378b6afcfee7e4a8ee410f0ee1",
+    "deployedAt": "2026-11-23T13:28:47.090Z"
   }
 }

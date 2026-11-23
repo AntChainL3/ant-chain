@@ -45,6 +45,18 @@ export { PROFILES };
 export const ACTIVE = "testnet";
 // false: mainnet runs but is not announced; the mainnet explorer shows "not open yet" even when the node is up
 export const MAINNET_OPEN = false;
+
+// $ANTc staking for gas credits. It lives on Robinhood Chain (where $ANTc trades on Pons), independent of ACTIVE.
+// Until $ANTc exists, the page runs in test mode: tANT stands in for $ANTc on Robinhood Chain Testnet.
+// At launch: deploy with `ANTC_TOKEN=0x... node scripts/06-antc-staking.js --mainnet`, then switch this block to mainnet.
+export const STAKING = {
+  test: true,
+  chain: { id: 46630, hex: "0xb626", name: "Robinhood Chain Testnet", rpcs: PROFILES.testnet.L2.rpcs, walletRpc: PROFILES.testnet.L2.walletRpc },
+  contract: "0xf3ab16504dcb85390924662f780f49d91387b857",
+  token: "0xbf10d827020a5f4260e27a005ae0034d97514b17",
+  symbol: "tANT",
+  buyUrl: null, // Pons page of $ANTc, once launched
+};
 const P = PROFILES[ACTIVE];
 export const NETWORK = P.NETWORK;
 export const TOKEN = P.TOKEN;

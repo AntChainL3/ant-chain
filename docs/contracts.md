@@ -17,6 +17,7 @@ Always check addresses against this page or [antchain.tech](https://antchain.tec
 | Challenge manager | `0x66A04fce24303BAE871CAdfCAaCd90A89A751B7E` |
 | Fee token pricer | `0x545328faa9c28fda8d9c1d23ad4bd32f52b2daa7` |
 | Mock ETH/USD feed (testnet only) | `0x9e541d48480d3fdbdcb5ce534ab6f5974e137a66` |
+| $ANTc staking, test mode (tANT stands in for $ANTc) | `0xf3ab16504dcb85390924662f780f49d91387b857` |
 
 ### On ANT CHAIN Testnet (26801)
 

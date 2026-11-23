@@ -37,6 +37,7 @@ Everything else works like any EVM chain: MetaMask, Rabby, Foundry, Hardhat, vie
 | Explorer (blocks, transactions, addresses) | Live for testnet and mainnet |
 | Test kit faucet | Live on testnet |
 | $ANTc, the ANT CHAIN token | **Planned**. Not launched; there is no presale or airdrop. See [Token](#the-antc-token-planned). |
+| $ANTc staking for gas credits | Contract ready and **live in test mode** on testnet (tANT stands in for $ANTc) at [antchain.tech/stake](https://antchain.tech/stake/). Goes live for $ANTc at launch. |
 
 ## Meet tANT, the testnet gas token
 
@@ -99,6 +100,8 @@ An ANT CHAIN token, **$ANTc**, is planned with three jobs on the chain:
 - bidding for the **express lane** (priority ordering of transactions, Arbitrum Timeboost),
 - a **daily gas allowance** for people who stake it,
 - a **0.01% bridge and swap fee** used to buy $ANTc back and burn it.
+
+The first of these to ship is **staking for gas credits**: stake $ANTc on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once mainnet opens. Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing.
 
 Gas itself stays ANT. Supply and launch terms will be published on [antchain.tech](https://antchain.tech) before launch, with the contract address added to the network details. **Until then there is no ANT CHAIN token, presale or airdrop, and anything claiming to be one is not ours.** Nothing in this repository is an offer or investment advice.
 
