@@ -2,3 +2,8 @@
 *.b64
 nodeConfig*
 *.log
+
+# The wallet bundle is not in git (see ../.gitignore) but must ship with the site.
+!js/walletkit/
+!js/walletkit/**
+!walletkit.css

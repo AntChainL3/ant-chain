@@ -127,7 +127,7 @@ chain/        contracts, deployment scripts, node config generator, keeper, fauc
   contracts/  AntFeeTokenPricer, TestANT (tANT), TestUSD (tUSD), WrappedANT
   scripts/    numbered deploy steps (00 to 05), bridge helpers, faucet, smoke tests
 site/         antchain.tech: home, bridge, swap, docs, explorer (static, served by Caddy)
-walletkit/    RainbowKit + wagmi wallet modal, bundled into site/js/walletkit
+walletkit/    source of the wallet modal (RainbowKit + wagmi); its build output is not committed
 docs/         this documentation
 DESIGN.md     design system of the website
 ```
@@ -135,19 +135,12 @@ DESIGN.md     design system of the website
 ### Run the website locally
 
 ```bash
+cd walletkit && npm install && npm run build && cd ..   # builds site/js/walletkit and site/walletkit.css
 cd site
-python -m http.server 8765        # then open http://127.0.0.1:8765
+python -m http.server 8765                              # then open http://127.0.0.1:8765
 ```
 
-The pages read live data straight from the public RPCs, so nothing else needs to run.
-
-### Rebuild the wallet bundle
-
-```bash
-cd walletkit
-npm install
-npm run build                     # writes site/js/walletkit and site/walletkit.css
-```
+The wallet bundle is build output of third-party libraries, so it is not committed: build it once before serving or deploying the site. The pages read live data straight from the public RPCs, so nothing else needs to run.
 
 ### Chain scripts
 
@@ -166,7 +159,7 @@ Found a problem? Please do not open a public issue for anything that could put f
 The code in this repository is released under the [MIT License](LICENSE), with these exceptions:
 
 - [`chain/contracts/WrappedANT.sol`](chain/contracts/WrappedANT.sol) is a port of WETH9 and keeps its **GPL-3.0-or-later** license, as stated in the file.
-- The wallet bundle in `site/js/walletkit/` is built from RainbowKit, wagmi, viem, React and TanStack Query, each under its own license (MIT).
+- The wallet bundle (`site/js/walletkit/`, built locally and not committed) comes from RainbowKit, wagmi, viem, React and TanStack Query, each under its own license (MIT).
 - The exchange contracts are the official Uniswap V2 bytecode, fetched from npm at deploy time and not stored here; they remain under Uniswap's licenses.
 - The chain itself runs the official Arbitrum Nitro node and contracts from Offchain Labs, under their licenses.
 

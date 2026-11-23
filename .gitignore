@@ -21,3 +21,7 @@ chain/*.log
 .railway/
 chain/ant-pools.json
 walletkit/node_modules/
+
+# Wallet bundle: build output of walletkit/ (RainbowKit, wagmi, viem). Rebuild with `cd walletkit && npm run build`.
+site/js/walletkit/
+site/walletkit.css
