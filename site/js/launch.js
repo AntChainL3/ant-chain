@@ -4,6 +4,7 @@
 // rendered as text (textContent), never as HTML.
 import { LAUNCHPAD, L3, ACTIVE } from "./config.js";
 import { viem, l3, state, onWallet, connect, write, friendlyError, fmt, short } from "./wallet.js";
+import { showLive, refreshLive } from "./launch-live.js";
 
 const warn = (e) => console.warn(e);
 const { parseAbi, parseAbiItem, parseUnits, decodeEventLog, maxUint256, getAddress, isAddress } = viem;
@@ -38,7 +39,8 @@ const deadline = () => BigInt(Math.floor(Date.now() / 1000) + 600);
 const status = (el, text, kind = "") => { el.textContent = text; el.dataset.kind = kind; };
 const amountOf = (v) => { try { const a = parseUnits(String(v || "").trim().replace(",", "."), 18); return a > 0n ? a : 0n; } catch { return 0n; } };
 const price = (l) => (l.vToken ? Number(l.vQuote) / Number(l.vToken) : 0);
-const fmtPrice = (p) => (p === 0 ? "0" : p < 0.0001 ? p.toExponential(3) : p.toLocaleString("en-US", { maximumSignificantDigits: 4 }));
+// plain decimals people can read (0.0000625), scientific notation only for truly tiny prices
+const fmtPrice = (p) => (p === 0 ? "0" : p < 1e-9 ? p.toExponential(3) : p.toLocaleString("en-US", { maximumSignificantDigits: 4, maximumFractionDigits: 12 }));
 const pct = (l) => (l.graduated ? 100 : Number((l.sold * 10000n) / CURVE) / 100);
 
 
@@ -145,6 +147,7 @@ function renderDetail() {
   D("graduated").hidden = !t.graduated;
   D("swap").href = `/swap/?net=${ACTIVE}`;
   $("[data-trade]").hidden = t.graduated;
+  showLive(t);
 }
 
 // ---------------------------------------------------------------- trade
@@ -220,6 +223,7 @@ $("[data-trade]").addEventListener("submit", async (e) => {
     status(msg, "Done.", "ok");
     $("#lp-amt").value = ""; T("out").textContent = "";
     await refreshToken(t.address); renderDetail(); renderList(); await refreshTrade();
+    refreshLive().catch(warn);
   } catch (err) {
     status(msg, friendlyError(err), "bad");
   } finally { btn.disabled = false; }

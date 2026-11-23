@@ -290,3 +290,26 @@ dialog.picker { background: linear-gradient(155deg, rgba(28,28,28,.92), rgba(14,
 .lp-upload-btn { position: relative; overflow: hidden; cursor: pointer; }
 .lp-upload-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .lp-upload-btn:focus-within { outline: 2px solid var(--amber); outline-offset: 2px; }
+/* launchpad live panel */
+.lp-main { display: grid; gap: 16px; min-width: 0; }
+.lp-main .card + .card { margin-top: 0; }
+.lp-live-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.lp-live-head h2 { margin: 2px 0 0; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.lp-live-price { font: 500 1rem var(--mono); color: var(--amber); }
+.lp-live-meta { display: grid; gap: 4px; justify-items: end; }
+.lp-live-meta .pill[data-kind="ok"] { color: #3ddc97; border-color: rgba(61,220,151,.4); }
+.lp-live-meta .pill[data-kind="bad"] { color: #ff6b6b; border-color: rgba(255,107,107,.4); }
+.lp-chart { width: 100%; height: 220px; display: block; margin-top: 14px; border-radius: 10px; background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.06); cursor: crosshair; }
+.lp-tip { min-height: 1.2em; margin: 6px 0 0; font-family: var(--mono); }
+.lp-live-tabs { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 12px 0 8px; }
+.lp-table-wrap { overflow-x: auto; max-height: 420px; overflow-y: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,.06); }
+.lp-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.lp-table th { position: sticky; top: 0; background: #121212; text-align: left; font: 500 .66rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--night-mute, #8a8a8a); padding: 9px 10px; white-space: nowrap; }
+.lp-table td { padding: 8px 10px; border-top: 1px solid rgba(255,255,255,.05); white-space: nowrap; }
+.lp-table td.mono { font-family: var(--mono); }
+.lp-table td.empty { color: var(--night-mute, #8a8a8a); white-space: normal; padding: 18px 10px; }
+.lp-table .pill { font-size: .66rem; padding: 2px 7px; }
+.lp-table .pill.ok { color: #3ddc97; border-color: rgba(61,220,151,.4); }
+.lp-table .pill.bad { color: #ff6b6b; border-color: rgba(255,107,107,.4); }
+.lp-table td .pill { margin-left: 6px; }
+@media (max-width: 640px) { .lp-chart { height: 170px; } .lp-live-meta { justify-items: start; } }

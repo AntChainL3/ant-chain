@@ -84,6 +84,23 @@
     <p class="notice" data-lp-pending hidden><b>The launchpad opens on mainnet soon.</b> It is live on testnet now, with free tANTC standing in for $ANTC. <a href="/launch/?net=testnet">Try it on testnet →</a></p>
 
     <div class="lp-grid" data-lp-app hidden>
+      <div class="lp-main">
+      <section class="card lp-live" data-lp-live hidden aria-label="Live chart, trades and holders">
+        <div class="lp-live-head">
+          <div><p class="label" data-live-updated>Live</p><h2><span data-live-name>…</span> <span class="lp-live-price" data-live-price>…</span></h2></div>
+          <div class="lp-live-meta"><span class="pill" data-live-change>…</span><span class="fine" data-live-hl></span></div>
+        </div>
+        <svg class="lp-chart" data-live-chart viewBox="0 0 600 220" preserveAspectRatio="none" role="img" aria-label="Price chart"></svg>
+        <p class="fine lp-tip" data-live-tip aria-live="off"></p>
+        <div class="lp-live-tabs">
+          <div class="seg" role="tablist" aria-label="Activity">
+            <button role="tab" type="button" data-live-tab="trades" aria-selected="true">Trades</button>
+            <button role="tab" type="button" data-live-tab="holders" aria-selected="false" tabindex="-1">Holders</button>
+          </div>
+          <span class="fine" data-live-holders-count hidden></span>
+        </div>
+        <div class="lp-table-wrap"><table class="lp-table"><thead><tr data-live-head></tr></thead><tbody data-live-rows></tbody></table></div>
+      </section>
       <section class="card lp-list-card" aria-label="Tokens">
         <div class="swap-head"><h2>Tokens</h2>
           <div class="slip" role="group" aria-label="Sort">
@@ -94,6 +111,7 @@
         </div>
         <ul class="lp-list" data-lp-list><li class="empty">Loading tokens…</li></ul>
       </section>
+      </div>
 
       <aside class="lp-side">
         <section class="card" data-lp-detail hidden aria-label="Token">
