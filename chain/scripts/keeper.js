@@ -13,11 +13,14 @@
 //  - freeze while ANT is paused, its oracle is paused, or within 1h of a corporate action (effectiveAt)
 //  - each update stays inside the pricer's on-chain deviation band
 //
+// Also runs the exchange fee burn on ANT CHAIN once a FeeBurner is deployed (see the end of this file).
+//
 // Run: node scripts/keeper.js --mainnet            (sends transactions)
 //      DRY_RUN=1 node scripts/keeper.js --mainnet  (logs decisions only)
 import http from "node:http";
-import { parseAbi, keccak256, encodeAbiParameters, formatEther, parseEther } from "viem";
+import { parseAbi, keccak256, encodeAbiParameters, formatEther, parseEther, createPublicClient, createWalletClient, defineChain, http as viemHttp } from "viem";
 import { NETWORK, parentPublicClient as client, walletClient, account, loadDeployment, ANT_TOKEN } from "./lib.js";
+import { createBurnerJob } from "./fee-burner-job.js";
 
 if (NETWORK !== "mainnet") throw new Error("Keeper runs on mainnet only (use --mainnet).");
 
@@ -225,3 +228,31 @@ http
 
 await tick();
 setInterval(tick, CFG.sampleEveryMs);
+
+// ---------- exchange fee burn (ANT CHAIN) ----------
+// Every BURN_EVERY_MS (default 6 h) the keeper turns the exchange's protocol fee, held by the FeeBurner,
+// into burned $ANTC (see scripts/fee-burner-job.js). It runs apart from the price loop: an error here is
+// reported under "burner" and never affects the price updates or /health.
+const dep = loadDeployment();
+if (dep.feeBurner?.address && !CFG.dryRun && process.env.BURNER_DISABLED !== "1") {
+  const L3_RPC = process.env.L3_RPC || "https://rpc.antchain.tech";
+  const l3 = defineChain({ id: 26800, name: "ANT CHAIN", nativeCurrency: { name: "ANT", symbol: "ANT", decimals: 18 }, rpcUrls: { default: { http: [L3_RPC] } } });
+  const l3pub = createPublicClient({ chain: l3, transport: viemHttp(L3_RPC, { timeout: 60_000 }) });
+  const l3wallet = createWalletClient({ account: keeper, chain: l3, transport: viemHttp(L3_RPC, { timeout: 60_000 }) });
+  const job = createBurnerJob({
+    pub: l3pub,
+    wallet: l3wallet,
+    addr: { burner: dep.feeBurner.address, factory: dep.dex.factory, router: dep.dex.router, antc: dep.launchpad.quote, want: dep.dex.wrappedAnt },
+    log,
+  });
+  status.burner = job.status;
+  let burning = false;
+  const burn = async () => {
+    if (burning) return;
+    burning = true;
+    try { await job.run(); } finally { burning = false; }
+  };
+  setTimeout(burn, 120_000);
+  setInterval(burn, Number(process.env.BURN_EVERY_MS || 6 * 3600_000));
+  log("fee burn job on", { burner: dep.feeBurner.address, everyMs: Number(process.env.BURN_EVERY_MS || 6 * 3600_000) });
+}

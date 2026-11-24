@@ -2,7 +2,7 @@
 
 Every push runs [Slither](https://github.com/crytic/slither) 0.11.6 on `chain/contracts` in [CI](../.github/workflows/ci.yml). The job fails on any High finding, and all findings are published in the repository's **Security → Code scanning** tab.
 
-Latest run, as of 24 November 2026: **0 High**, 7 Medium, 16 Low, 7 Informational. The complete report, with every finding linked to its line of code, is public: [slither-report.md](slither-report.md). Each finding was reviewed. None is an exploitable issue in the deployed contracts; the reasoning is below so reviewers do not have to repeat it.
+Latest run, as of 24 November 2026: **0 High**, 9 Medium, 17 Low, 7 Informational. The complete report, with every finding linked to its line of code, is public: [slither-report.md](slither-report.md). Each finding was reviewed. None is an exploitable issue in the contracts; the reasoning is below so reviewers do not have to repeat it.
 
 Run it yourself:
 
@@ -17,8 +17,9 @@ slither . --config-file slither.config.json
 | Finding | Where | Verdict |
 |---|---|---|
 | `divide-before-multiply` (4) | `AntcLaunchpad`: `buy`, `sell`, `quoteBuy`, `quoteSell` | **By design.** The curve output is computed first, then the fee is taken as a percentage of it. The rounding loss is at most 1 wei per trade and always rounds in the launchpad's favour (outputs round down, the sell-out cost rounds up). Covered by the fuzz tests `testFuzz_solvency` and `testFuzz_noFreeProfit`. |
-| `incorrect-equality` (2) | `ANTcStaking.stake` (`received == 0`), `ANTcStaking.recover` (`amount == 0`) | **False positive.** These reject zero amounts; they are not balance invariants an attacker can break by donating tokens. |
+| `incorrect-equality` (4) | `ANTcStaking.stake` (`received == 0`), `ANTcStaking.recover` (`amount == 0`), `FeeBurner.unwind` (`liquidity == 0`), `FeeBurner.burnAntc` (`amount == 0`) | **False positive.** These reject zero amounts; they are not balance invariants an attacker can break by donating tokens. Donating to the FeeBurner only adds to what gets burned. |
 | `reentrancy-no-eth` (1), `reentrancy-benign` (1) | `AntcLaunchpad.create` / `_newToken` | **False positive.** The external calls go to the exchange's Uniswap V2 factory (fixed at deployment) and to the `LaunchToken` the launchpad just deployed; neither calls back. All state-changing entry points are `nonReentrant`. |
+| `reentrancy-benign` (1) | `FeeBurner.swapAndBurn` | **False positive.** `totalBurned` is updated after the swap because it records the $ANTC the swap actually delivered to the dead address. The router is fixed at deployment, every FeeBurner entry point is `nonReentrant`, and the counter is informational only. |
 | `missing-zero-check` (4) | `ANTcStaking.setRedeemer`, `AntFeeTokenPricer.setKeeper` and constructor, `LaunchToken.setPair` | **Intended.** Setting the redeemer or keeper to `address(0)` is how they are switched off. `setPair` can only be called once, by the launchpad, with the pair the factory returned. |
 | `return-bomb` (1), `low-level-calls` (1) | `AntFeeTokenPricer._refreshEth` | **Low.** A gas-capped `staticcall` to the Chainlink ETH/USD feed, whose address is immutable. The cap is there so a broken feed cannot make fee pricing revert; the pricer then keeps its last good price. |
 | `low-level-calls` (1) | `WrappedANT.withdraw` | **Standard WETH pattern.** The balance is reduced before the native-ANT transfer, and a failed transfer reverts. |
@@ -27,7 +28,7 @@ slither . --config-file slither.config.json
 
 ## What is not covered here
 
-Static analysis finds patterns, not logic errors. The contracts also have unit and fuzz tests (`chain/test`, 56 tests), and their deployed bytecode is checked against this source on every push (see [TRANSPARENCY.md](../TRANSPARENCY.md)). They have not had an external audit yet.
+Static analysis finds patterns, not logic errors. The contracts also have unit and fuzz tests (`chain/test`, 73 tests), and their deployed bytecode is checked against this source on every push (see [TRANSPARENCY.md](../TRANSPARENCY.md)). They have not had an external audit yet.
 
 ## Changes made after the scan
 

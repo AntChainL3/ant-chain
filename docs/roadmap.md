@@ -50,7 +50,7 @@ Nothing here is an offer or a promise of value.
 | | Status |
 |---|---|
 | Express lane: bid $ANTC for priority ordering of transactions (Arbitrum Timeboost) | Planned |
-| 0.01% bridge and swap fee that buys $ANTC back and burns it | Planned |
+| Exchange fee burn: 0.05% of swap volume, taken from the existing 0.3% pool fee, buys $ANTC back and burns it ([FeeBurner.sol](../chain/contracts/FeeBurner.sol)). Traders pay nothing extra; the bridge stays free | Soon |
 | Fast withdrawals through liquidity providers, without shortening the challenge window | Planned |
 
 ## Not changing
