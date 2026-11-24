@@ -56,6 +56,15 @@
 .doc-table tr:first-child th, .doc-table tr:first-child td { border-top: 0; }
 .doc-table th { font-weight: 400; color: var(--night-mute); width: 38%; }
 .doc-table td { color: var(--night-ink); }
+.doc-table thead th { width: auto; font-weight: 600; color: var(--night-ink); }
+.doc-table-scroll { margin: 6px 0 16px; }
+.doc-table-scroll .doc-table { margin: 0; }
+@media (max-width: 560px) {
+  .doc-table-stack thead { display: none; }
+  .doc-table-stack tr { display: block; padding: 12px 16px; border-top: 1px solid rgba(255,255,255,.07); }
+  .doc-table-stack tr:first-child { border-top: 0; }
+  .doc-table-stack th, .doc-table-stack td { display: block; width: auto; padding: 2px 0; border: 0; }
+}
 .doc-table.addr code { background: none; border: 0; padding: 0; font-size: .8125rem; }
 
 .tag-soon { font: 500 .6875rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: var(--amber); border-radius: 999px; padding: 5px 10px; }

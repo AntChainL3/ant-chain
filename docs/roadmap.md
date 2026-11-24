@@ -35,7 +35,7 @@ Nothing here is an offer or a promise of value.
 | ANT CHAIN mainnet (chain 26800) on Robinhood Chain, gas paid in ANT ([guide](mainnet-guide.md)) | Live |
 | Bridge with real ANT (deposit, withdraw after the ~7 day challenge window, claim) | Live |
 | Exchange on mainnet: contracts live, anyone can create a pool | Live |
-| First ANT liquidity pool on the mainnet exchange | Soon |
+| First ANT liquidity pool on the mainnet exchange: ANT / $ANTC, `0x0525b9F257039Ad925AE3D094d24CB2B1a7D8aEF` | Live |
 | Claim gas on ANT CHAIN with credits from $ANTC staking ([guide](staking-guide.md)) | Live |
 | Monitoring and alerts for the chain's operators | Planned |
 
@@ -50,7 +50,7 @@ Nothing here is an offer or a promise of value.
 | | Status |
 |---|---|
 | Express lane: bid $ANTC for priority ordering of transactions (Arbitrum Timeboost) | Planned |
-| Exchange fee burn: 0.05% of swap volume, taken from the existing 0.3% pool fee, buys $ANTC back and burns it ([FeeBurner.sol](../chain/contracts/FeeBurner.sol), `0x110797efDcBedD157920Faee8e020E51270348Fc`). Traders pay nothing extra; the bridge stays free | Live |
+| Exchange fee burn: 0.05% of swap volume, taken from the existing 0.3% pool fee, buys $ANTC back and burns it ([FeeBurner.sol](../chain/contracts/FeeBurner.sol), `0x110797efDcBedD157920Faee8e020E51270348Fc`). Traders pay nothing extra; the bridge stays free ([when it burns](fee-burn.md)) | Live |
 | Fast withdrawals through liquidity providers, without shortening the challenge window | Planned |
 
 ## Not changing

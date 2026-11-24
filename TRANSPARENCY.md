@@ -83,7 +83,7 @@ All are single-key wallets (EOAs) held by the operator. There is no multisig.
 | ANT CHAIN gas fees | Network fee account `0x032c47Ff69165F2723BE277A8049Dc9308c8f838` (the deployer); this pays for posting batches to Robinhood Chain |
 | Launchpad trading fee (1% of each trade, in $ANTC) | Half burned (sent to `0x000000000000000000000000000000000000dEaD`), half to the treasury `0x032c47Ff69165F2723BE277A8049Dc9308c8f838` |
 | Launchpad graduation | All $ANTC raised + 200,000,000 tokens go into a Uniswap V2 pool; the pool shares go to `0x…dEaD`, so that liquidity can never be withdrawn |
-| Exchange swaps | 0.3% per swap (standard Uniswap V2): 0.25% to liquidity providers, 0.05% to the [FeeBurner](https://antchain.tech/explorer/address/0x110797efDcBedD157920Faee8e020E51270348Fc), which the keeper turns into $ANTC sent to `0x…dEaD` about every 6 hours. Small amounts wait until they are worth the gas. Total burned: `totalBurned()` on the FeeBurner |
+| Exchange swaps | 0.3% per swap (standard Uniswap V2): 0.25% to liquidity providers, 0.05% to the [FeeBurner](https://antchain.tech/explorer/address/0x110797efDcBedD157920Faee8e020E51270348Fc), which the keeper turns into $ANTC sent to `0x…dEaD` about every 6 hours. Small amounts wait until they are worth the gas. Total burned: `totalBurned()` on the FeeBurner. When a burn happens: [docs/fee-burn.md](docs/fee-burn.md) |
 | Bridge | No fee. Deposits are locked in the bridge contract on Robinhood Chain until withdrawn |
 | Gas-credit claims | Paid from the redeemer's ANT on ANT CHAIN; the credits used are recorded on chain (`CreditsSpent` events) |
 

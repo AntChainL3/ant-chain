@@ -92,6 +92,7 @@
           <li><a href="#fees">Fees</a></li>
           <li><a href="#bridge">Bridging ANT</a></li>
           <li><a href="#exchange">The exchange</a></li>
+          <li><a href="#burn">When the fee is burned</a></li>
         </ul>
         <p class="side-group">Tokens</p>
         <ul>
@@ -277,13 +278,38 @@
 
       <section id="exchange" class="doc-sec">
         <h2>The exchange</h2>
-        <p>The ANT CHAIN exchange runs the Uniswap V2 contracts, deployed unmodified from Uniswap's published bytecode, with Wrapped ANT (WANT) as the base asset. Anyone can create a pool and add liquidity. Each trade pays 0.3%: 0.25% to the pool's liquidity providers, and 0.05% goes to the FeeBurner, which turns it into $ANTC sent to the dead address.</p>
+        <p>The ANT CHAIN exchange runs the Uniswap V2 contracts, deployed unmodified from Uniswap's published bytecode, with Wrapped ANT (WANT) as the base asset. Anyone can create a pool and add liquidity. Each trade pays 0.3%: 0.25% to the pool's liquidity providers, and 0.05% goes to the FeeBurner, which turns it into $ANTC sent to the dead address (see <a href="#burn">when the fee is burned</a>).</p>
         <ul class="doc-list">
           <li><b>ANT and WANT</b> are the same asset. Wrapping is one to one and always reversible.</li>
           <li><b>Pools start empty.</b> The first deposit into a pool sets its starting price.</li>
           <li><b>Check addresses.</b> Anyone can create a token with any name. Trade only tokens whose contract you have verified.</li>
         </ul>
         <div class="callout warn"><b>Status</b><p>The exchange is live on mainnet and on testnet (with a seeded tANT / tUSD pool) on the <a href="../swap/">swap page</a>. Mainnet pools are created by their liquidity providers.</p></div>
+      </section>
+
+      <section id="burn" class="doc-sec">
+        <h2>When the swap fee is burned <span class="tag-soon">Live</span></h2>
+        <p>0.05% of every swap, taken from the 0.3% pool fee, is turned into $ANTC and sent to the dead address <code>0x…dEaD</code>. Traders pay nothing extra and the bridge has no fee. A burn does not happen on every swap: it happens in three steps.</p>
+        <ol class="doc-steps">
+          <li><b>Swaps: the fee builds up inside the pool.</b> Each swap pays 0.3%. The 0.05% part stays in the pool for now; this is how Uniswap V2 keeps swaps cheap.</li>
+          <li><b>A liquidity event: the fee is handed to the FeeBurner.</b> When anyone adds or removes liquidity in that pool, the pool works out the fee earned since the last such event and gives it to the <a href="../explorer/address/0x110797efDcBedD157920Faee8e020E51270348Fc">FeeBurner</a> as pool shares. Adding or removing liquidity on the <a href="../swap/">swap page</a>, a launchpad token graduating, and the keeper's own unwinding all count. The first event in a pool after the fee was switched on (24 November 2026) only sets the starting point.</li>
+          <li><b>The keeper runs (every 6 hours): the burn.</b> It unwinds the FeeBurner's pool shares into their two tokens, swaps everything that is not $ANTC to $ANTC, and sends all of it to <code>0x…dEaD</code>. A step waits for a later run until it is worth at least three times its gas, and each swap is sized so it moves the price by at most 3%.</li>
+        </ol>
+        <div class="doc-table-scroll">
+        <table class="doc-table doc-table-stack">
+          <thead><tr><th scope="col">Example</th><th scope="col">What happens</th><th scope="col">Burn status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Monday 10:00</th><td>People swap $1,000 in total on the ANT / $ANTC pool</td><td>0.05% = $0.50 builds up in the pool</td></tr>
+            <tr><th scope="row">Monday 14:00</th><td>Someone adds liquidity to that pool</td><td>The $0.50 now belongs to the FeeBurner</td></tr>
+            <tr><th scope="row">Monday 17:45</th><td>The keeper runs</td><td>Swapped to $ANTC and sent to <code>0x…dEaD</code></td></tr>
+          </tbody>
+        </table>
+        </div>
+        <ul class="doc-list">
+          <li><b>Check it yourself.</b> <code>totalBurned()</code> on the FeeBurner <code>0x110797efDcBedD157920Faee8e020E51270348Fc</code> is the total $ANTC it has burned; every burn is a transfer to <code>0x…dEaD</code> on the <a href="../explorer/address/0x110797efDcBedD157920Faee8e020E51270348Fc">explorer</a>.</li>
+          <li><b>It can only burn.</b> The FeeBurner has no way to send tokens anywhere but the dead address. Its operator (the keeper) can only swap fees into burned $ANTC. Source: <a href="https://github.com/AntChainL3/ant-chain/blob/main/chain/contracts/FeeBurner.sol">FeeBurner.sol</a>.</li>
+          <li><b>Who can change it.</b> The deployer is the exchange factory's <code>feeToSetter</code>: it can point the fee elsewhere or turn it off. It cannot change the 0.3% fee or touch liquidity.</li>
+        </ul>
       </section>
 
       <section id="token" class="doc-sec">
