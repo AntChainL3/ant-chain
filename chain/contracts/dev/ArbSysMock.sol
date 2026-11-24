@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.28;
 
 /// @notice FORK REHEARSAL ONLY. Anvil does not implement Arbitrum precompiles, so this
 ///         stand-in is placed at 0x...64 on the local fork with anvil_setCode.

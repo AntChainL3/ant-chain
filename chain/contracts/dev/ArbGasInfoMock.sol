@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.28;
 
 /// @notice FORK REHEARSAL ONLY. Stand-in for the ArbGasInfo precompile (0x...6C), placed on
 ///         the local fork with anvil_setCode. Values mirror Robinhood Chain mainnet as read

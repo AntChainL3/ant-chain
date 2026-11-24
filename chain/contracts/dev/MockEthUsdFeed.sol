@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
+import {AggregatorV3Interface} from "../AntFeeTokenPricer.sol";
+
 /// @title Mock ETH/USD feed (testnet only)
 /// @notice Chainlink AggregatorV3-shaped feed for the ANT CHAIN testnet fee pricer.
 ///         Always reports the current block time, so the pricer never sees it as stale.
 ///         The owner can move the answer. Never use on mainnet.
-contract MockEthUsdFeed {
-    address public owner;
+contract MockEthUsdFeed is AggregatorV3Interface {
+    address public immutable owner;
     int256 public answer;
     uint80 public round = 1;
 
