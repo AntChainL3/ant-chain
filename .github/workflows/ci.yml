@@ -111,7 +111,7 @@ jobs:
             echo
             echo "How each finding was assessed: [docs/static-analysis.md](https://github.com/${{ github.repository }}/blob/main/docs/static-analysis.md)"
             echo
-            slither . --config-file slither.config.json --checklist --markdown-root "https://github.com/${{ github.repository }}/blob/${{ github.sha }}/chain/" 2>/dev/null || true
+            slither . --config-file slither.config.json --checklist --show-ignored-findings --markdown-root "https://github.com/${{ github.repository }}/blob/${{ github.sha }}/chain/" 2>/dev/null || true
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish findings to the Security tab

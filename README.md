@@ -169,7 +169,7 @@ Found a problem? Please do not open a public issue for anything that could put f
 
 ## Transparency
 
-Every contract, every wallet the team operates and what it can do, where fees go, and what is not in place yet: [TRANSPARENCY.md](TRANSPARENCY.md). Anyone can check that the code running on chain is the code in this repository with `node chain/scripts/verify-bytecode.js` (also run by CI on every push). Slither runs on every push too; its findings and how each was assessed are in [docs/static-analysis.md](docs/static-analysis.md).
+Every contract, every wallet the team operates and what it can do, where fees go, and what is not in place yet: [TRANSPARENCY.md](TRANSPARENCY.md). Anyone can check that the code running on chain is the code in this repository with `node chain/scripts/verify-bytecode.js` (also run by CI on every push). Slither runs on every push too: the full public report is [docs/slither-report.md](docs/slither-report.md), and how each finding was assessed is in [docs/static-analysis.md](docs/static-analysis.md).
 
 ## License
 

@@ -2,7 +2,7 @@
 
 Every push runs [Slither](https://github.com/crytic/slither) 0.11.6 on `chain/contracts` in [CI](../.github/workflows/ci.yml). The job fails on any High finding, and all findings are published in the repository's **Security → Code scanning** tab.
 
-Latest run, as of 24 November 2026: **0 High**, 7 Medium, 16 Low, 7 Informational. Each finding was reviewed. None is an exploitable issue in the deployed contracts; the reasoning is below so reviewers do not have to repeat it.
+Latest run, as of 24 November 2026: **0 High**, 7 Medium, 16 Low, 7 Informational. The complete report, with every finding linked to its line of code, is public: [slither-report.md](slither-report.md). Each finding was reviewed. None is an exploitable issue in the deployed contracts; the reasoning is below so reviewers do not have to repeat it.
 
 Run it yourself:
 

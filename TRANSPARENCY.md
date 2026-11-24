@@ -85,7 +85,7 @@ All are single-key wallets (EOAs) held by the operator. There is no multisig.
 
 ## Not in place yet
 
-- **No external audit.** The contracts are covered by automated tests (unit and fuzz) and static analysis ([SonarCloud](https://sonarcloud.io/summary/overall?id=AntChainL3_ant-chain&branch=main)), which are not an audit.
+- **No external audit.** The contracts are covered by automated tests (unit and fuzz) and static analysis ([Slither report](docs/slither-report.md), [how each finding was assessed](docs/static-analysis.md), [SonarCloud](https://sonarcloud.io/summary/overall?id=AntChainL3_ant-chain&branch=main)), which are not an audit.
 - **No multisig or timelock.** One key controls upgrades and settings.
 - **One operator** runs the sequencer, batch poster and validator.
 - **Off-chain services** (price keeper, gas-credits service) run on Railway with their keys there; their code is in [chain/scripts](chain/scripts).
