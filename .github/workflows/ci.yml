@@ -103,6 +103,17 @@ jobs:
       - name: Slither (fails on any High finding; triage in docs/static-analysis.md)
         run: slither . --config-file slither.config.json --fail-high --sarif slither.sarif
 
+      - name: Public report on this run's Summary page
+        if: always()
+        run: |
+          {
+            echo "## Slither report"
+            echo
+            echo "How each finding was assessed: [docs/static-analysis.md](https://github.com/${{ github.repository }}/blob/main/docs/static-analysis.md)"
+            echo
+            slither . --config-file slither.config.json --checklist --markdown-root "https://github.com/${{ github.repository }}/blob/${{ github.sha }}/chain/" 2>/dev/null || true
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Publish findings to the Security tab
         if: always()
         uses: github/codeql-action/upload-sarif@d2aacf54c2fbc910db8d7ec338fdb54ea48c692d # v3
