@@ -24,14 +24,16 @@ MATCH  UniswapV2Router02 (exchange)                  ANT CHAIN 0x3Cd343c668cCBaE
 All 6 contracts match the source in this repository.
 ```
 
+The contracts on Robinhood Chain are also verified on [Sourcify](https://sourcify.dev) with an exact match (source and compiler settings identical), published with `node chain/scripts/verify-sourcify.js`. ANT CHAIN is not a Sourcify chain, so its contracts rely on the bytecode check above.
+
 The chain's own core contracts (rollup, bridge, inbox, outbox, token bridge) are the standard Arbitrum Nitro contracts deployed by Offchain Labs' [orbit SDK](https://github.com/OffchainLabs/arbitrum-chain-sdk), not code written here.
 
 ## Contracts we wrote
 
 | Contract | Chain | Address | Source | Tests |
 |---|---|---|---|---|
-| ANTcStaking | Robinhood Chain | `0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac` | [ANTcStaking.sol](chain/contracts/ANTcStaking.sol) | 23 incl. fuzz |
-| AntFeeTokenPricer | Robinhood Chain | `0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab` | [AntFeeTokenPricer.sol](chain/contracts/AntFeeTokenPricer.sol) | 11 |
+| ANTcStaking | Robinhood Chain | `0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac` | [ANTcStaking.sol](chain/contracts/ANTcStaking.sol) · [verified on Sourcify](https://repo.sourcify.dev/4663/0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac) | 23 incl. fuzz |
+| AntFeeTokenPricer | Robinhood Chain | `0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab` | [AntFeeTokenPricer.sol](chain/contracts/AntFeeTokenPricer.sol) · [verified on Sourcify](https://repo.sourcify.dev/4663/0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab) | 11 |
 | AntcLaunchpad | ANT CHAIN | `0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA` | [AntcLaunchpad.sol](chain/contracts/AntcLaunchpad.sol) | 22 incl. fuzz |
 | LaunchToken (one per launched token) | ANT CHAIN | created by the launchpad | [LaunchToken.sol](chain/contracts/LaunchToken.sol) | in the launchpad suite |
 | WrappedANT | ANT CHAIN | `0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4` | [WrappedANT.sol](chain/contracts/WrappedANT.sol) | — |
