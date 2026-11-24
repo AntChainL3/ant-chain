@@ -34,6 +34,21 @@ export function sniff(b) {
   return null;
 }
 
+/**
+ * The path of a stored image, built only from trusted parts: the name is the hex of exactly 32 bytes
+ * re-encoded from the request, the extension comes from a fixed list, and the result must sit directly
+ * inside DIR. Anything else gives null.
+ */
+const EXTS = { png: "png", jpg: "jpg", webp: "webp" };
+function storedFile(hexName, ext) {
+  const bytes = Buffer.from(String(hexName), "hex");
+  const safeExt = Object.hasOwn(EXTS, ext) ? EXTS[ext] : null;
+  if (bytes.length !== 32 || !safeExt) return null;
+  const base = path.resolve(DIR);
+  const file = path.resolve(base, `${bytes.toString("hex")}.${safeExt}`);
+  return path.dirname(file) === base ? file : null;
+}
+
 let total = 0;
 for (const f of fs.readdirSync(DIR)) { try { total += fs.statSync(path.join(DIR, f)).size; } catch { /* skip */ } }
 const hits = new Map(); // ip -> timestamps in the last hour
@@ -43,13 +58,13 @@ const json = (res, code, body) => { res.writeHead(code, { "content-type": "appli
 
 http.createServer(async (req, res) => {
   try {
-    const url = new URL(req.url, "http://x");
+    const url = new URL(req.url, "https://media.local");
     if (req.method === "GET" && url.pathname === "/health") return json(res, 200, { ok: true, files: fs.readdirSync(DIR).length, totalMB: Math.round(total / 1048576) });
 
     const m = /^\/i\/([0-9a-f]{64})\.(png|jpg|webp)$/.exec(url.pathname);
     if ((req.method === "GET" || req.method === "HEAD") && m) {
-      const file = path.join(DIR, `${m[1]}.${m[2]}`);
-      if (!fs.existsSync(file)) { res.writeHead(404, { "cache-control": "no-store" }); return res.end(); }
+      const file = storedFile(m[1], m[2]);
+      if (!file || !fs.existsSync(file)) { res.writeHead(404, { "cache-control": "no-store" }); return res.end(); }
       res.writeHead(200, {
         "content-type": TYPES[m[2]],
         "cache-control": "public, max-age=31536000, immutable",
@@ -77,7 +92,8 @@ http.createServer(async (req, res) => {
     if (total + buf.length > MAX_TOTAL) return json(res, 507, { error: "Image storage is full. Try again later." });
 
     const sha = crypto.createHash("sha256").update(buf).digest("hex");
-    const name = `${sha}.${ext}`, file = path.join(DIR, name);
+    const name = `${sha}.${ext}`, file = storedFile(sha, ext);
+    if (!file) return json(res, 500, { error: "Upload failed. Try again." });
     if (!fs.existsSync(file)) {
       const tmp = `${file}.${process.pid}.tmp`;
       fs.writeFileSync(tmp, buf, { flag: "wx" });

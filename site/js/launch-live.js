@@ -219,8 +219,8 @@ export function showLive(t) {
     $("[data-live-rows]", card).replaceChildren();
     $("[data-live-chart]", card).replaceChildren();
   }
-  refresh();
-  if (!timer) timer = setInterval(refresh, REFRESH_MS);
+  refresh().catch((e) => console.warn(e));
+  if (!timer) timer = setInterval(() => { refresh().catch((e) => console.warn(e)); }, REFRESH_MS);
 }
 /** Fetch new events now (after the user's own trade). */
 export function refreshLive() { return refresh(); }
@@ -232,5 +232,5 @@ if (card) {
     $("[data-live-holders-count]", card).hidden = tab !== "holders";
     draw();
   }));
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh().catch((e) => console.warn(e)); });
 }

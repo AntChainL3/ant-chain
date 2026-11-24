@@ -23,7 +23,8 @@ const erc = parseAbi(["function drip()", "function approve(address,uint256) retu
 const wait2 = async (h) => { const r = await l2.waitForTransactionReceipt({ hash: h }); if (r.status !== "success") throw new Error("reverted " + h); return r; };
 const wait3 = async (h) => { const r = await l3.waitForTransactionReceipt({ hash: h }); if (r.status !== "success") throw new Error("reverted " + h); return r; };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const check = (ok, label) => { console.log(`${ok ? "PASS" : "FAIL"}  ${label}`); if (!ok) process.exitCode = 1; };
+// one line per check; control characters are stripped so nothing in a label can forge extra log lines
+const check = (ok, label) => { console.log(`${ok ? "PASS" : "FAIL"}  ${String(label).replace(/[\r\n\u2028\u2029]+/g, " ")}`); if (!ok) process.exitCode = 1; };
 
 // 1. redeemer role + funding
 if ((await l2.readContract({ address: STAKING, abi: stakingAbi, functionName: "redeemer" })).toLowerCase() !== redeemer.address.toLowerCase()) {
