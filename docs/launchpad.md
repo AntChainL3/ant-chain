@@ -25,7 +25,7 @@ Until a token graduates, nobody but the launchpad can send it to its pool. That 
 |---|---|
 | Trading fee | 1% of each buy and sell, in $ANTC. Half is burned (sent to `0x…dEaD`), half goes to the treasury. |
 | Creating a token | Free on testnet. |
-| Exchange fee after graduation | 0.3% to liquidity providers (standard Uniswap V2). |
+| Exchange fee after graduation | 0.3% per swap (standard Uniswap V2): 0.25% to liquidity providers, 0.05% buys $ANTC back and burns it. |
 
 The owner can change the fee (never above 2%), the fee split, the creation fee and the graduation target **for new tokens**, and can pause the creation of new tokens. The owner can never move the $ANTC or tokens held for a curve, and can never stop anyone from selling back to a curve.
 

@@ -253,7 +253,7 @@
           </a>
           <a class="app rv" style="--i:1" href="/swap/">
             <svg class="app-art" viewBox="0 0 320 150" aria-hidden="true"><g class="art"><path d="M20 110 C80 110 90 40 160 40 S240 110 300 110"/><path d="M20 40 C80 40 90 110 160 110 S240 40 300 40"/><circle cx="160" cy="40" r="5"/><circle cx="160" cy="110" r="5"/><text x="40" y="30">tANT</text><text x="268" y="30">tUSD</text></g></svg>
-            <span class="app-top"><span class="tag live">live</span><span class="mono muted">Uniswap V2 · 0.3% to LPs</span></span>
+            <span class="app-top"><span class="tag live">live</span><span class="mono muted">Uniswap V2 · 0.3% fee</span></span>
             <span class="app-name">Swap</span>
             <span class="app-desc">The exchange of ANT CHAIN. Swap tokens or add liquidity. Gas is the ANT you bridged.</span>
             <span class="app-meta"><span>Exchange</span><b>Uniswap V2</b></span>
@@ -290,7 +290,7 @@
           <li class="rv"><span class="b-name">$ANTC token</span><span class="b-desc">Live on <a class="link" href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Pons</a>, Robinhood Chain. Contract 0x1A9c…6281.</span><span class="tag live">live</span></li>
           <li class="rv"><span class="b-name">Express lane bids</span><span class="b-desc">Bid $ANTC for priority ordering of transactions (Timeboost).</span><span class="tag planned">planned</span></li>
           <li class="rv"><span class="b-name">Gas credits</span><span class="b-desc">Stake $ANTC, earn credits that pay for gas on ANT CHAIN. Live on the <a class="link" href="/stake/">Stake page</a>.</span><span class="tag live">live</span></li>
-          <li class="rv"><span class="b-name">Bridge and swap fee</span><span class="b-desc">0.01% fee used to buy $ANTC back and burn it.</span><span class="tag planned">planned</span></li>
+          <li class="rv"><span class="b-name">Exchange fee burn</span><span class="b-desc">0.05% of swap volume, out of the 0.3% pool fee, buys $ANTC back and burns it. The bridge has no fee.</span><span class="tag live">live</span></li>
         </ul>
       </div>
     </section>
@@ -492,7 +492,7 @@ forge create src/Counter.sol:Counter \
           </details>
           <details>
             <summary>Does ANT CHAIN have its own token?</summary>
-            <p>Yes: $ANTC, live on <a class="link" href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Pons</a> at <code>0x1A9ca5A347c4aeAb4870668E76506E45C23D6281</code> on Robinhood Chain. Only this address is ours. It has three jobs on the chain: staking for gas credits (opening first), bidding for the express lane, and a 0.01% bridge and swap fee that buys it back and burns it (both with mainnet). Gas itself stays ANT. $ANTC is not connected to Anthropic, PBC. Nothing on this page is an offer.</p>
+            <p>Yes: $ANTC, live on <a class="link" href="https://ponsfamily.com/launchpad/0x1A9ca5A347c4aeAb4870668E76506E45C23D6281" target="_blank" rel="noopener">Pons</a> at <code>0x1A9ca5A347c4aeAb4870668E76506E45C23D6281</code> on Robinhood Chain. Only this address is ours. It has three jobs on the chain: staking for gas credits (live), the exchange fee burn (live: 0.05% of swap volume, out of the 0.3% pool fee, buys it back and burns it), and bidding for the express lane (planned). Gas itself stays ANT. $ANTC is not connected to Anthropic, PBC. Nothing on this page is an offer.</p>
           </details>
           <details>
             <summary>Why pay gas with a stock token?</summary>

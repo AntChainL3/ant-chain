@@ -28,6 +28,7 @@ const CHECKS = [
   { chain: "robinhood", name: "ANTcStaking ($ANTC staking for gas credits)", address: dep.antcStaking.address, src: "contracts/ANTcStaking.sol", art: () => foundry("ANTcStaking.sol", "ANTcStaking") },
   { chain: "robinhood", name: "AntFeeTokenPricer (ANT fee pricer)", address: dep.feeTokenPricer, src: "contracts/AntFeeTokenPricer.sol", art: () => foundry("AntFeeTokenPricer.sol", "AntFeeTokenPricer") },
   { chain: "antchain", name: "AntcLaunchpad (launchpad)", address: dep.launchpad.address, src: "contracts/AntcLaunchpad.sol", art: () => foundry("AntcLaunchpad.sol", "AntcLaunchpad") },
+  { chain: "antchain", name: "FeeBurner (exchange fee -> burned $ANTC)", address: dep.feeBurner.address, src: "contracts/FeeBurner.sol", art: () => foundry("FeeBurner.sol", "FeeBurner") },
   { chain: "antchain", name: "WrappedANT (WANT)", address: dep.dex.wrappedAnt, src: "contracts/WrappedANT.sol", art: () => foundry("WrappedANT.sol", "WrappedANT") },
   { chain: "antchain", name: "UniswapV2Factory (exchange)", address: dep.dex.factory, src: "@uniswap/v2-core (official build)", art: () => uniswap("@uniswap/v2-core/build/UniswapV2Factory.json") },
   { chain: "antchain", name: "UniswapV2Router02 (exchange)", address: dep.dex.router, src: "@uniswap/v2-periphery (official build)", art: () => uniswap("@uniswap/v2-periphery/build/UniswapV2Router02.json") },

@@ -12,16 +12,17 @@ Every ANT CHAIN contract on chain is exactly the code in this repository. You ca
 cd chain && npm ci && forge build && node scripts/verify-bytecode.js
 ```
 
-It compiles the sources here and compares them byte for byte with the code deployed on Robinhood Chain and on ANT CHAIN. Only constructor-set values may differ. "Exact match" means the compiler's metadata hash is identical too; "code match" means every executed byte is identical and only that build fingerprint differs (it changes with the build machine's folder layout, so the [CI](.github/workflows/ci.yml) run on every push usually shows code matches). On the deployer's machine all six are exact matches:
+It compiles the sources here and compares them byte for byte with the code deployed on Robinhood Chain and on ANT CHAIN. Only constructor-set values may differ. "Exact match" means the compiler's metadata hash is identical too; "code match" means every executed byte is identical and only that build fingerprint differs (it changes with the build machine's folder layout, so the [CI](.github/workflows/ci.yml) run on every push usually shows code matches). On the deployer's machine all seven are exact matches:
 
 ```text
 MATCH  ANTcStaking ($ANTC staking for gas credits)   Robinhood Chain 0xfd0d05df472a932e6bc64ca34744c77fd3c7b1ac
 MATCH  AntFeeTokenPricer (ANT fee pricer)            Robinhood Chain 0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab
 MATCH  AntcLaunchpad (launchpad)                     ANT CHAIN 0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA
+MATCH  FeeBurner (exchange fee -> burned $ANTC)      ANT CHAIN 0x110797efDcBedD157920Faee8e020E51270348Fc
 MATCH  WrappedANT (WANT)                             ANT CHAIN 0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4
 MATCH  UniswapV2Factory (exchange)                   ANT CHAIN 0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A
 MATCH  UniswapV2Router02 (exchange)                  ANT CHAIN 0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF
-All 6 contracts match the source in this repository.
+All 7 contracts match the source in this repository.
 ```
 
 The contracts on Robinhood Chain are also verified on [Sourcify](https://sourcify.dev) with an exact match (source and compiler settings identical), published with `node chain/scripts/verify-sourcify.js`. ANT CHAIN is not a Sourcify chain, so its contracts rely on the bytecode check above.
@@ -36,6 +37,7 @@ The chain's own core contracts (rollup, bridge, inbox, outbox, token bridge) are
 | AntFeeTokenPricer | Robinhood Chain | `0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab` | [AntFeeTokenPricer.sol](chain/contracts/AntFeeTokenPricer.sol) · [verified on Sourcify](https://repo.sourcify.dev/4663/0x87b35eb0ed8724250126fd16ba3c1f3509eeb2ab) | 11 |
 | AntcLaunchpad | ANT CHAIN | `0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA` | [AntcLaunchpad.sol](chain/contracts/AntcLaunchpad.sol) | 22 incl. fuzz |
 | LaunchToken (one per launched token) | ANT CHAIN | created by the launchpad | [LaunchToken.sol](chain/contracts/LaunchToken.sol) | in the launchpad suite |
+| FeeBurner | ANT CHAIN | `0x110797efDcBedD157920Faee8e020E51270348Fc` | [FeeBurner.sol](chain/contracts/FeeBurner.sol) · bytecode checked in CI | 17 incl. fuzz |
 | WrappedANT | ANT CHAIN | `0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4` | [WrappedANT.sol](chain/contracts/WrappedANT.sol) | — |
 
 Every other address is in [docs/contracts.md](docs/contracts.md).
@@ -57,7 +59,7 @@ All are single-key wallets (EOAs) held by the operator. There is no multisig.
 | Deployer / owner | `0x032c47Ff69165F2723BE277A8049Dc9308c8f838` | Deployed the contracts; owns them | See "What the owner can do" |
 | Batch poster | `0xA7eD0281fe56209D094315527C4AfFc8Bf8346aB` | Posts ANT CHAIN's transaction batches to Robinhood Chain | Nothing else |
 | Validator | `0x98136b570891de44dAfeC819491b7a5A546faC1E` | Posts a bond and asserts the chain's state | Its claims can be challenged by anyone |
-| Price keeper | `0x82218fb2cE98cEA1ec852892770f986ca53e1970` | Keeps the fee pricer's ANT price in line with the market ([keeper.js](chain/scripts/keeper.js)) | At most ±10% per update, at most once a minute |
+| Price keeper | `0x82218fb2cE98cEA1ec852892770f986ca53e1970` | Keeps the fee pricer's ANT price in line with the market, and runs the exchange fee burn ([keeper.js](chain/scripts/keeper.js), [fee-burner-job.js](chain/scripts/fee-burner-job.js)) | Price: at most ±10% per update, at most once a minute. Fee burn: can only swap fees held by the FeeBurner into $ANTC sent to `0x…dEaD` |
 | Gas-credits redeemer | `0x7f76693f374Aa9049dDFca473Bf23181E7Ea1DAe` | Records credit use and sends gas to stakers ([credits.js](chain/scripts/credits.js)) | Only `spendCredits`, never staked tokens |
 
 ## What the owner can do
@@ -70,6 +72,8 @@ All are single-key wallets (EOAs) held by the operator. There is no multisig.
 | AntFeeTokenPricer | Set the ANT or ETH price directly (for emergencies and corporate actions); change the keeper and its limits | Set a price outside $0–$1,000,000 |
 | AntcLaunchpad | Change the fee (never above 2%), fee split, creation fee and graduation target for **new** tokens; pause **new** launches | Move $ANTC or tokens held for a curve; stop anyone selling back to a curve; touch graduated liquidity |
 | LaunchToken | No owner | — |
+| FeeBurner | Change the operator (the keeper) | Take any token out: $ANTC can only go to `0x…dEaD`, other tokens can only be swapped to $ANTC sent to `0x…dEaD` |
+| Exchange factory (Uniswap V2, `feeToSetter` is the deployer) | Point the protocol fee (`feeTo`) at another address, or turn it off | Change the 0.3% swap fee, or touch liquidity in any pool |
 | $ANTC | No owner | — |
 
 ## Where the money goes
@@ -79,7 +83,7 @@ All are single-key wallets (EOAs) held by the operator. There is no multisig.
 | ANT CHAIN gas fees | Network fee account `0x032c47Ff69165F2723BE277A8049Dc9308c8f838` (the deployer); this pays for posting batches to Robinhood Chain |
 | Launchpad trading fee (1% of each trade, in $ANTC) | Half burned (sent to `0x000000000000000000000000000000000000dEaD`), half to the treasury `0x032c47Ff69165F2723BE277A8049Dc9308c8f838` |
 | Launchpad graduation | All $ANTC raised + 200,000,000 tokens go into a Uniswap V2 pool; the pool shares go to `0x…dEaD`, so that liquidity can never be withdrawn |
-| Exchange swaps | 0.3% to liquidity providers (standard Uniswap V2); the protocol fee switch is off |
+| Exchange swaps | 0.3% per swap (standard Uniswap V2): 0.25% to liquidity providers, 0.05% to the [FeeBurner](https://antchain.tech/explorer/address/0x110797efDcBedD157920Faee8e020E51270348Fc), which the keeper turns into $ANTC sent to `0x…dEaD` about every 6 hours. Small amounts wait until they are worth the gas. Total burned: `totalBurned()` on the FeeBurner |
 | Bridge | No fee. Deposits are locked in the bridge contract on Robinhood Chain until withdrawn |
 | Gas-credit claims | Paid from the redeemer's ANT on ANT CHAIN; the credits used are recorded on chain (`CreditsSpent` events) |
 

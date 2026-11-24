@@ -96,5 +96,15 @@
     "factory": "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A",
     "target": "1000000000000000000000000",
     "deployedAt": "2026-11-23T18:09:29.024Z"
+  },
+  "feeBurner": {
+    "address": "0x110797efDcBedD157920Faee8e020E51270348Fc",
+    "operator": "0x82218fb2cE98cEA1ec852892770f986ca53e1970",
+    "owner": "0x032c47Ff69165F2723BE277A8049Dc9308c8f838",
+    "antc": "0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c",
+    "factory": "0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A",
+    "router": "0x3Cd343c668cCBaEaE01326ffc721C840A1A1BefF",
+    "tx": "0x1ed7c9d4a1100b505475c9819a1b2f772536a34681967fbc0985bf51dad5dc31",
+    "deployedAt": "2026-11-24T05:28:36.517Z"
   }
 }

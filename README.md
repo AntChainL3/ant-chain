@@ -123,7 +123,7 @@ Only this address is ours. It has three jobs on the chain:
 
 - bidding for the **express lane** (priority ordering of transactions, Arbitrum Timeboost),
 - a **daily gas allowance** for people who stake it,
-- a **0.01% bridge and swap fee** used to buy $ANTC back and burn it.
+- the **exchange fee burn** (live): 0.05% of swap volume, taken from the 0.3% pool fee, buys $ANTC back and burns it. The bridge has no fee.
 
 The first of these to ship is **staking for gas credits**: stake $ANTC on Robinhood Chain and earn credits (token-days) that pay for gas on ANT CHAIN once credit spending opens (coming soon). Unstaking is never blocked, nobody can move staked tokens, and credits are not a token: they cannot be sold and pay no yield. Contract: [`chain/contracts/ANTcStaking.sol`](chain/contracts/ANTcStaking.sol), 23 tests including fuzzing. Step-by-step guide: [docs/staking-guide.md](docs/staking-guide.md).
 

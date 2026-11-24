@@ -61,9 +61,10 @@ Pair init code hash: `0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7d
 | Exchange factory (Uniswap V2) | `0xF7ba8FDa62e031252151D3c5b6F05C1dbA05459A` |
 | Wrapped ANT | `0xf4dc96b75d44EE74a6a4Ea59004aa9f8AF4C1Bb4` |
 | Launchpad (AntcLaunchpad) | `0x2BECe5405eE63844e6d14dF44c3aDE22AD3533dA` |
+| FeeBurner (exchange fee to burned $ANTC) | `0x110797efDcBedD157920Faee8e020E51270348Fc` |
 | $ANTC (bridged, standard gateway) | `0x65024Ab548EecDcCb686a3DcaC4DE2BF9b63042c` |
 
-The mainnet exchange is open. Pools are created by their liquidity providers; the first ANT pool is listed on the roadmap.
+The mainnet exchange is open. Pools are created by their liquidity providers. Each swap pays 0.3%: 0.25% to liquidity providers and 0.05% to the FeeBurner, which turns it into $ANTC sent to `0x…dEaD` ([FeeBurner.sol](../chain/contracts/FeeBurner.sol)).
 
 > **Beware of impostors.** A different token at `0x36c2861a1f94c6f277a388338a4f8a686e0d9b30` also uses the name "Anthropic" with a 1B supply. It is **not** the ANT Stock Token and has nothing to do with ANT CHAIN.
 

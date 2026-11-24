@@ -252,7 +252,7 @@
             <tr><th scope="row">ANT transfer</th><td>28,402 gas ≈ 0.0000028 ANT ≈ $0.00025</td></tr>
             <tr><th scope="row">Deposit from Robinhood Chain</th><td>Paid in ETH on Robinhood Chain: one approval (first time) and one deposit</td></tr>
             <tr><th scope="row">Withdrawal</th><td>A small ANT fee on ANT CHAIN, then ETH on Robinhood Chain to claim</td></tr>
-            <tr><th scope="row">Swap</th><td>0.3% to liquidity providers, plus gas</td></tr>
+            <tr><th scope="row">Swap</th><td>0.3% (0.25% to liquidity providers, 0.05% buys $ANTC back and burns it), plus gas</td></tr>
           </tbody>
         </table>
         <p class="muted-note">Dollar figures move with the ANT price. The live figure is on the <a href="../#fees">home page</a>.</p>
@@ -277,7 +277,7 @@
 
       <section id="exchange" class="doc-sec">
         <h2>The exchange</h2>
-        <p>The ANT CHAIN exchange runs the Uniswap V2 contracts, deployed unmodified from Uniswap's published bytecode, with Wrapped ANT (WANT) as the base asset. Anyone can create a pool, add liquidity and earn the 0.3% fee on trades through it.</p>
+        <p>The ANT CHAIN exchange runs the Uniswap V2 contracts, deployed unmodified from Uniswap's published bytecode, with Wrapped ANT (WANT) as the base asset. Anyone can create a pool and add liquidity. Each trade pays 0.3%: 0.25% to the pool's liquidity providers, and 0.05% goes to the FeeBurner, which turns it into $ANTC sent to the dead address.</p>
         <ul class="doc-list">
           <li><b>ANT and WANT</b> are the same asset. Wrapping is one to one and always reversible.</li>
           <li><b>Pools start empty.</b> The first deposit into a pool sets its starting price.</li>
@@ -300,7 +300,7 @@
         <div class="doc-cards">
           <div class="doc-card"><h3>Express lane</h3><p>Bid for priority ordering of your transactions in each round. Arbitrum's Timeboost runs a sealed-bid auction for an "express lane"; on ANT CHAIN the bids are paid in the ANT CHAIN token. Useful for traders and bots that need to land first.</p></div>
           <div class="doc-card"><h3>Gas credits</h3><p>Stake $ANTC on Robinhood Chain and earn gas credits every second (token-days). Credits pay for your transactions on ANT CHAIN once credit spending opens (coming soon). Unstake any time. Live on the <a href="/stake/">Stake page</a>, contract <code>0xfd0d…b1ac</code>.</p></div>
-          <div class="doc-card"><h3>Buyback and burn</h3><p>A 0.01% fee on bridge deposits and swaps buys the ANT CHAIN token on the market and burns it. The fee and the burns are on chain for anyone to check.</p></div>
+          <div class="doc-card"><h3>Buyback and burn</h3><p>0.05% of every swap on the exchange, taken from the 0.3% pool fee, goes to the <a href="/explorer/address/0x110797efDcBedD157920Faee8e020E51270348Fc">FeeBurner</a>. About every 6 hours the keeper swaps it to $ANTC and sends it to <code>0x…dEaD</code>. Traders pay nothing extra and the bridge has no fee. The contract can only burn: it has no way to send tokens anywhere else. Live.</p></div>
         </div>
         <h3>What it is not</h3>
         <ul class="doc-list">
